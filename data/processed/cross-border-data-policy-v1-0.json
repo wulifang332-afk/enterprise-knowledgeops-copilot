@@ -1,0 +1,304 @@
+{
+  "chunks": [
+    {
+      "chunk_id": "chk:cross-border-data-policy-v1-0:purpose-and-scope:01:faf270bc8f:001",
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 292,
+      "metadata": {
+        "access_level": "confidential",
+        "chunk_id": "chk:cross-border-data-policy-v1-0:purpose-and-scope:01:faf270bc8f:001",
+        "chunk_index": 1,
+        "content_sha256": "e9908e014b07ca0f3ca66e99ffa42e21e8c4bfe4f5593c6a786e51b7a6ba7177",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Legal and Compliance",
+        "doc_id": "cross-border-data-policy-v1-0",
+        "effective_date": "2025-04-15",
+        "heading_occurrence": 1,
+        "owner": "Data Protection Office",
+        "policy_type": "policy",
+        "regions": [
+          "APAC",
+          "EU"
+        ],
+        "related_process": "Cross-border Data Transfer Review",
+        "related_processes": [
+          "Cross-border Data Transfer Review"
+        ],
+        "section_path": [
+          "Cross-border Data Handling Policy",
+          "Purpose and Scope"
+        ],
+        "section_path_hash": "faf270bc8f",
+        "section_title": "Purpose and Scope",
+        "source_file": "data/raw/cross_border_data_policy.md",
+        "title": "Cross-border Data Handling Policy",
+        "updated_at": "2025-04-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 37,
+      "text": "## Purpose and Scope\n\nThis policy governs cross-border handling of personal data and confidential regulated data in APAC and EU operations.\n\nThe Data Protection Office owns this policy and coordinates with Legal and Compliance for regional interpretation.",
+      "text_sha256": "bf531c4fdb6fbc4d75203280de2295047bf6629ea806da1a0d491e0110050d03",
+      "token_count": 37
+    },
+    {
+      "chunk_id": "chk:cross-border-data-policy-v1-0:restricted-data-categories:01:8ea71254f0:001",
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 629,
+      "metadata": {
+        "access_level": "confidential",
+        "chunk_id": "chk:cross-border-data-policy-v1-0:restricted-data-categories:01:8ea71254f0:001",
+        "chunk_index": 2,
+        "content_sha256": "e9908e014b07ca0f3ca66e99ffa42e21e8c4bfe4f5593c6a786e51b7a6ba7177",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Legal and Compliance",
+        "doc_id": "cross-border-data-policy-v1-0",
+        "effective_date": "2025-04-15",
+        "heading_occurrence": 1,
+        "owner": "Data Protection Office",
+        "policy_type": "policy",
+        "regions": [
+          "APAC",
+          "EU"
+        ],
+        "related_process": "Cross-border Data Transfer Review",
+        "related_processes": [
+          "Cross-border Data Transfer Review"
+        ],
+        "section_path": [
+          "Cross-border Data Handling Policy",
+          "Restricted Data Categories"
+        ],
+        "section_path_hash": "8ea71254f0",
+        "section_title": "Restricted Data Categories",
+        "source_file": "data/raw/cross_border_data_policy.md",
+        "title": "Cross-border Data Handling Policy",
+        "updated_at": "2025-04-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 294,
+      "text": "## Restricted Data Categories\n\nCustomer personal data, employee personal data, government identity numbers, payment details, health information, and confidential regulated business records are restricted data categories.\n\nRestricted data must not be transferred to an unapproved external SaaS platform or unapproved overseas recipient.",
+      "text_sha256": "9fee6addbcbc5650146fff4320abfa0af3ec495a696e8a16e93f6485ce707f64",
+      "token_count": 42
+    },
+    {
+      "chunk_id": "chk:cross-border-data-policy-v1-0:approval-process:01:b5a20fae57:001",
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 953,
+      "metadata": {
+        "access_level": "confidential",
+        "chunk_id": "chk:cross-border-data-policy-v1-0:approval-process:01:b5a20fae57:001",
+        "chunk_index": 3,
+        "content_sha256": "e9908e014b07ca0f3ca66e99ffa42e21e8c4bfe4f5593c6a786e51b7a6ba7177",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Legal and Compliance",
+        "doc_id": "cross-border-data-policy-v1-0",
+        "effective_date": "2025-04-15",
+        "heading_occurrence": 1,
+        "owner": "Data Protection Office",
+        "policy_type": "policy",
+        "regions": [
+          "APAC",
+          "EU"
+        ],
+        "related_process": "Cross-border Data Transfer Review",
+        "related_processes": [
+          "Cross-border Data Transfer Review"
+        ],
+        "section_path": [
+          "Cross-border Data Handling Policy",
+          "Approval Process"
+        ],
+        "section_path_hash": "b5a20fae57",
+        "section_title": "Approval Process",
+        "source_file": "data/raw/cross_border_data_policy.md",
+        "title": "Cross-border Data Handling Policy",
+        "updated_at": "2025-04-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 631,
+      "text": "## Approval Process\n\nCross-border transfer of personal data requires Data Protection Officer approval and an approved transfer mechanism before the transfer occurs.\n\nThe request must describe the data category, origin region, destination region, vendor or system, business purpose, retention period, and security controls.",
+      "text_sha256": "9878115395621c2ff206fbc546a0dae887cf06b0d2d186483b99d48cd5a3db4b",
+      "token_count": 43
+    },
+    {
+      "chunk_id": "chk:cross-border-data-policy-v1-0:external-saas-restrictions:01:26421359dc:001",
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 1332,
+      "metadata": {
+        "access_level": "confidential",
+        "chunk_id": "chk:cross-border-data-policy-v1-0:external-saas-restrictions:01:26421359dc:001",
+        "chunk_index": 4,
+        "content_sha256": "e9908e014b07ca0f3ca66e99ffa42e21e8c4bfe4f5593c6a786e51b7a6ba7177",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Legal and Compliance",
+        "doc_id": "cross-border-data-policy-v1-0",
+        "effective_date": "2025-04-15",
+        "heading_occurrence": 1,
+        "owner": "Data Protection Office",
+        "policy_type": "policy",
+        "regions": [
+          "APAC",
+          "EU"
+        ],
+        "related_process": "Cross-border Data Transfer Review",
+        "related_processes": [
+          "Cross-border Data Transfer Review"
+        ],
+        "section_path": [
+          "Cross-border Data Handling Policy",
+          "External SaaS Restrictions"
+        ],
+        "section_path_hash": "26421359dc",
+        "section_title": "External SaaS Restrictions",
+        "source_file": "data/raw/cross_border_data_policy.md",
+        "title": "Cross-border Data Handling Policy",
+        "updated_at": "2025-04-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 955,
+      "text": "## External SaaS Restrictions\n\nEmployees must not upload restricted data categories to unapproved external SaaS tools. Public AI tools are treated as unapproved external SaaS unless specifically listed in the approved software catalog.\n\nIf a business process requires external SaaS handling, the Data Protection Office must approve the system and transfer mechanism before use.",
+      "text_sha256": "f2c4e9ab5c3920c0a17ae241d2cb1e28246882e74c7133f8c126ddf0149e5257",
+      "token_count": 54
+    },
+    {
+      "chunk_id": "chk:cross-border-data-policy-v1-0:exceptions-and-evidence:01:db4f76587e:001",
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 1598,
+      "metadata": {
+        "access_level": "confidential",
+        "chunk_id": "chk:cross-border-data-policy-v1-0:exceptions-and-evidence:01:db4f76587e:001",
+        "chunk_index": 5,
+        "content_sha256": "e9908e014b07ca0f3ca66e99ffa42e21e8c4bfe4f5593c6a786e51b7a6ba7177",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Legal and Compliance",
+        "doc_id": "cross-border-data-policy-v1-0",
+        "effective_date": "2025-04-15",
+        "heading_occurrence": 1,
+        "owner": "Data Protection Office",
+        "policy_type": "policy",
+        "regions": [
+          "APAC",
+          "EU"
+        ],
+        "related_process": "Cross-border Data Transfer Review",
+        "related_processes": [
+          "Cross-border Data Transfer Review"
+        ],
+        "section_path": [
+          "Cross-border Data Handling Policy",
+          "Exceptions and Evidence"
+        ],
+        "section_path_hash": "db4f76587e",
+        "section_title": "Exceptions and Evidence",
+        "source_file": "data/raw/cross_border_data_policy.md",
+        "title": "Cross-border Data Handling Policy",
+        "updated_at": "2025-04-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1334,
+      "text": "## Exceptions and Evidence\n\nExceptions require written Data Protection Office approval and Legal review when EU personal data is involved.\n\nThe request owner must retain approval evidence, transfer mechanism evidence, and vendor security evidence for audit review.",
+      "text_sha256": "ee501d4d97b4a26bf380997e556bf1a417a053cad3a1dafb292924e9083153d3",
+      "token_count": 37
+    }
+  ],
+  "content": "# Cross-border Data Handling Policy\n\n## Purpose and Scope\n\nThis policy governs cross-border handling of personal data and confidential regulated data in APAC and EU operations.\n\nThe Data Protection Office owns this policy and coordinates with Legal and Compliance for regional interpretation.\n\n## Restricted Data Categories\n\nCustomer personal data, employee personal data, government identity numbers, payment details, health information, and confidential regulated business records are restricted data categories.\n\nRestricted data must not be transferred to an unapproved external SaaS platform or unapproved overseas recipient.\n\n## Approval Process\n\nCross-border transfer of personal data requires Data Protection Officer approval and an approved transfer mechanism before the transfer occurs.\n\nThe request must describe the data category, origin region, destination region, vendor or system, business purpose, retention period, and security controls.\n\n## External SaaS Restrictions\n\nEmployees must not upload restricted data categories to unapproved external SaaS tools. Public AI tools are treated as unapproved external SaaS unless specifically listed in the approved software catalog.\n\nIf a business process requires external SaaS handling, the Data Protection Office must approve the system and transfer mechanism before use.\n\n## Exceptions and Evidence\n\nExceptions require written Data Protection Office approval and Legal review when EU personal data is involved.\n\nThe request owner must retain approval evidence, transfer mechanism evidence, and vendor security evidence for audit review.\n",
+  "ingested_at": "2026-06-17T12:13:04.420704Z",
+  "metadata": {
+    "access_level": "confidential",
+    "content_sha256": "e9908e014b07ca0f3ca66e99ffa42e21e8c4bfe4f5593c6a786e51b7a6ba7177",
+    "created_at": "2025-01-01T00:00:00Z",
+    "department": "Legal and Compliance",
+    "doc_id": "cross-border-data-policy-v1-0",
+    "effective_date": "2025-04-15",
+    "owner": "Data Protection Office",
+    "policy_type": "policy",
+    "regions": [
+      "APAC",
+      "EU"
+    ],
+    "related_processes": [
+      "Cross-border Data Transfer Review"
+    ],
+    "source_file": "data/raw/cross_border_data_policy.md",
+    "title": "Cross-border Data Handling Policy",
+    "updated_at": "2025-04-15T00:00:00Z",
+    "version": "1.0"
+  },
+  "sections": [
+    {
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 294,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:cross-border-data-policy-v1-0:purpose-and-scope:01:faf270bc8f",
+      "section_path": [
+        "Cross-border Data Handling Policy",
+        "Purpose and Scope"
+      ],
+      "section_path_hash": "faf270bc8f",
+      "start_char": 37,
+      "text": "## Purpose and Scope\n\nThis policy governs cross-border handling of personal data and confidential regulated data in APAC and EU operations.\n\nThe Data Protection Office owns this policy and coordinates with Legal and Compliance for regional interpretation.\n\n",
+      "title": "Purpose and Scope"
+    },
+    {
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 631,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:cross-border-data-policy-v1-0:restricted-data-categories:01:8ea71254f0",
+      "section_path": [
+        "Cross-border Data Handling Policy",
+        "Restricted Data Categories"
+      ],
+      "section_path_hash": "8ea71254f0",
+      "start_char": 294,
+      "text": "## Restricted Data Categories\n\nCustomer personal data, employee personal data, government identity numbers, payment details, health information, and confidential regulated business records are restricted data categories.\n\nRestricted data must not be transferred to an unapproved external SaaS platform or unapproved overseas recipient.\n\n",
+      "title": "Restricted Data Categories"
+    },
+    {
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 955,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:cross-border-data-policy-v1-0:approval-process:01:b5a20fae57",
+      "section_path": [
+        "Cross-border Data Handling Policy",
+        "Approval Process"
+      ],
+      "section_path_hash": "b5a20fae57",
+      "start_char": 631,
+      "text": "## Approval Process\n\nCross-border transfer of personal data requires Data Protection Officer approval and an approved transfer mechanism before the transfer occurs.\n\nThe request must describe the data category, origin region, destination region, vendor or system, business purpose, retention period, and security controls.\n\n",
+      "title": "Approval Process"
+    },
+    {
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 1334,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:cross-border-data-policy-v1-0:external-saas-restrictions:01:26421359dc",
+      "section_path": [
+        "Cross-border Data Handling Policy",
+        "External SaaS Restrictions"
+      ],
+      "section_path_hash": "26421359dc",
+      "start_char": 955,
+      "text": "## External SaaS Restrictions\n\nEmployees must not upload restricted data categories to unapproved external SaaS tools. Public AI tools are treated as unapproved external SaaS unless specifically listed in the approved software catalog.\n\nIf a business process requires external SaaS handling, the Data Protection Office must approve the system and transfer mechanism before use.\n\n",
+      "title": "External SaaS Restrictions"
+    },
+    {
+      "doc_id": "cross-border-data-policy-v1-0",
+      "end_char": 1599,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:cross-border-data-policy-v1-0:exceptions-and-evidence:01:db4f76587e",
+      "section_path": [
+        "Cross-border Data Handling Policy",
+        "Exceptions and Evidence"
+      ],
+      "section_path_hash": "db4f76587e",
+      "start_char": 1334,
+      "text": "## Exceptions and Evidence\n\nExceptions require written Data Protection Office approval and Legal review when EU personal data is involved.\n\nThe request owner must retain approval evidence, transfer mechanism evidence, and vendor security evidence for audit review.\n",
+      "title": "Exceptions and Evidence"
+    }
+  ]
+}

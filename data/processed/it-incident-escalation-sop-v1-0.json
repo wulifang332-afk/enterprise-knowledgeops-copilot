@@ -1,0 +1,298 @@
+{
+  "chunks": [
+    {
+      "chunk_id": "chk:it-incident-escalation-sop-v1-0:purpose-and-scope:01:5a5092dbde:001",
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 396,
+      "metadata": {
+        "access_level": "restricted",
+        "chunk_id": "chk:it-incident-escalation-sop-v1-0:purpose-and-scope:01:5a5092dbde:001",
+        "chunk_index": 1,
+        "content_sha256": "1f9fa800a83d88035e240cfcfa2bdf0dc0347da33047ea860bbb4c110b40e4c2",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "IT",
+        "doc_id": "it-incident-escalation-sop-v1-0",
+        "effective_date": "2025-03-01",
+        "heading_occurrence": 1,
+        "owner": "IT Service Management",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "IT Incident Management",
+        "related_processes": [
+          "IT Incident Management"
+        ],
+        "section_path": [
+          "IT Incident Escalation SOP",
+          "Purpose and Scope"
+        ],
+        "section_path_hash": "5a5092dbde",
+        "section_title": "Purpose and Scope",
+        "source_file": "data/raw/it_incident_escalation_sop.md",
+        "title": "IT Incident Escalation SOP",
+        "updated_at": "2025-03-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 30,
+      "text": "## Purpose and Scope\n\nThis SOP defines how IT incidents are classified, acknowledged, escalated, and recorded. It applies to incidents reported through ServiceNow, the IT Service Desk, or automated monitoring.\n\nIT Service Management owns this SOP. The Information Security team participates when an incident may involve data exposure, account compromise, or malware.",
+      "text_sha256": "d814a6b2c2a8401dbd4a0cc6e53206a0272ee89a262e20e515cddbaef6ac7a11",
+      "token_count": 52
+    },
+    {
+      "chunk_id": "chk:it-incident-escalation-sop-v1-0:severity-levels:01:a51d2cb2f1:001",
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 774,
+      "metadata": {
+        "access_level": "restricted",
+        "chunk_id": "chk:it-incident-escalation-sop-v1-0:severity-levels:01:a51d2cb2f1:001",
+        "chunk_index": 2,
+        "content_sha256": "1f9fa800a83d88035e240cfcfa2bdf0dc0347da33047ea860bbb4c110b40e4c2",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "IT",
+        "doc_id": "it-incident-escalation-sop-v1-0",
+        "effective_date": "2025-03-01",
+        "heading_occurrence": 1,
+        "owner": "IT Service Management",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "IT Incident Management",
+        "related_processes": [
+          "IT Incident Management"
+        ],
+        "section_path": [
+          "IT Incident Escalation SOP",
+          "Severity Levels"
+        ],
+        "section_path_hash": "a51d2cb2f1",
+        "section_title": "Severity Levels",
+        "source_file": "data/raw/it_incident_escalation_sop.md",
+        "title": "IT Incident Escalation SOP",
+        "updated_at": "2025-03-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 398,
+      "text": "## Severity Levels\n\nSeverity 1 incidents are critical incidents that cause a major business outage, confirmed security compromise, or material data-risk event. Severity 1 incidents must be acknowledged within 15 minutes.\n\nSeverity 2 incidents affect a business-critical service for a limited user group. Severity 3 incidents are standard support incidents with limited impact.",
+      "text_sha256": "c5e4007c07df74772cba8867d70a02b2e9b23ee2412fc1090265aecf16e9744e",
+      "token_count": 53
+    },
+    {
+      "chunk_id": "chk:it-incident-escalation-sop-v1-0:severity-1-workflow:01:557ff9999a:001",
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 1143,
+      "metadata": {
+        "access_level": "restricted",
+        "chunk_id": "chk:it-incident-escalation-sop-v1-0:severity-1-workflow:01:557ff9999a:001",
+        "chunk_index": 3,
+        "content_sha256": "1f9fa800a83d88035e240cfcfa2bdf0dc0347da33047ea860bbb4c110b40e4c2",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "IT",
+        "doc_id": "it-incident-escalation-sop-v1-0",
+        "effective_date": "2025-03-01",
+        "heading_occurrence": 1,
+        "owner": "IT Service Management",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "IT Incident Management",
+        "related_processes": [
+          "IT Incident Management"
+        ],
+        "section_path": [
+          "IT Incident Escalation SOP",
+          "Severity 1 Workflow"
+        ],
+        "section_path_hash": "557ff9999a",
+        "section_title": "Severity 1 Workflow",
+        "source_file": "data/raw/it_incident_escalation_sop.md",
+        "title": "IT Incident Escalation SOP",
+        "updated_at": "2025-03-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 776,
+      "text": "## Severity 1 Workflow\n\nThe IT Service Desk logs the incident in ServiceNow and assigns Severity 1 when the criteria are met. The desk must notify the Incident Commander and the Information Security duty lead within 15 minutes.\n\nThe Incident Commander opens a bridge, coordinates technical responders, and records material decisions in the ServiceNow incident record.",
+      "text_sha256": "d36ba929a29942bfc422833029a707d4d6559991ff273a9350112fcdf9736e79",
+      "token_count": 56
+    },
+    {
+      "chunk_id": "chk:it-incident-escalation-sop-v1-0:escalation-path:01:b099981697:001",
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 1464,
+      "metadata": {
+        "access_level": "restricted",
+        "chunk_id": "chk:it-incident-escalation-sop-v1-0:escalation-path:01:b099981697:001",
+        "chunk_index": 4,
+        "content_sha256": "1f9fa800a83d88035e240cfcfa2bdf0dc0347da33047ea860bbb4c110b40e4c2",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "IT",
+        "doc_id": "it-incident-escalation-sop-v1-0",
+        "effective_date": "2025-03-01",
+        "heading_occurrence": 1,
+        "owner": "IT Service Management",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "IT Incident Management",
+        "related_processes": [
+          "IT Incident Management"
+        ],
+        "section_path": [
+          "IT Incident Escalation SOP",
+          "Escalation Path"
+        ],
+        "section_path_hash": "b099981697",
+        "section_title": "Escalation Path",
+        "source_file": "data/raw/it_incident_escalation_sop.md",
+        "title": "IT Incident Escalation SOP",
+        "updated_at": "2025-03-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1145,
+      "text": "## Escalation Path\n\nIf customer data, employee data, or confidential company information may be exposed, the Information Security duty lead escalates to the Data Protection Office.\n\nIf the incident remains unresolved after 60 minutes, the Incident Commander escalates to the CIO delegate and provides an impact summary.",
+      "text_sha256": "8549bc69c4102af16ee53491c66482e274cd7d4f82c21dd94f1c226f8ea28847",
+      "token_count": 47
+    },
+    {
+      "chunk_id": "chk:it-incident-escalation-sop-v1-0:closure-requirements:01:0b6891ce29:001",
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 1729,
+      "metadata": {
+        "access_level": "restricted",
+        "chunk_id": "chk:it-incident-escalation-sop-v1-0:closure-requirements:01:0b6891ce29:001",
+        "chunk_index": 5,
+        "content_sha256": "1f9fa800a83d88035e240cfcfa2bdf0dc0347da33047ea860bbb4c110b40e4c2",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "IT",
+        "doc_id": "it-incident-escalation-sop-v1-0",
+        "effective_date": "2025-03-01",
+        "heading_occurrence": 1,
+        "owner": "IT Service Management",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "IT Incident Management",
+        "related_processes": [
+          "IT Incident Management"
+        ],
+        "section_path": [
+          "IT Incident Escalation SOP",
+          "Closure Requirements"
+        ],
+        "section_path_hash": "0b6891ce29",
+        "section_title": "Closure Requirements",
+        "source_file": "data/raw/it_incident_escalation_sop.md",
+        "title": "IT Incident Escalation SOP",
+        "updated_at": "2025-03-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1466,
+      "text": "## Closure Requirements\n\nThe Incident Commander may close a Severity 1 incident only after service restoration, stakeholder notification, and completion of an initial root-cause note in ServiceNow.\n\nA post-incident review must be scheduled within 5 business days.",
+      "text_sha256": "51e11929f0c8af50ba626ae417bd537ec2ba1b59909e83c1a09f09c0a5577e30",
+      "token_count": 37
+    }
+  ],
+  "content": "# IT Incident Escalation SOP\n\n## Purpose and Scope\n\nThis SOP defines how IT incidents are classified, acknowledged, escalated, and recorded. It applies to incidents reported through ServiceNow, the IT Service Desk, or automated monitoring.\n\nIT Service Management owns this SOP. The Information Security team participates when an incident may involve data exposure, account compromise, or malware.\n\n## Severity Levels\n\nSeverity 1 incidents are critical incidents that cause a major business outage, confirmed security compromise, or material data-risk event. Severity 1 incidents must be acknowledged within 15 minutes.\n\nSeverity 2 incidents affect a business-critical service for a limited user group. Severity 3 incidents are standard support incidents with limited impact.\n\n## Severity 1 Workflow\n\nThe IT Service Desk logs the incident in ServiceNow and assigns Severity 1 when the criteria are met. The desk must notify the Incident Commander and the Information Security duty lead within 15 minutes.\n\nThe Incident Commander opens a bridge, coordinates technical responders, and records material decisions in the ServiceNow incident record.\n\n## Escalation Path\n\nIf customer data, employee data, or confidential company information may be exposed, the Information Security duty lead escalates to the Data Protection Office.\n\nIf the incident remains unresolved after 60 minutes, the Incident Commander escalates to the CIO delegate and provides an impact summary.\n\n## Closure Requirements\n\nThe Incident Commander may close a Severity 1 incident only after service restoration, stakeholder notification, and completion of an initial root-cause note in ServiceNow.\n\nA post-incident review must be scheduled within 5 business days.\n",
+  "ingested_at": "2026-06-17T12:13:04.428704Z",
+  "metadata": {
+    "access_level": "restricted",
+    "content_sha256": "1f9fa800a83d88035e240cfcfa2bdf0dc0347da33047ea860bbb4c110b40e4c2",
+    "created_at": "2025-01-01T00:00:00Z",
+    "department": "IT",
+    "doc_id": "it-incident-escalation-sop-v1-0",
+    "effective_date": "2025-03-01",
+    "owner": "IT Service Management",
+    "policy_type": "sop",
+    "regions": [
+      "Global"
+    ],
+    "related_processes": [
+      "IT Incident Management"
+    ],
+    "source_file": "data/raw/it_incident_escalation_sop.md",
+    "title": "IT Incident Escalation SOP",
+    "updated_at": "2025-03-01T00:00:00Z",
+    "version": "1.0"
+  },
+  "sections": [
+    {
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 398,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:it-incident-escalation-sop-v1-0:purpose-and-scope:01:5a5092dbde",
+      "section_path": [
+        "IT Incident Escalation SOP",
+        "Purpose and Scope"
+      ],
+      "section_path_hash": "5a5092dbde",
+      "start_char": 30,
+      "text": "## Purpose and Scope\n\nThis SOP defines how IT incidents are classified, acknowledged, escalated, and recorded. It applies to incidents reported through ServiceNow, the IT Service Desk, or automated monitoring.\n\nIT Service Management owns this SOP. The Information Security team participates when an incident may involve data exposure, account compromise, or malware.\n\n",
+      "title": "Purpose and Scope"
+    },
+    {
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 776,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:it-incident-escalation-sop-v1-0:severity-levels:01:a51d2cb2f1",
+      "section_path": [
+        "IT Incident Escalation SOP",
+        "Severity Levels"
+      ],
+      "section_path_hash": "a51d2cb2f1",
+      "start_char": 398,
+      "text": "## Severity Levels\n\nSeverity 1 incidents are critical incidents that cause a major business outage, confirmed security compromise, or material data-risk event. Severity 1 incidents must be acknowledged within 15 minutes.\n\nSeverity 2 incidents affect a business-critical service for a limited user group. Severity 3 incidents are standard support incidents with limited impact.\n\n",
+      "title": "Severity Levels"
+    },
+    {
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 1145,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:it-incident-escalation-sop-v1-0:severity-1-workflow:01:557ff9999a",
+      "section_path": [
+        "IT Incident Escalation SOP",
+        "Severity 1 Workflow"
+      ],
+      "section_path_hash": "557ff9999a",
+      "start_char": 776,
+      "text": "## Severity 1 Workflow\n\nThe IT Service Desk logs the incident in ServiceNow and assigns Severity 1 when the criteria are met. The desk must notify the Incident Commander and the Information Security duty lead within 15 minutes.\n\nThe Incident Commander opens a bridge, coordinates technical responders, and records material decisions in the ServiceNow incident record.\n\n",
+      "title": "Severity 1 Workflow"
+    },
+    {
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 1466,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:it-incident-escalation-sop-v1-0:escalation-path:01:b099981697",
+      "section_path": [
+        "IT Incident Escalation SOP",
+        "Escalation Path"
+      ],
+      "section_path_hash": "b099981697",
+      "start_char": 1145,
+      "text": "## Escalation Path\n\nIf customer data, employee data, or confidential company information may be exposed, the Information Security duty lead escalates to the Data Protection Office.\n\nIf the incident remains unresolved after 60 minutes, the Incident Commander escalates to the CIO delegate and provides an impact summary.\n\n",
+      "title": "Escalation Path"
+    },
+    {
+      "doc_id": "it-incident-escalation-sop-v1-0",
+      "end_char": 1730,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:it-incident-escalation-sop-v1-0:closure-requirements:01:0b6891ce29",
+      "section_path": [
+        "IT Incident Escalation SOP",
+        "Closure Requirements"
+      ],
+      "section_path_hash": "0b6891ce29",
+      "start_char": 1466,
+      "text": "## Closure Requirements\n\nThe Incident Commander may close a Severity 1 incident only after service restoration, stakeholder notification, and completion of an initial root-cause note in ServiceNow.\n\nA post-incident review must be scheduled within 5 business days.\n",
+      "title": "Closure Requirements"
+    }
+  ]
+}

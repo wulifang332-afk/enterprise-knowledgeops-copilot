@@ -1,0 +1,298 @@
+{
+  "chunks": [
+    {
+      "chunk_id": "chk:hr-leave-policy-v1-0:purpose-and-scope:01:7ac33f9ef5:001",
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 380,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:hr-leave-policy-v1-0:purpose-and-scope:01:7ac33f9ef5:001",
+        "chunk_index": 1,
+        "content_sha256": "ebaf1cdcb264c6f8fe6dab9098b08ded9ceaf5390a7ce606284d4582f2bdc853",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "hr-leave-policy-v1-0",
+        "effective_date": "2025-01-01",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Leave Request Management",
+        "related_processes": [
+          "Leave Request Management"
+        ],
+        "section_path": [
+          "HR Leave Policy",
+          "Purpose and Scope"
+        ],
+        "section_path_hash": "7ac33f9ef5",
+        "section_title": "Purpose and Scope",
+        "source_file": "data/raw/hr_leave_policy.md",
+        "title": "HR Leave Policy",
+        "updated_at": "2025-01-10T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 19,
+      "text": "## Purpose and Scope\n\nThis policy defines leave entitlements and approval requirements for full-time employees of Northstar Example Group. It applies globally to regular full-time employees unless a stricter local labor rule applies.\n\nThe Human Resources Operations team owns this policy and is responsible for interpretation, maintenance, and exception review.",
+      "text_sha256": "8b7d5c4690c2f13b0a579190b1830ce18a58588c479177248792bcacb4a5631f",
+      "token_count": 50
+    },
+    {
+      "chunk_id": "chk:hr-leave-policy-v1-0:annual-leave:01:ac7c015ac3:001",
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 692,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:hr-leave-policy-v1-0:annual-leave:01:ac7c015ac3:001",
+        "chunk_index": 2,
+        "content_sha256": "ebaf1cdcb264c6f8fe6dab9098b08ded9ceaf5390a7ce606284d4582f2bdc853",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "hr-leave-policy-v1-0",
+        "effective_date": "2025-01-01",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Leave Request Management",
+        "related_processes": [
+          "Leave Request Management"
+        ],
+        "section_path": [
+          "HR Leave Policy",
+          "Annual Leave"
+        ],
+        "section_path_hash": "ac7c015ac3",
+        "section_title": "Annual Leave",
+        "source_file": "data/raw/hr_leave_policy.md",
+        "title": "HR Leave Policy",
+        "updated_at": "2025-01-10T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 382,
+      "text": "## Annual Leave\n\nFull-time employees receive 20 working days of annual leave per calendar year. Annual leave must be requested in the HRIS Leave module before the planned absence begins.\n\nAnnual leave requires approval from the employee's direct manager. Managers must review staffing coverage before approval.",
+      "text_sha256": "d236794cf52ec59024556619dff9a0968ffc83ffbfc2ab3fcc27d45da85a0f75",
+      "token_count": 46
+    },
+    {
+      "chunk_id": "chk:hr-leave-policy-v1-0:sick-leave:01:d8b5ce54f2:001",
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 1076,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:hr-leave-policy-v1-0:sick-leave:01:d8b5ce54f2:001",
+        "chunk_index": 3,
+        "content_sha256": "ebaf1cdcb264c6f8fe6dab9098b08ded9ceaf5390a7ce606284d4582f2bdc853",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "hr-leave-policy-v1-0",
+        "effective_date": "2025-01-01",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Leave Request Management",
+        "related_processes": [
+          "Leave Request Management"
+        ],
+        "section_path": [
+          "HR Leave Policy",
+          "Sick Leave"
+        ],
+        "section_path_hash": "d8b5ce54f2",
+        "section_title": "Sick Leave",
+        "source_file": "data/raw/hr_leave_policy.md",
+        "title": "HR Leave Policy",
+        "updated_at": "2025-01-10T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 694,
+      "text": "## Sick Leave\n\nEmployees should record sick leave in the HRIS Leave module as soon as reasonably possible. Sick leave of more than 3 consecutive working days requires supporting medical documentation where permitted by local law.\n\nManagers may approve routine sick leave entries, but Human Resources Operations may review patterns that require accommodation or policy clarification.",
+      "text_sha256": "2b60971a49f9005d4e3ad1749ad5cd113b70bdb53f0bc4718ebcdfd50e80f5a3",
+      "token_count": 56
+    },
+    {
+      "chunk_id": "chk:hr-leave-policy-v1-0:extended-leave:01:fc612339c5:001",
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 1456,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:hr-leave-policy-v1-0:extended-leave:01:fc612339c5:001",
+        "chunk_index": 4,
+        "content_sha256": "ebaf1cdcb264c6f8fe6dab9098b08ded9ceaf5390a7ce606284d4582f2bdc853",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "hr-leave-policy-v1-0",
+        "effective_date": "2025-01-01",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Leave Request Management",
+        "related_processes": [
+          "Leave Request Management"
+        ],
+        "section_path": [
+          "HR Leave Policy",
+          "Extended Leave"
+        ],
+        "section_path_hash": "fc612339c5",
+        "section_title": "Extended Leave",
+        "source_file": "data/raw/hr_leave_policy.md",
+        "title": "HR Leave Policy",
+        "updated_at": "2025-01-10T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1078,
+      "text": "## Extended Leave\n\nLeave requests longer than 10 consecutive working days are classified as extended leave. Extended leave requires direct manager review and Human Resources Operations approval before the leave begins.\n\nIf an extended leave request involves medical, family care, or statutory leave, Human Resources Operations must confirm whether local legal protections apply.",
+      "text_sha256": "cb1fb2e2f0678b61fa4371eaf1402112d92482200e4023fe3f059acc44a0557f",
+      "token_count": 53
+    },
+    {
+      "chunk_id": "chk:hr-leave-policy-v1-0:approval-and-escalation:01:1befd0d649:001",
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 1816,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:hr-leave-policy-v1-0:approval-and-escalation:01:1befd0d649:001",
+        "chunk_index": 5,
+        "content_sha256": "ebaf1cdcb264c6f8fe6dab9098b08ded9ceaf5390a7ce606284d4582f2bdc853",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "hr-leave-policy-v1-0",
+        "effective_date": "2025-01-01",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Leave Request Management",
+        "related_processes": [
+          "Leave Request Management"
+        ],
+        "section_path": [
+          "HR Leave Policy",
+          "Approval and Escalation"
+        ],
+        "section_path_hash": "1befd0d649",
+        "section_title": "Approval and Escalation",
+        "source_file": "data/raw/hr_leave_policy.md",
+        "title": "HR Leave Policy",
+        "updated_at": "2025-01-10T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1458,
+      "text": "## Approval and Escalation\n\nEmployees submit leave requests in HRIS. The direct manager reviews annual leave and routine sick leave. Human Resources Operations reviews extended leave and unresolved leave disputes.\n\nIf a manager and employee disagree about leave eligibility, the case escalates to Human Resources Operations for a final policy interpretation.",
+      "text_sha256": "8d91d2de130415ef57c158054142cc463919865410f3ec414674d9922a459ecf",
+      "token_count": 51
+    }
+  ],
+  "content": "# HR Leave Policy\n\n## Purpose and Scope\n\nThis policy defines leave entitlements and approval requirements for full-time employees of Northstar Example Group. It applies globally to regular full-time employees unless a stricter local labor rule applies.\n\nThe Human Resources Operations team owns this policy and is responsible for interpretation, maintenance, and exception review.\n\n## Annual Leave\n\nFull-time employees receive 20 working days of annual leave per calendar year. Annual leave must be requested in the HRIS Leave module before the planned absence begins.\n\nAnnual leave requires approval from the employee's direct manager. Managers must review staffing coverage before approval.\n\n## Sick Leave\n\nEmployees should record sick leave in the HRIS Leave module as soon as reasonably possible. Sick leave of more than 3 consecutive working days requires supporting medical documentation where permitted by local law.\n\nManagers may approve routine sick leave entries, but Human Resources Operations may review patterns that require accommodation or policy clarification.\n\n## Extended Leave\n\nLeave requests longer than 10 consecutive working days are classified as extended leave. Extended leave requires direct manager review and Human Resources Operations approval before the leave begins.\n\nIf an extended leave request involves medical, family care, or statutory leave, Human Resources Operations must confirm whether local legal protections apply.\n\n## Approval and Escalation\n\nEmployees submit leave requests in HRIS. The direct manager reviews annual leave and routine sick leave. Human Resources Operations reviews extended leave and unresolved leave disputes.\n\nIf a manager and employee disagree about leave eligibility, the case escalates to Human Resources Operations for a final policy interpretation.\n",
+  "ingested_at": "2026-06-17T12:13:04.427223Z",
+  "metadata": {
+    "access_level": "internal",
+    "content_sha256": "ebaf1cdcb264c6f8fe6dab9098b08ded9ceaf5390a7ce606284d4582f2bdc853",
+    "created_at": "2025-01-01T00:00:00Z",
+    "department": "Human Resources",
+    "doc_id": "hr-leave-policy-v1-0",
+    "effective_date": "2025-01-01",
+    "owner": "Human Resources Operations",
+    "policy_type": "policy",
+    "regions": [
+      "Global"
+    ],
+    "related_processes": [
+      "Leave Request Management"
+    ],
+    "source_file": "data/raw/hr_leave_policy.md",
+    "title": "HR Leave Policy",
+    "updated_at": "2025-01-10T00:00:00Z",
+    "version": "1.0"
+  },
+  "sections": [
+    {
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 382,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:hr-leave-policy-v1-0:purpose-and-scope:01:7ac33f9ef5",
+      "section_path": [
+        "HR Leave Policy",
+        "Purpose and Scope"
+      ],
+      "section_path_hash": "7ac33f9ef5",
+      "start_char": 19,
+      "text": "## Purpose and Scope\n\nThis policy defines leave entitlements and approval requirements for full-time employees of Northstar Example Group. It applies globally to regular full-time employees unless a stricter local labor rule applies.\n\nThe Human Resources Operations team owns this policy and is responsible for interpretation, maintenance, and exception review.\n\n",
+      "title": "Purpose and Scope"
+    },
+    {
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 694,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:hr-leave-policy-v1-0:annual-leave:01:ac7c015ac3",
+      "section_path": [
+        "HR Leave Policy",
+        "Annual Leave"
+      ],
+      "section_path_hash": "ac7c015ac3",
+      "start_char": 382,
+      "text": "## Annual Leave\n\nFull-time employees receive 20 working days of annual leave per calendar year. Annual leave must be requested in the HRIS Leave module before the planned absence begins.\n\nAnnual leave requires approval from the employee's direct manager. Managers must review staffing coverage before approval.\n\n",
+      "title": "Annual Leave"
+    },
+    {
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 1078,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:hr-leave-policy-v1-0:sick-leave:01:d8b5ce54f2",
+      "section_path": [
+        "HR Leave Policy",
+        "Sick Leave"
+      ],
+      "section_path_hash": "d8b5ce54f2",
+      "start_char": 694,
+      "text": "## Sick Leave\n\nEmployees should record sick leave in the HRIS Leave module as soon as reasonably possible. Sick leave of more than 3 consecutive working days requires supporting medical documentation where permitted by local law.\n\nManagers may approve routine sick leave entries, but Human Resources Operations may review patterns that require accommodation or policy clarification.\n\n",
+      "title": "Sick Leave"
+    },
+    {
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 1458,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:hr-leave-policy-v1-0:extended-leave:01:fc612339c5",
+      "section_path": [
+        "HR Leave Policy",
+        "Extended Leave"
+      ],
+      "section_path_hash": "fc612339c5",
+      "start_char": 1078,
+      "text": "## Extended Leave\n\nLeave requests longer than 10 consecutive working days are classified as extended leave. Extended leave requires direct manager review and Human Resources Operations approval before the leave begins.\n\nIf an extended leave request involves medical, family care, or statutory leave, Human Resources Operations must confirm whether local legal protections apply.\n\n",
+      "title": "Extended Leave"
+    },
+    {
+      "doc_id": "hr-leave-policy-v1-0",
+      "end_char": 1817,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:hr-leave-policy-v1-0:approval-and-escalation:01:1befd0d649",
+      "section_path": [
+        "HR Leave Policy",
+        "Approval and Escalation"
+      ],
+      "section_path_hash": "1befd0d649",
+      "start_char": 1458,
+      "text": "## Approval and Escalation\n\nEmployees submit leave requests in HRIS. The direct manager reviews annual leave and routine sick leave. Human Resources Operations reviews extended leave and unresolved leave disputes.\n\nIf a manager and employee disagree about leave eligibility, the case escalates to Human Resources Operations for a final policy interpretation.\n",
+      "title": "Approval and Escalation"
+    }
+  ]
+}

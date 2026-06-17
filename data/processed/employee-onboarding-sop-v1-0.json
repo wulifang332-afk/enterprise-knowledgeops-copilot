@@ -1,0 +1,298 @@
+{
+  "chunks": [
+    {
+      "chunk_id": "chk:employee-onboarding-sop-v1-0:purpose-and-scope:01:089c97ffa7:001",
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 302,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:employee-onboarding-sop-v1-0:purpose-and-scope:01:089c97ffa7:001",
+        "chunk_index": 1,
+        "content_sha256": "878039fe6a4b52720cfd0f961080d8cb7fef77df6c6c0d41e8a0b1e19e6d954b",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "employee-onboarding-sop-v1-0",
+        "effective_date": "2025-01-15",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Employee Onboarding",
+        "related_processes": [
+          "Employee Onboarding"
+        ],
+        "section_path": [
+          "Employee Onboarding SOP",
+          "Purpose and Scope"
+        ],
+        "section_path_hash": "089c97ffa7",
+        "section_title": "Purpose and Scope",
+        "source_file": "data/raw/employee_onboarding_sop.md",
+        "title": "Employee Onboarding SOP",
+        "updated_at": "2025-01-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 27,
+      "text": "## Purpose and Scope\n\nThis SOP defines the standard onboarding workflow for new employees. It applies to full-time employees hired into corporate roles.\n\nHuman Resources Operations owns the onboarding process and coordinates with IT Service Management and the hiring manager.",
+      "text_sha256": "ee0feb7cb9f8d11630d2abe1ca27740a5bd12df276c65800bee3ecceff2e603e",
+      "token_count": 40
+    },
+    {
+      "chunk_id": "chk:employee-onboarding-sop-v1-0:pre-boarding-documents:01:10c6d184a7:001",
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 600,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:employee-onboarding-sop-v1-0:pre-boarding-documents:01:10c6d184a7:001",
+        "chunk_index": 2,
+        "content_sha256": "878039fe6a4b52720cfd0f961080d8cb7fef77df6c6c0d41e8a0b1e19e6d954b",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "employee-onboarding-sop-v1-0",
+        "effective_date": "2025-01-15",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Employee Onboarding",
+        "related_processes": [
+          "Employee Onboarding"
+        ],
+        "section_path": [
+          "Employee Onboarding SOP",
+          "Pre-boarding Documents"
+        ],
+        "section_path_hash": "10c6d184a7",
+        "section_title": "Pre-boarding Documents",
+        "source_file": "data/raw/employee_onboarding_sop.md",
+        "title": "Employee Onboarding SOP",
+        "updated_at": "2025-01-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 304,
+      "text": "## Pre-boarding Documents\n\nBefore onboarding begins, Human Resources Operations must collect a signed offer letter, identity verification, tax form, and emergency contact information.\n\nThe hiring manager must confirm the employee's role, start date, reporting line, and required business systems.",
+      "text_sha256": "481f2e025668f980649445a076d0b3c2a0e52720de6a5a5cdbbf7a71bf40ef42",
+      "token_count": 39
+    },
+    {
+      "chunk_id": "chk:employee-onboarding-sop-v1-0:hris-setup:01:66568c96e4:001",
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 806,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:employee-onboarding-sop-v1-0:hris-setup:01:66568c96e4:001",
+        "chunk_index": 3,
+        "content_sha256": "878039fe6a4b52720cfd0f961080d8cb7fef77df6c6c0d41e8a0b1e19e6d954b",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "employee-onboarding-sop-v1-0",
+        "effective_date": "2025-01-15",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Employee Onboarding",
+        "related_processes": [
+          "Employee Onboarding"
+        ],
+        "section_path": [
+          "Employee Onboarding SOP",
+          "HRIS Setup"
+        ],
+        "section_path_hash": "66568c96e4",
+        "section_title": "HRIS Setup",
+        "source_file": "data/raw/employee_onboarding_sop.md",
+        "title": "Employee Onboarding SOP",
+        "updated_at": "2025-01-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 602,
+      "text": "## HRIS Setup\n\nHuman Resources Operations creates the employee record in HRIS at least 5 business days before the start date.\n\nThe HRIS employee ID is required before IT can complete account provisioning.",
+      "text_sha256": "19ee0c6bc680eabe32955570085138bf6f75af8132c5021e1ce19a1db7bf63a6",
+      "token_count": 33
+    },
+    {
+      "chunk_id": "chk:employee-onboarding-sop-v1-0:it-account-setup:01:3d9d9628a1:001",
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 1125,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:employee-onboarding-sop-v1-0:it-account-setup:01:3d9d9628a1:001",
+        "chunk_index": 4,
+        "content_sha256": "878039fe6a4b52720cfd0f961080d8cb7fef77df6c6c0d41e8a0b1e19e6d954b",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "employee-onboarding-sop-v1-0",
+        "effective_date": "2025-01-15",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Employee Onboarding",
+        "related_processes": [
+          "Employee Onboarding"
+        ],
+        "section_path": [
+          "Employee Onboarding SOP",
+          "IT Account Setup"
+        ],
+        "section_path_hash": "3d9d9628a1",
+        "section_title": "IT Account Setup",
+        "source_file": "data/raw/employee_onboarding_sop.md",
+        "title": "Employee Onboarding SOP",
+        "updated_at": "2025-01-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 808,
+      "text": "## IT Account Setup\n\nIT Service Management provisions the employee account through the Identity Management system. Standard access includes email, collaboration tools, HRIS self-service, and required security training.\n\nAdditional application access requires manager approval and the applicable system owner approval.",
+      "text_sha256": "a832f1eae07200c7ae9db26d237cd379de2aec609231916266d535760f8fc69f",
+      "token_count": 40
+    },
+    {
+      "chunk_id": "chk:employee-onboarding-sop-v1-0:orientation-and-manager-check-in:01:8b802124e5:001",
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 1432,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:employee-onboarding-sop-v1-0:orientation-and-manager-check-in:01:8b802124e5:001",
+        "chunk_index": 5,
+        "content_sha256": "878039fe6a4b52720cfd0f961080d8cb7fef77df6c6c0d41e8a0b1e19e6d954b",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Human Resources",
+        "doc_id": "employee-onboarding-sop-v1-0",
+        "effective_date": "2025-01-15",
+        "heading_occurrence": 1,
+        "owner": "Human Resources Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Employee Onboarding",
+        "related_processes": [
+          "Employee Onboarding"
+        ],
+        "section_path": [
+          "Employee Onboarding SOP",
+          "Orientation and Manager Check-in"
+        ],
+        "section_path_hash": "8b802124e5",
+        "section_title": "Orientation and Manager Check-in",
+        "source_file": "data/raw/employee_onboarding_sop.md",
+        "title": "Employee Onboarding SOP",
+        "updated_at": "2025-01-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1127,
+      "text": "## Orientation and Manager Check-in\n\nThe new employee must complete orientation, security awareness training, and policy acknowledgements during the first week.\n\nThe hiring manager must complete a check-in during the first 5 business days and confirm that required equipment and system access are working.",
+      "text_sha256": "c614a3331b8f9bb241707aad1281c6b8e1dddac47a64d22bbf13ec8f3aba6801",
+      "token_count": 44
+    }
+  ],
+  "content": "# Employee Onboarding SOP\n\n## Purpose and Scope\n\nThis SOP defines the standard onboarding workflow for new employees. It applies to full-time employees hired into corporate roles.\n\nHuman Resources Operations owns the onboarding process and coordinates with IT Service Management and the hiring manager.\n\n## Pre-boarding Documents\n\nBefore onboarding begins, Human Resources Operations must collect a signed offer letter, identity verification, tax form, and emergency contact information.\n\nThe hiring manager must confirm the employee's role, start date, reporting line, and required business systems.\n\n## HRIS Setup\n\nHuman Resources Operations creates the employee record in HRIS at least 5 business days before the start date.\n\nThe HRIS employee ID is required before IT can complete account provisioning.\n\n## IT Account Setup\n\nIT Service Management provisions the employee account through the Identity Management system. Standard access includes email, collaboration tools, HRIS self-service, and required security training.\n\nAdditional application access requires manager approval and the applicable system owner approval.\n\n## Orientation and Manager Check-in\n\nThe new employee must complete orientation, security awareness training, and policy acknowledgements during the first week.\n\nThe hiring manager must complete a check-in during the first 5 business days and confirm that required equipment and system access are working.\n",
+  "ingested_at": "2026-06-17T12:13:04.425258Z",
+  "metadata": {
+    "access_level": "internal",
+    "content_sha256": "878039fe6a4b52720cfd0f961080d8cb7fef77df6c6c0d41e8a0b1e19e6d954b",
+    "created_at": "2025-01-01T00:00:00Z",
+    "department": "Human Resources",
+    "doc_id": "employee-onboarding-sop-v1-0",
+    "effective_date": "2025-01-15",
+    "owner": "Human Resources Operations",
+    "policy_type": "sop",
+    "regions": [
+      "Global"
+    ],
+    "related_processes": [
+      "Employee Onboarding"
+    ],
+    "source_file": "data/raw/employee_onboarding_sop.md",
+    "title": "Employee Onboarding SOP",
+    "updated_at": "2025-01-15T00:00:00Z",
+    "version": "1.0"
+  },
+  "sections": [
+    {
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 304,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:employee-onboarding-sop-v1-0:purpose-and-scope:01:089c97ffa7",
+      "section_path": [
+        "Employee Onboarding SOP",
+        "Purpose and Scope"
+      ],
+      "section_path_hash": "089c97ffa7",
+      "start_char": 27,
+      "text": "## Purpose and Scope\n\nThis SOP defines the standard onboarding workflow for new employees. It applies to full-time employees hired into corporate roles.\n\nHuman Resources Operations owns the onboarding process and coordinates with IT Service Management and the hiring manager.\n\n",
+      "title": "Purpose and Scope"
+    },
+    {
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 602,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:employee-onboarding-sop-v1-0:pre-boarding-documents:01:10c6d184a7",
+      "section_path": [
+        "Employee Onboarding SOP",
+        "Pre-boarding Documents"
+      ],
+      "section_path_hash": "10c6d184a7",
+      "start_char": 304,
+      "text": "## Pre-boarding Documents\n\nBefore onboarding begins, Human Resources Operations must collect a signed offer letter, identity verification, tax form, and emergency contact information.\n\nThe hiring manager must confirm the employee's role, start date, reporting line, and required business systems.\n\n",
+      "title": "Pre-boarding Documents"
+    },
+    {
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 808,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:employee-onboarding-sop-v1-0:hris-setup:01:66568c96e4",
+      "section_path": [
+        "Employee Onboarding SOP",
+        "HRIS Setup"
+      ],
+      "section_path_hash": "66568c96e4",
+      "start_char": 602,
+      "text": "## HRIS Setup\n\nHuman Resources Operations creates the employee record in HRIS at least 5 business days before the start date.\n\nThe HRIS employee ID is required before IT can complete account provisioning.\n\n",
+      "title": "HRIS Setup"
+    },
+    {
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 1127,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:employee-onboarding-sop-v1-0:it-account-setup:01:3d9d9628a1",
+      "section_path": [
+        "Employee Onboarding SOP",
+        "IT Account Setup"
+      ],
+      "section_path_hash": "3d9d9628a1",
+      "start_char": 808,
+      "text": "## IT Account Setup\n\nIT Service Management provisions the employee account through the Identity Management system. Standard access includes email, collaboration tools, HRIS self-service, and required security training.\n\nAdditional application access requires manager approval and the applicable system owner approval.\n\n",
+      "title": "IT Account Setup"
+    },
+    {
+      "doc_id": "employee-onboarding-sop-v1-0",
+      "end_char": 1433,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:employee-onboarding-sop-v1-0:orientation-and-manager-check-in:01:8b802124e5",
+      "section_path": [
+        "Employee Onboarding SOP",
+        "Orientation and Manager Check-in"
+      ],
+      "section_path_hash": "8b802124e5",
+      "start_char": 1127,
+      "text": "## Orientation and Manager Check-in\n\nThe new employee must complete orientation, security awareness training, and policy acknowledgements during the first week.\n\nThe hiring manager must complete a check-in during the first 5 business days and confirm that required equipment and system access are working.\n",
+      "title": "Orientation and Manager Check-in"
+    }
+  ]
+}

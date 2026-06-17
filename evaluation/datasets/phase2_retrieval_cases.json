@@ -1,0 +1,127 @@
+{
+  "dataset_version": "phase2-v1",
+  "description": "Phase 2 retrieval-only evaluation cases tied to deterministic Phase 1 chunk IDs.",
+  "cases": [
+    {
+      "case_id": "R001",
+      "query": "HR Leave Policy annual leave 20 working days",
+      "expected_doc_ids": ["hr-leave-policy-v1-0"],
+      "expected_chunk_ids": ["chk:hr-leave-policy-v1-0:annual-leave:01:ac7c015ac3:001"]
+    },
+    {
+      "case_id": "R002",
+      "query": "extended leave longer than 10 consecutive working days HR Operations approval",
+      "expected_doc_ids": ["hr-leave-policy-v1-0"],
+      "expected_chunk_ids": ["chk:hr-leave-policy-v1-0:extended-leave:01:fc612339c5:001"]
+    },
+    {
+      "case_id": "R003",
+      "query": "Travel Reimbursement Policy minibar charges not reimbursable",
+      "expected_doc_ids": ["travel-reimbursement-policy-v1-0"],
+      "expected_chunk_ids": ["chk:travel-reimbursement-policy-v1-0:excluded-expenses:01:db8ab04adc:001"]
+    },
+    {
+      "case_id": "R004",
+      "query": "Concur Expense claim within 10 business days receipts",
+      "expected_doc_ids": ["travel-reimbursement-policy-v1-0"],
+      "expected_chunk_ids": ["chk:travel-reimbursement-policy-v1-0:claim-submission:01:4b056590ae:001"]
+    },
+    {
+      "case_id": "R005",
+      "query": "ServiceNow Severity 1 incident acknowledge within 15 minutes",
+      "expected_doc_ids": ["it-incident-escalation-sop-v1-0"],
+      "expected_chunk_ids": ["chk:it-incident-escalation-sop-v1-0:severity-levels:01:a51d2cb2f1:001"]
+    },
+    {
+      "case_id": "R006",
+      "query": "Incident Commander Information Security duty lead Severity 1 workflow",
+      "expected_doc_ids": ["it-incident-escalation-sop-v1-0"],
+      "expected_chunk_ids": ["chk:it-incident-escalation-sop-v1-0:severity-1-workflow:01:557ff9999a:001"]
+    },
+    {
+      "case_id": "R007",
+      "query": "customer complaint Severity 1 Regional Compliance within 30 minutes",
+      "expected_doc_ids": ["customer-complaint-escalation-sop-v1-0"],
+      "expected_chunk_ids": ["chk:customer-complaint-escalation-sop-v1-0:severity-and-escalation:01:337eb13b42:001"]
+    },
+    {
+      "case_id": "R008",
+      "query": "Customer Operations Director owns Severity 1 coordination",
+      "expected_doc_ids": ["customer-complaint-escalation-sop-v1-0"],
+      "expected_chunk_ids": ["chk:customer-complaint-escalation-sop-v1-0:response-ownership:01:bba7a0f238:001"]
+    },
+    {
+      "case_id": "R009",
+      "query": "public AI tools confidential company information customer personal data prohibited",
+      "expected_doc_ids": ["data-security-ai-tool-policy-v1-0"],
+      "expected_chunk_ids": ["chk:data-security-ai-tool-policy-v1-0:prohibited-data:01:98868ada1c:001"]
+    },
+    {
+      "case_id": "R010",
+      "query": "AI tool exceptions Information Security Data Protection Office approval",
+      "expected_doc_ids": ["data-security-ai-tool-policy-v1-0"],
+      "expected_chunk_ids": ["chk:data-security-ai-tool-policy-v1-0:exception-process:01:1154f3ee18:001"]
+    },
+    {
+      "case_id": "R011",
+      "query": "Vendor Payment Request Form valid vendor invoice executed contract reference",
+      "expected_doc_ids": ["vendor-payment-approval-policy-v1-0"],
+      "expected_chunk_ids": ["chk:vendor-payment-approval-policy-v1-0:required-documents:01:353e30e0d4:001"]
+    },
+    {
+      "case_id": "R012",
+      "query": "vendor payments above USD 50,000 Finance Director CFO",
+      "expected_doc_ids": ["vendor-payment-approval-policy-v1-0"],
+      "expected_chunk_ids": ["chk:vendor-payment-approval-policy-v1-0:approval-thresholds:01:c37a63ee91:001"]
+    },
+    {
+      "case_id": "R013",
+      "query": "split vendor payment into smaller requests bypass approval thresholds",
+      "expected_doc_ids": ["vendor-payment-approval-policy-v1-0"],
+      "expected_chunk_ids": ["chk:vendor-payment-approval-policy-v1-0:exception-process:01:c197acaea4:001"]
+    },
+    {
+      "case_id": "R014",
+      "query": "signed offer identity verification tax form emergency contact onboarding",
+      "expected_doc_ids": ["employee-onboarding-sop-v1-0"],
+      "expected_chunk_ids": ["chk:employee-onboarding-sop-v1-0:pre-boarding-documents:01:10c6d184a7:001"]
+    },
+    {
+      "case_id": "R015",
+      "query": "HRIS employee ID IT account provisioning Identity Management",
+      "expected_doc_ids": ["employee-onboarding-sop-v1-0"],
+      "expected_chunk_ids": ["chk:employee-onboarding-sop-v1-0:hris-setup:01:66568c96e4:001"]
+    },
+    {
+      "case_id": "R016",
+      "query": "Identity Management email collaboration tools security training onboarding",
+      "expected_doc_ids": ["employee-onboarding-sop-v1-0"],
+      "expected_chunk_ids": ["chk:employee-onboarding-sop-v1-0:it-account-setup:01:3d9d9628a1:001"]
+    },
+    {
+      "case_id": "R017",
+      "query": "APAC EU Cross-border Data Handling Policy scope",
+      "expected_doc_ids": ["cross-border-data-policy-v1-0"],
+      "expected_chunk_ids": ["chk:cross-border-data-policy-v1-0:purpose-and-scope:01:faf270bc8f:001"]
+    },
+    {
+      "case_id": "R018",
+      "query": "government identity numbers payment details health information restricted data categories",
+      "expected_doc_ids": ["cross-border-data-policy-v1-0"],
+      "expected_chunk_ids": ["chk:cross-border-data-policy-v1-0:restricted-data-categories:01:8ea71254f0:001"]
+    },
+    {
+      "case_id": "R019",
+      "query": "cross-border transfer personal data Data Protection Officer approved transfer mechanism",
+      "expected_doc_ids": ["cross-border-data-policy-v1-0"],
+      "expected_chunk_ids": ["chk:cross-border-data-policy-v1-0:approval-process:01:b5a20fae57:001"]
+    },
+    {
+      "case_id": "R020",
+      "query": "Public AI tools unapproved external SaaS approved software catalog",
+      "expected_doc_ids": ["cross-border-data-policy-v1-0"],
+      "expected_chunk_ids": ["chk:cross-border-data-policy-v1-0:external-saas-restrictions:01:26421359dc:001"]
+    }
+  ]
+}
+

@@ -1,0 +1,37 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+import streamlit as st
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+st.set_page_config(
+    page_title="Enterprise KnowledgeOps Copilot",
+    page_icon="KO",
+    layout="wide",
+)
+
+st.title("Enterprise KnowledgeOps Copilot")
+st.caption("企业知识库自动化构建与 GraphRAG 智能应用平台")
+
+st.markdown(
+    """
+This Phase 3 MVP is a KnowledgeOps workspace for document ingestion, metadata review,
+chunk inspection, retrieval scoring, and citation traceability.
+"""
+)
+
+col_a, col_b, col_c = st.columns(3)
+col_a.metric("Raw Documents", len(list((PROJECT_ROOT / "data" / "raw").glob("*.md"))))
+col_b.metric("Processed Documents", len(list((PROJECT_ROOT / "data" / "processed").glob("*.json"))))
+col_c.metric("MVP Phase", "3")
+
+st.subheader("Workflow")
+st.write("1. Ingest synthetic enterprise documents.")
+st.write("2. Review metadata and generated chunks.")
+st.write("3. Search with BM25, vector, or hybrid retrieval.")
+st.write("4. Inspect citations, offsets, quote hashes, and source chunks.")
+
+st.info("GraphRAG query, answer generation, guardrails, feedback, and evaluation dashboards are intentionally reserved for later phases.")
+

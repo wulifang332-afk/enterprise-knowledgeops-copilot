@@ -1,0 +1,298 @@
+{
+  "chunks": [
+    {
+      "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:purpose-and-scope:01:7409482231:001",
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 400,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:purpose-and-scope:01:7409482231:001",
+        "chunk_index": 1,
+        "content_sha256": "10a75363a5bb34c9c1da5f3813c263d8087f22ad4bcd335754322fbe3bda0650",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Customer Operations",
+        "doc_id": "customer-complaint-escalation-sop-v1-0",
+        "effective_date": "2025-03-15",
+        "heading_occurrence": 1,
+        "owner": "Customer Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Customer Complaint Management",
+        "related_processes": [
+          "Customer Complaint Management"
+        ],
+        "section_path": [
+          "Customer Complaint Escalation SOP",
+          "Purpose and Scope"
+        ],
+        "section_path_hash": "7409482231",
+        "section_title": "Purpose and Scope",
+        "source_file": "data/raw/customer_complaint_escalation_sop.md",
+        "title": "Customer Complaint Escalation SOP",
+        "updated_at": "2025-03-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 37,
+      "text": "## Purpose and Scope\n\nThis SOP defines how customer complaints are classified, escalated, and tracked. It applies to complaints received through support tickets, account teams, social channels, and executive escalations.\n\nCustomer Operations owns this SOP and coordinates with Regional Compliance for complaints involving regulatory, privacy, or conduct concerns.",
+      "text_sha256": "f324182360352e3a66a30911b21b4039e196ee978fec7901c830ecee566db17d",
+      "token_count": 48
+    },
+    {
+      "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:complaint-classification:01:d5d7da5f0a:001",
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 752,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:complaint-classification:01:d5d7da5f0a:001",
+        "chunk_index": 2,
+        "content_sha256": "10a75363a5bb34c9c1da5f3813c263d8087f22ad4bcd335754322fbe3bda0650",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Customer Operations",
+        "doc_id": "customer-complaint-escalation-sop-v1-0",
+        "effective_date": "2025-03-15",
+        "heading_occurrence": 1,
+        "owner": "Customer Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Customer Complaint Management",
+        "related_processes": [
+          "Customer Complaint Management"
+        ],
+        "section_path": [
+          "Customer Complaint Escalation SOP",
+          "Complaint Classification"
+        ],
+        "section_path_hash": "d5d7da5f0a",
+        "section_title": "Complaint Classification",
+        "source_file": "data/raw/customer_complaint_escalation_sop.md",
+        "title": "Customer Complaint Escalation SOP",
+        "updated_at": "2025-03-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 402,
+      "text": "## Complaint Classification\n\nSeverity 1 complaints involve potential regulatory breach, privacy impact, executive escalation, major customer harm, or repeated unresolved service failure.\n\nSeverity 2 complaints involve service failure for a single customer account without immediate regulatory impact. Severity 3 complaints are routine service issues.",
+      "text_sha256": "ca1230b933dd72829b4637b67e12f919a7c9c32070b234446c46c64cb0f985bc",
+      "token_count": 44
+    },
+    {
+      "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:severity-and-escalation:01:337eb13b42:001",
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 1065,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:severity-and-escalation:01:337eb13b42:001",
+        "chunk_index": 3,
+        "content_sha256": "10a75363a5bb34c9c1da5f3813c263d8087f22ad4bcd335754322fbe3bda0650",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Customer Operations",
+        "doc_id": "customer-complaint-escalation-sop-v1-0",
+        "effective_date": "2025-03-15",
+        "heading_occurrence": 1,
+        "owner": "Customer Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Customer Complaint Management",
+        "related_processes": [
+          "Customer Complaint Management"
+        ],
+        "section_path": [
+          "Customer Complaint Escalation SOP",
+          "Severity and Escalation"
+        ],
+        "section_path_hash": "337eb13b42",
+        "section_title": "Severity and Escalation",
+        "source_file": "data/raw/customer_complaint_escalation_sop.md",
+        "title": "Customer Complaint Escalation SOP",
+        "updated_at": "2025-03-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 754,
+      "text": "## Severity and Escalation\n\nA Severity 1 customer complaint must be escalated to the Customer Operations Director and Regional Compliance within 30 minutes of classification.\n\nThe complaint owner must record the classification reason, customer impact, and first response plan in the complaint management system.",
+      "text_sha256": "aaec64049b4e17a49930ab3d502054db3e7fe11e0f2729cbc0bddb4cb089d08e",
+      "token_count": 44
+    },
+    {
+      "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:response-ownership:01:bba7a0f238:001",
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 1360,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:response-ownership:01:bba7a0f238:001",
+        "chunk_index": 4,
+        "content_sha256": "10a75363a5bb34c9c1da5f3813c263d8087f22ad4bcd335754322fbe3bda0650",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Customer Operations",
+        "doc_id": "customer-complaint-escalation-sop-v1-0",
+        "effective_date": "2025-03-15",
+        "heading_occurrence": 1,
+        "owner": "Customer Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Customer Complaint Management",
+        "related_processes": [
+          "Customer Complaint Management"
+        ],
+        "section_path": [
+          "Customer Complaint Escalation SOP",
+          "Response Ownership"
+        ],
+        "section_path_hash": "bba7a0f238",
+        "section_title": "Response Ownership",
+        "source_file": "data/raw/customer_complaint_escalation_sop.md",
+        "title": "Customer Complaint Escalation SOP",
+        "updated_at": "2025-03-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1067,
+      "text": "## Response Ownership\n\nCustomer Support owns the first response. The Customer Operations Director owns Severity 1 coordination until the complaint is resolved or formally delegated.\n\nRegional Compliance advises on regulatory notification, customer commitments, and required evidence retention.",
+      "text_sha256": "990f96a5eb89bb8990467c6e70ba7d412e8803efab3a79b11b248bd42a6e8fc0",
+      "token_count": 37
+    },
+    {
+      "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:closure-and-evidence:01:6664308b81:001",
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 1674,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:customer-complaint-escalation-sop-v1-0:closure-and-evidence:01:6664308b81:001",
+        "chunk_index": 5,
+        "content_sha256": "10a75363a5bb34c9c1da5f3813c263d8087f22ad4bcd335754322fbe3bda0650",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Customer Operations",
+        "doc_id": "customer-complaint-escalation-sop-v1-0",
+        "effective_date": "2025-03-15",
+        "heading_occurrence": 1,
+        "owner": "Customer Operations",
+        "policy_type": "sop",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Customer Complaint Management",
+        "related_processes": [
+          "Customer Complaint Management"
+        ],
+        "section_path": [
+          "Customer Complaint Escalation SOP",
+          "Closure and Evidence"
+        ],
+        "section_path_hash": "6664308b81",
+        "section_title": "Closure and Evidence",
+        "source_file": "data/raw/customer_complaint_escalation_sop.md",
+        "title": "Customer Complaint Escalation SOP",
+        "updated_at": "2025-03-15T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1362,
+      "text": "## Closure and Evidence\n\nSeverity 1 complaints may be closed only after the customer response is sent, corrective actions are assigned, and Regional Compliance confirms that required evidence has been retained.\n\nThe complaint record must include the final customer response, root-cause summary, and action owner.",
+      "text_sha256": "eea6e8491dd8b8bccd7e1bd7c95cf3d44e243a23a60bcaecd43b941b5cb934fb",
+      "token_count": 45
+    }
+  ],
+  "content": "# Customer Complaint Escalation SOP\n\n## Purpose and Scope\n\nThis SOP defines how customer complaints are classified, escalated, and tracked. It applies to complaints received through support tickets, account teams, social channels, and executive escalations.\n\nCustomer Operations owns this SOP and coordinates with Regional Compliance for complaints involving regulatory, privacy, or conduct concerns.\n\n## Complaint Classification\n\nSeverity 1 complaints involve potential regulatory breach, privacy impact, executive escalation, major customer harm, or repeated unresolved service failure.\n\nSeverity 2 complaints involve service failure for a single customer account without immediate regulatory impact. Severity 3 complaints are routine service issues.\n\n## Severity and Escalation\n\nA Severity 1 customer complaint must be escalated to the Customer Operations Director and Regional Compliance within 30 minutes of classification.\n\nThe complaint owner must record the classification reason, customer impact, and first response plan in the complaint management system.\n\n## Response Ownership\n\nCustomer Support owns the first response. The Customer Operations Director owns Severity 1 coordination until the complaint is resolved or formally delegated.\n\nRegional Compliance advises on regulatory notification, customer commitments, and required evidence retention.\n\n## Closure and Evidence\n\nSeverity 1 complaints may be closed only after the customer response is sent, corrective actions are assigned, and Regional Compliance confirms that required evidence has been retained.\n\nThe complaint record must include the final customer response, root-cause summary, and action owner.\n",
+  "ingested_at": "2026-06-17T12:13:04.422373Z",
+  "metadata": {
+    "access_level": "internal",
+    "content_sha256": "10a75363a5bb34c9c1da5f3813c263d8087f22ad4bcd335754322fbe3bda0650",
+    "created_at": "2025-01-01T00:00:00Z",
+    "department": "Customer Operations",
+    "doc_id": "customer-complaint-escalation-sop-v1-0",
+    "effective_date": "2025-03-15",
+    "owner": "Customer Operations",
+    "policy_type": "sop",
+    "regions": [
+      "Global"
+    ],
+    "related_processes": [
+      "Customer Complaint Management"
+    ],
+    "source_file": "data/raw/customer_complaint_escalation_sop.md",
+    "title": "Customer Complaint Escalation SOP",
+    "updated_at": "2025-03-15T00:00:00Z",
+    "version": "1.0"
+  },
+  "sections": [
+    {
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 402,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:customer-complaint-escalation-sop-v1-0:purpose-and-scope:01:7409482231",
+      "section_path": [
+        "Customer Complaint Escalation SOP",
+        "Purpose and Scope"
+      ],
+      "section_path_hash": "7409482231",
+      "start_char": 37,
+      "text": "## Purpose and Scope\n\nThis SOP defines how customer complaints are classified, escalated, and tracked. It applies to complaints received through support tickets, account teams, social channels, and executive escalations.\n\nCustomer Operations owns this SOP and coordinates with Regional Compliance for complaints involving regulatory, privacy, or conduct concerns.\n\n",
+      "title": "Purpose and Scope"
+    },
+    {
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 754,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:customer-complaint-escalation-sop-v1-0:complaint-classification:01:d5d7da5f0a",
+      "section_path": [
+        "Customer Complaint Escalation SOP",
+        "Complaint Classification"
+      ],
+      "section_path_hash": "d5d7da5f0a",
+      "start_char": 402,
+      "text": "## Complaint Classification\n\nSeverity 1 complaints involve potential regulatory breach, privacy impact, executive escalation, major customer harm, or repeated unresolved service failure.\n\nSeverity 2 complaints involve service failure for a single customer account without immediate regulatory impact. Severity 3 complaints are routine service issues.\n\n",
+      "title": "Complaint Classification"
+    },
+    {
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 1067,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:customer-complaint-escalation-sop-v1-0:severity-and-escalation:01:337eb13b42",
+      "section_path": [
+        "Customer Complaint Escalation SOP",
+        "Severity and Escalation"
+      ],
+      "section_path_hash": "337eb13b42",
+      "start_char": 754,
+      "text": "## Severity and Escalation\n\nA Severity 1 customer complaint must be escalated to the Customer Operations Director and Regional Compliance within 30 minutes of classification.\n\nThe complaint owner must record the classification reason, customer impact, and first response plan in the complaint management system.\n\n",
+      "title": "Severity and Escalation"
+    },
+    {
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 1362,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:customer-complaint-escalation-sop-v1-0:response-ownership:01:bba7a0f238",
+      "section_path": [
+        "Customer Complaint Escalation SOP",
+        "Response Ownership"
+      ],
+      "section_path_hash": "bba7a0f238",
+      "start_char": 1067,
+      "text": "## Response Ownership\n\nCustomer Support owns the first response. The Customer Operations Director owns Severity 1 coordination until the complaint is resolved or formally delegated.\n\nRegional Compliance advises on regulatory notification, customer commitments, and required evidence retention.\n\n",
+      "title": "Response Ownership"
+    },
+    {
+      "doc_id": "customer-complaint-escalation-sop-v1-0",
+      "end_char": 1675,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:customer-complaint-escalation-sop-v1-0:closure-and-evidence:01:6664308b81",
+      "section_path": [
+        "Customer Complaint Escalation SOP",
+        "Closure and Evidence"
+      ],
+      "section_path_hash": "6664308b81",
+      "start_char": 1362,
+      "text": "## Closure and Evidence\n\nSeverity 1 complaints may be closed only after the customer response is sent, corrective actions are assigned, and Regional Compliance confirms that required evidence has been retained.\n\nThe complaint record must include the final customer response, root-cause summary, and action owner.\n",
+      "title": "Closure and Evidence"
+    }
+  ]
+}

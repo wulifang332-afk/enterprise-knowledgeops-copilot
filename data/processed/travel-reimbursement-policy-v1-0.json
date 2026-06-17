@@ -1,0 +1,298 @@
+{
+  "chunks": [
+    {
+      "chunk_id": "chk:travel-reimbursement-policy-v1-0:purpose-and-scope:01:1cbe27f9ab:001",
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 340,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:travel-reimbursement-policy-v1-0:purpose-and-scope:01:1cbe27f9ab:001",
+        "chunk_index": 1,
+        "content_sha256": "d9b67ef539321f7a95a8d31221aebf10a48404b16782a11f5f01626c281ee170",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Finance",
+        "doc_id": "travel-reimbursement-policy-v1-0",
+        "effective_date": "2025-02-01",
+        "heading_occurrence": 1,
+        "owner": "Finance Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Travel Expense Reimbursement",
+        "related_processes": [
+          "Travel Expense Reimbursement"
+        ],
+        "section_path": [
+          "Travel Reimbursement Policy",
+          "Purpose and Scope"
+        ],
+        "section_path_hash": "1cbe27f9ab",
+        "section_title": "Purpose and Scope",
+        "source_file": "data/raw/travel_reimbursement_policy.md",
+        "title": "Travel Reimbursement Policy",
+        "updated_at": "2025-02-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 31,
+      "text": "## Purpose and Scope\n\nThis policy defines reimbursable business travel expenses, claim submission requirements, and approval controls. It applies to employees traveling for approved company business.\n\nFinance Operations owns the policy and reviews exceptions with the employee's department leader when needed.",
+      "text_sha256": "52f7798b841d003226ebd9aa31b533d6e7b9a4bfc801b719c147039e6f2ad01e",
+      "token_count": 41
+    },
+    {
+      "chunk_id": "chk:travel-reimbursement-policy-v1-0:eligible-expenses:01:4d025794fb:001",
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 685,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:travel-reimbursement-policy-v1-0:eligible-expenses:01:4d025794fb:001",
+        "chunk_index": 2,
+        "content_sha256": "d9b67ef539321f7a95a8d31221aebf10a48404b16782a11f5f01626c281ee170",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Finance",
+        "doc_id": "travel-reimbursement-policy-v1-0",
+        "effective_date": "2025-02-01",
+        "heading_occurrence": 1,
+        "owner": "Finance Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Travel Expense Reimbursement",
+        "related_processes": [
+          "Travel Expense Reimbursement"
+        ],
+        "section_path": [
+          "Travel Reimbursement Policy",
+          "Eligible Expenses"
+        ],
+        "section_path_hash": "4d025794fb",
+        "section_title": "Eligible Expenses",
+        "source_file": "data/raw/travel_reimbursement_policy.md",
+        "title": "Travel Reimbursement Policy",
+        "updated_at": "2025-02-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 342,
+      "text": "## Eligible Expenses\n\nEligible travel expenses include economy-class transportation, standard business lodging, ground transportation, visa fees required for business travel, and meals within the daily meal limit.\n\nEmployees must choose reasonable options and avoid expenses that would create a personal benefit unrelated to the business trip.",
+      "text_sha256": "bfd1d57b3574fc1ffb5f7b40faac4d3998167ce5de725330be3d9c82e428e438",
+      "token_count": 46
+    },
+    {
+      "chunk_id": "chk:travel-reimbursement-policy-v1-0:excluded-expenses:01:db8ab04adc:001",
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 1002,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:travel-reimbursement-policy-v1-0:excluded-expenses:01:db8ab04adc:001",
+        "chunk_index": 3,
+        "content_sha256": "d9b67ef539321f7a95a8d31221aebf10a48404b16782a11f5f01626c281ee170",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Finance",
+        "doc_id": "travel-reimbursement-policy-v1-0",
+        "effective_date": "2025-02-01",
+        "heading_occurrence": 1,
+        "owner": "Finance Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Travel Expense Reimbursement",
+        "related_processes": [
+          "Travel Expense Reimbursement"
+        ],
+        "section_path": [
+          "Travel Reimbursement Policy",
+          "Excluded Expenses"
+        ],
+        "section_path_hash": "db8ab04adc",
+        "section_title": "Excluded Expenses",
+        "source_file": "data/raw/travel_reimbursement_policy.md",
+        "title": "Travel Reimbursement Policy",
+        "updated_at": "2025-02-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 687,
+      "text": "## Excluded Expenses\n\nPersonal entertainment, minibar charges, family travel, personal shopping, traffic fines, and upgrades not pre-approved by Finance Operations are not reimbursable.\n\nAlcohol expenses are reimbursable only when explicitly permitted by a client event budget and approved by the department leader.",
+      "text_sha256": "171a56f0b892589ba2b3cc6d9b90ea712b233be4788a4ed9db7659b63f36a542",
+      "token_count": 42
+    },
+    {
+      "chunk_id": "chk:travel-reimbursement-policy-v1-0:claim-submission:01:4b056590ae:001",
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 1374,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:travel-reimbursement-policy-v1-0:claim-submission:01:4b056590ae:001",
+        "chunk_index": 4,
+        "content_sha256": "d9b67ef539321f7a95a8d31221aebf10a48404b16782a11f5f01626c281ee170",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Finance",
+        "doc_id": "travel-reimbursement-policy-v1-0",
+        "effective_date": "2025-02-01",
+        "heading_occurrence": 1,
+        "owner": "Finance Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Travel Expense Reimbursement",
+        "related_processes": [
+          "Travel Expense Reimbursement"
+        ],
+        "section_path": [
+          "Travel Reimbursement Policy",
+          "Claim Submission"
+        ],
+        "section_path_hash": "4b056590ae",
+        "section_title": "Claim Submission",
+        "source_file": "data/raw/travel_reimbursement_policy.md",
+        "title": "Travel Reimbursement Policy",
+        "updated_at": "2025-02-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1004,
+      "text": "## Claim Submission\n\nEmployees must submit travel reimbursement claims in Concur Expense within 10 business days after the trip ends. Each claim must include itemized receipts and the approved business trip reference.\n\nReceipts should be uploaded only to approved company systems. Employees must not upload receipts containing personal data to unapproved external tools.",
+      "text_sha256": "5cc49cf82ee4f1f8e4aa823545b13509ec4a4de56a0157742f619bdbb3ded597",
+      "token_count": 53
+    },
+    {
+      "chunk_id": "chk:travel-reimbursement-policy-v1-0:approval-rules:01:fc142d756a:001",
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 1684,
+      "metadata": {
+        "access_level": "internal",
+        "chunk_id": "chk:travel-reimbursement-policy-v1-0:approval-rules:01:fc142d756a:001",
+        "chunk_index": 5,
+        "content_sha256": "d9b67ef539321f7a95a8d31221aebf10a48404b16782a11f5f01626c281ee170",
+        "created_at": "2025-01-01T00:00:00Z",
+        "department": "Finance",
+        "doc_id": "travel-reimbursement-policy-v1-0",
+        "effective_date": "2025-02-01",
+        "heading_occurrence": 1,
+        "owner": "Finance Operations",
+        "policy_type": "policy",
+        "regions": [
+          "Global"
+        ],
+        "related_process": "Travel Expense Reimbursement",
+        "related_processes": [
+          "Travel Expense Reimbursement"
+        ],
+        "section_path": [
+          "Travel Reimbursement Policy",
+          "Approval Rules"
+        ],
+        "section_path_hash": "fc142d756a",
+        "section_title": "Approval Rules",
+        "source_file": "data/raw/travel_reimbursement_policy.md",
+        "title": "Travel Reimbursement Policy",
+        "updated_at": "2025-02-01T00:00:00Z",
+        "version": "1.0"
+      },
+      "start_char": 1376,
+      "text": "## Approval Rules\n\nTravel claims require approval from the employee's direct manager. Employees may not approve their own travel reimbursement claims.\n\nFinance Operations may reject incomplete claims, claims submitted without receipts, or claims submitted after the deadline without documented justification.",
+      "text_sha256": "5ebf5d2a162b2a239260d53b184b780d63e77225ff982d7e9ef205f163a47514",
+      "token_count": 40
+    }
+  ],
+  "content": "# Travel Reimbursement Policy\n\n## Purpose and Scope\n\nThis policy defines reimbursable business travel expenses, claim submission requirements, and approval controls. It applies to employees traveling for approved company business.\n\nFinance Operations owns the policy and reviews exceptions with the employee's department leader when needed.\n\n## Eligible Expenses\n\nEligible travel expenses include economy-class transportation, standard business lodging, ground transportation, visa fees required for business travel, and meals within the daily meal limit.\n\nEmployees must choose reasonable options and avoid expenses that would create a personal benefit unrelated to the business trip.\n\n## Excluded Expenses\n\nPersonal entertainment, minibar charges, family travel, personal shopping, traffic fines, and upgrades not pre-approved by Finance Operations are not reimbursable.\n\nAlcohol expenses are reimbursable only when explicitly permitted by a client event budget and approved by the department leader.\n\n## Claim Submission\n\nEmployees must submit travel reimbursement claims in Concur Expense within 10 business days after the trip ends. Each claim must include itemized receipts and the approved business trip reference.\n\nReceipts should be uploaded only to approved company systems. Employees must not upload receipts containing personal data to unapproved external tools.\n\n## Approval Rules\n\nTravel claims require approval from the employee's direct manager. Employees may not approve their own travel reimbursement claims.\n\nFinance Operations may reject incomplete claims, claims submitted without receipts, or claims submitted after the deadline without documented justification.\n",
+  "ingested_at": "2026-06-17T12:13:04.430158Z",
+  "metadata": {
+    "access_level": "internal",
+    "content_sha256": "d9b67ef539321f7a95a8d31221aebf10a48404b16782a11f5f01626c281ee170",
+    "created_at": "2025-01-01T00:00:00Z",
+    "department": "Finance",
+    "doc_id": "travel-reimbursement-policy-v1-0",
+    "effective_date": "2025-02-01",
+    "owner": "Finance Operations",
+    "policy_type": "policy",
+    "regions": [
+      "Global"
+    ],
+    "related_processes": [
+      "Travel Expense Reimbursement"
+    ],
+    "source_file": "data/raw/travel_reimbursement_policy.md",
+    "title": "Travel Reimbursement Policy",
+    "updated_at": "2025-02-01T00:00:00Z",
+    "version": "1.0"
+  },
+  "sections": [
+    {
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 342,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:travel-reimbursement-policy-v1-0:purpose-and-scope:01:1cbe27f9ab",
+      "section_path": [
+        "Travel Reimbursement Policy",
+        "Purpose and Scope"
+      ],
+      "section_path_hash": "1cbe27f9ab",
+      "start_char": 31,
+      "text": "## Purpose and Scope\n\nThis policy defines reimbursable business travel expenses, claim submission requirements, and approval controls. It applies to employees traveling for approved company business.\n\nFinance Operations owns the policy and reviews exceptions with the employee's department leader when needed.\n\n",
+      "title": "Purpose and Scope"
+    },
+    {
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 687,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:travel-reimbursement-policy-v1-0:eligible-expenses:01:4d025794fb",
+      "section_path": [
+        "Travel Reimbursement Policy",
+        "Eligible Expenses"
+      ],
+      "section_path_hash": "4d025794fb",
+      "start_char": 342,
+      "text": "## Eligible Expenses\n\nEligible travel expenses include economy-class transportation, standard business lodging, ground transportation, visa fees required for business travel, and meals within the daily meal limit.\n\nEmployees must choose reasonable options and avoid expenses that would create a personal benefit unrelated to the business trip.\n\n",
+      "title": "Eligible Expenses"
+    },
+    {
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 1004,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:travel-reimbursement-policy-v1-0:excluded-expenses:01:db8ab04adc",
+      "section_path": [
+        "Travel Reimbursement Policy",
+        "Excluded Expenses"
+      ],
+      "section_path_hash": "db8ab04adc",
+      "start_char": 687,
+      "text": "## Excluded Expenses\n\nPersonal entertainment, minibar charges, family travel, personal shopping, traffic fines, and upgrades not pre-approved by Finance Operations are not reimbursable.\n\nAlcohol expenses are reimbursable only when explicitly permitted by a client event budget and approved by the department leader.\n\n",
+      "title": "Excluded Expenses"
+    },
+    {
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 1376,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:travel-reimbursement-policy-v1-0:claim-submission:01:4b056590ae",
+      "section_path": [
+        "Travel Reimbursement Policy",
+        "Claim Submission"
+      ],
+      "section_path_hash": "4b056590ae",
+      "start_char": 1004,
+      "text": "## Claim Submission\n\nEmployees must submit travel reimbursement claims in Concur Expense within 10 business days after the trip ends. Each claim must include itemized receipts and the approved business trip reference.\n\nReceipts should be uploaded only to approved company systems. Employees must not upload receipts containing personal data to unapproved external tools.\n\n",
+      "title": "Claim Submission"
+    },
+    {
+      "doc_id": "travel-reimbursement-policy-v1-0",
+      "end_char": 1685,
+      "heading_level": 2,
+      "heading_occurrence": 1,
+      "section_id": "sec:travel-reimbursement-policy-v1-0:approval-rules:01:fc142d756a",
+      "section_path": [
+        "Travel Reimbursement Policy",
+        "Approval Rules"
+      ],
+      "section_path_hash": "fc142d756a",
+      "start_char": 1376,
+      "text": "## Approval Rules\n\nTravel claims require approval from the employee's direct manager. Employees may not approve their own travel reimbursement claims.\n\nFinance Operations may reject incomplete claims, claims submitted without receipts, or claims submitted after the deadline without documented justification.\n",
+      "title": "Approval Rules"
+    }
+  ]
+}
