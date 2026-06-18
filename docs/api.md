@@ -29,7 +29,8 @@ Selected-file behavior is deterministic:
 - If `files` is non-empty, only those files are ingested, even when `ingest_all` is omitted or `true`.
 - If `files` is empty and `ingest_all=true`, all raw files are ingested.
 - If `files` is empty and `ingest_all=false`, the API returns `INVALID_REQUEST`.
-- `files` values must resolve under `data/raw/`; traversal paths, absolute paths outside `data/raw/`, symlink escapes, oversized files, and unsupported file types are rejected.
+- Selected-file ingestion paths are relative to `data/raw/`. Do not use absolute paths and do not prefix values with `data/raw/`.
+- `files` values must resolve under `data/raw/`; traversal paths, absolute paths, paths prefixed with `data/raw/`, symlink escapes, oversized files, and unsupported file types are rejected.
 
 ### Request
 
@@ -46,7 +47,7 @@ Selected-file request:
 ```json
 {
   "ingest_all": true,
-  "files": ["data/raw/vendor_payment_approval_policy.md"],
+  "files": ["vendor_payment_approval_policy.md"],
   "rebuild_indexes": true
 }
 ```
@@ -67,8 +68,8 @@ Response:
   "error_code": "INVALID_REQUEST",
   "message": "Provide at least one file or set ingest_all=true.",
   "details": {
-    "ingest_all": false,
-    "files_count": 0
+    "files": [],
+    "ingest_all": false
   },
   "request_id": "...",
   "timestamp": "..."
@@ -199,7 +200,7 @@ Search processed chunks using BM25, vector, or hybrid retrieval.
   "filters": {
     "departments": ["Finance"],
     "regions": ["Global"],
-    "policy_types": ["Policy"]
+    "policy_types": ["policy"]
   }
 }
 ```
@@ -227,6 +228,8 @@ Supported fields:
 
 Empty lists are ignored. Valid filters preserve the current behavior: results are restricted before scoring where supported and metadata boosts can still apply in hybrid mode.
 
+Filter values should use canonical lowercase enum values where an enum is involved. Examples include `policy`, `sop`, `internal`, `restricted`, and `confidential`.
+
 Malformed filter example:
 
 ```json
@@ -247,7 +250,7 @@ Response:
   "error_code": "INVALID_REQUEST",
   "message": "Request validation failed.",
   "details": {
-    "validation_errors": [
+    "errors": [
       {
         "loc": ["body", "filters", "regions"],
         "msg": "Input should be a valid list"

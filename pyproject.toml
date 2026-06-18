@@ -1,7 +1,7 @@
 [project]
 name = "enterprise-knowledgeops-copilot"
 version = "0.1.0"
-description = "Local-first enterprise KnowledgeOps and GraphRAG portfolio platform."
+description = "Local-first enterprise KnowledgeOps retrieval demo with a planned GraphRAG extension."
 requires-python = ">=3.11"
 dependencies = [
   "pydantic>=2.0",

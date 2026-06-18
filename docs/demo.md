@@ -7,7 +7,7 @@ This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to
 Use Python 3.11 or newer. In this environment, use `python` instead of `python3`.
 
 ```bash
-cd /Users/cube/Documents/Playground/enterprise-knowledgeops-copilot
+cd enterprise-knowledgeops-copilot
 python --version
 ```
 

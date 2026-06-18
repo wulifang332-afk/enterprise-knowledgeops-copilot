@@ -1,10 +1,10 @@
 # Enterprise KnowledgeOps Copilot
 
-企业知识库自动化构建与 GraphRAG 智能应用平台
+企业知识库自动化构建与 GraphRAG-ready 智能应用路线图
 
 This project is an Enterprise KnowledgeOps platform, not a generic chatbot.
 
-The current MVP-0 turns synthetic enterprise documents into validated, chunked, searchable, and citation-traceable knowledge assets. The query-style search box in Streamlit is only a retrieval workspace for inspecting metadata, chunks, scores, and citations.
+The current MVP-0 focuses on ingestion, retrieval, citations, and a KnowledgeOps dashboard. It turns synthetic enterprise documents into validated, chunked, searchable, and citation-traceable knowledge assets. The query-style search box in Streamlit is only a retrieval workspace for inspecting metadata, chunks, scores, and citations.
 
 ## Current MVP-0 Capabilities
 
@@ -36,7 +36,7 @@ These are planned for later phases and are intentionally absent from MVP-0.
 Use Python 3.11 or newer. In this local environment, use `python`, not `python3`, because `python3` maps to Python 3.9.
 
 ```bash
-cd /Users/cube/Documents/Playground/enterprise-knowledgeops-copilot
+cd enterprise-knowledgeops-copilot
 python --version
 ```
 
