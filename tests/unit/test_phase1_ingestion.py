@@ -162,6 +162,29 @@ def test_stable_chunks_across_clean_runs(tmp_path: Path) -> None:
     assert chunks_a == chunks_b
 
 
+def test_processed_json_is_stable_when_rebuilding_registry_from_same_content(tmp_path: Path) -> None:
+    settings = make_settings(tmp_path)
+    copy_sample_docs(settings.raw_dir)
+
+    first = IngestionService(settings=settings).ingest_all_raw(request_id="first")
+    assert first.ingested_count == 8
+
+    before = {
+        file.name: file.read_text(encoding="utf-8")
+        for file in sorted(settings.processed_dir.glob("*.json"))
+    }
+    settings.db_path.unlink()
+
+    second = IngestionService(settings=settings).ingest_all_raw(request_id="second")
+    assert second.ingested_count == 8
+
+    after = {
+        file.name: file.read_text(encoding="utf-8")
+        for file in sorted(settings.processed_dir.glob("*.json"))
+    }
+    assert after == before
+
+
 def test_invalid_metadata_returns_invalid_metadata(tmp_path: Path) -> None:
     settings = make_settings(tmp_path)
     (settings.raw_dir / "invalid.md").write_text(
@@ -268,4 +291,3 @@ def test_duplicate_section_slugs_produce_unique_chunk_ids(tmp_path: Path) -> Non
     assert len(chunk_ids) == len(set(chunk_ids))
     assert any(":details:01:" in chunk_id for chunk_id in chunk_ids)
     assert any(":details:02:" in chunk_id for chunk_id in chunk_ids)
-

@@ -43,10 +43,10 @@ cd enterprise-knowledgeops-copilot
 python --version
 ```
 
-Install dependencies if needed:
+Install runtime and test dependencies if needed:
 
 ```bash
-python -m pip install -e .
+python -m pip install -e ".[dev]"
 ```
 
 The app runs without external API keys. Mock embeddings are deterministic and local.

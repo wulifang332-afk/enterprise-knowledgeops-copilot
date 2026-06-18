@@ -9,6 +9,7 @@
 - Phase 4 graph extraction uses deterministic rule-based patterns instead of LLM extraction so tests and demos remain local and reproducible.
 - Phase 4 uses NetworkX as the local graph backend. Neo4j remains a future optional adapter.
 - Phase 4 suppresses generic `MENTIONS` edges when stronger same-pair relations exist and deduplicates document-level metadata edges to reduce graph noise.
+- Processed JSON preserves an existing `ingested_at` value when the source content hash is unchanged. This keeps clean-clone demo runs from dirtying tracked processed artifacts while still allowing the SQLite registry to record a fresh ingestion timestamp.
 
 ## MVP-0 Checkpoint Commands
 

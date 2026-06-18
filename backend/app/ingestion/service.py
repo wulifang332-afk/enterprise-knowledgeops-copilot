@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from time import perf_counter
 from uuid import uuid4
 
@@ -139,11 +140,29 @@ class IngestionService:
     def _write_processed_document(self, document: Document) -> None:
         output_path = self.settings.processed_dir / f"{document.metadata.doc_id}.json"
         output_path.parent.mkdir(parents=True, exist_ok=True)
+        payload = document.model_dump(mode="json")
+        existing_ingested_at = self._existing_processed_ingested_at(
+            output_path=output_path,
+            content_sha256=document.metadata.content_sha256,
+        )
+        if existing_ingested_at:
+            payload["ingested_at"] = existing_ingested_at
         with output_path.open("w", encoding="utf-8") as handle:
-            json.dump(document.model_dump(mode="json"), handle, ensure_ascii=True, indent=2, sort_keys=True)
+            json.dump(payload, handle, ensure_ascii=True, indent=2, sort_keys=True)
             handle.write("\n")
 
     @staticmethod
     def _elapsed_ms(started: float) -> int:
         return int((perf_counter() - started) * 1000)
 
+    @staticmethod
+    def _existing_processed_ingested_at(*, output_path: Path, content_sha256: str) -> str | None:
+        try:
+            with open(output_path, encoding="utf-8") as handle:
+                existing = json.load(handle)
+        except (FileNotFoundError, json.JSONDecodeError, OSError):
+            return None
+        if existing.get("metadata", {}).get("content_sha256") != content_sha256:
+            return None
+        ingested_at = existing.get("ingested_at")
+        return ingested_at if isinstance(ingested_at, str) and ingested_at else None
