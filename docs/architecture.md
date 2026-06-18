@@ -1,6 +1,6 @@
-# MVP-0 Architecture
+# MVP-0 + Phase 4 Architecture
 
-MVP-0 is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, and a thin API/UI layer.
+The current build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, graph extraction, graph persistence, and thin API/UI inspection layers.
 
 ## Current Components
 
@@ -16,8 +16,12 @@ MVP-0 is a local-first KnowledgeOps pipeline. It focuses on deterministic ingest
 - Mock embedding provider: deterministic hash-based vectors.
 - Hybrid retrieval: weighted BM25/vector fusion with metadata and recency boosts.
 - Citation builder: quote, offsets, and quote hash from normalized source content.
-- FastAPI: Phase 3 endpoints for ingest, documents, chunks, and search.
-- Streamlit: MVP dashboard for ingestion and knowledge exploration.
+- Rule-based graph extractor: deterministic entity and relation extraction from processed chunks.
+- Graph schema: typed nodes and edges with source document/chunk lineage and evidence quotes.
+- NetworkX graph store: local graph backend persisted under `data/graph/`.
+- Graph rebuild script: `scripts/rebuild_graph.py`.
+- FastAPI: endpoints for ingest, documents, chunks, search, and graph inspection.
+- Streamlit: dashboard pages for ingestion, knowledge exploration, and graph exploration.
 - Demo check script: `scripts/demo_mvp0_check.py` runs tests, ingestion, index rebuild, and retrieval evaluation.
 
 ## ASCII Architecture Diagram
@@ -55,29 +59,29 @@ MVP-0 is a local-first KnowledgeOps pipeline. It focuses on deterministic ingest
 +-------------------------+   +-------------+-------------+
                                             |
                                             v
-                         +------------------+------------------+
-                         |                                     |
-                         v                                     v
-              +---------------------+              +----------------------+
-              | BM25 Index          |              | Chroma Vector Index  |
-              | exact terms         |              | mock embeddings      |
-              +----------+----------+              +----------+-----------+
-                         |                                    |
-                         +----------------+-------------------+
-                                          |
-                                          v
-                              +----------------------+
-                              | Hybrid Retrieval     |
-                              | score fusion         |
-                              +----------+-----------+
-                                         |
-                                         v
-                              +----------------------+
-                              | Citation Builder     |
-                              | quote/offset/hash    |
-                              +----------+-----------+
-                                         |
-                    +--------------------+--------------------+
+                         +------------------+------------------+------------------+
+                         |                                     |                  |
+                         v                                     v                  v
+              +---------------------+              +----------------------+  +----------------------+
+              | BM25 Index          |              | Chroma Vector Index  |  | Rule-Based Graph     |
+              | exact terms         |              | mock embeddings      |  | Extraction           |
+              +----------+----------+              +----------+-----------+  +----------+-----------+
+                         |                                    |                         |
+                         +----------------+-------------------+                         v
+                                          |                                  +----------------------+
+                                          v                                  | NetworkX Graph Store |
+                              +----------------------+                       | data/graph/*.json    |
+                              | Hybrid Retrieval     |                       +----------+-----------+
+                              | score fusion         |                                  |
+                              +----------+-----------+                                  |
+                                         |                                              |
+                                         v                                              |
+                              +----------------------+                                  |
+                              | Citation Builder     |                                  |
+                              | quote/offset/hash    |                                  |
+                              +----------+-----------+                                  |
+                                         |                                              |
+                    +--------------------+--------------------+-------------------------+
                     |                                         |
                     v                                         v
           +------------------+                    +----------------------+
@@ -93,20 +97,27 @@ MVP-0 is a local-first KnowledgeOps pipeline. It focuses on deterministic ingest
 3. Documents are split into sections using Markdown headings.
 4. Sections are chunked deterministically.
 5. Registry data is stored in SQLite and processed JSON is written to `data/processed`.
-6. Retrieval services read processed JSON as source of truth.
+6. Retrieval and graph services read processed JSON as source of truth.
 7. BM25 and Chroma indexes are rebuilt from processed chunks.
 8. Search results are fused and citations are built from chunk offsets.
-9. FastAPI exposes ingestion, registry browsing, chunk browsing, and retrieval.
-10. Streamlit provides the MVP-0 KnowledgeOps dashboard.
-11. `scripts/demo_mvp0_check.py` verifies the MVP-0 demo path from CLI.
+9. `scripts/rebuild_graph.py` extracts graph nodes and edges from processed chunks and persists a NetworkX graph artifact under `data/graph/`.
+10. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, and graph inspection.
+11. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer.
+12. `scripts/demo_mvp0_check.py` verifies the MVP-0 retrieval demo path from CLI.
 
-## Not Present In MVP-0
+## Graph Layer
 
-- Graph extraction
-- Graph store
+Phase 4 graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
+
+The graph layer is for inspection, lineage review, and portfolio demonstration. It is not production-grade information extraction and does not answer questions.
+
+## Not Present Yet
+
 - GraphRAG router
 - `/api/v1/query`
 - Answer generation
+- GraphRAG answer synthesis
 - Guardrails
 - Feedback loop
 - Full evaluation dashboard
+- Neo4j adapter

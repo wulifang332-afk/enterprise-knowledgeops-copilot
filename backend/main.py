@@ -8,7 +8,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from backend.app.api import chunks_router, documents_router, ingest_router, search_router
+from backend.app.api import chunks_router, documents_router, graph_router, ingest_router, search_router
 from backend.app.core.errors import KnowledgeOpsError
 from backend.app.schemas.enums import ErrorCode
 from backend.app.schemas.operational import ErrorResponse
@@ -17,8 +17,8 @@ from backend.app.schemas.operational import ErrorResponse
 def create_app() -> FastAPI:
     app = FastAPI(
         title="Enterprise KnowledgeOps Copilot API",
-        version="0.3.0",
-        description="Phase 3 MVP API for ingestion, document registry, chunk browsing, and retrieval search.",
+        version="0.4.0",
+        description="Phase 4 MVP API for ingestion, retrieval search, and graph inspection.",
     )
 
     @app.middleware("http")
@@ -39,6 +39,7 @@ def create_app() -> FastAPI:
     app.include_router(documents_router)
     app.include_router(chunks_router)
     app.include_router(search_router)
+    app.include_router(graph_router)
     return app
 
 
@@ -132,4 +133,3 @@ def _is_uuid(value: str | None) -> bool:
 
 
 app = create_app()
-

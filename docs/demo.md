@@ -1,6 +1,6 @@
-# MVP-0 Demo Guide
+# MVP-0 + Phase 4 Demo Guide
 
-This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, and citation inspection.
+This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, and graph inspection.
 
 ## Prerequisites
 
@@ -126,6 +126,44 @@ For each result, inspect:
 
 The `quote` should match the source chunk text. Offsets and quote hashes provide traceability from search result back to the normalized source document content.
 
+### 10. Open Knowledge Graph Explorer
+
+Use the Streamlit sidebar to open `Knowledge Graph Explorer`.
+
+This page is for graph inspection only. It does not answer questions and does not perform GraphRAG synthesis.
+
+### 11. Rebuild And Inspect Graph
+
+Click `Rebuild Graph From Processed Chunks`.
+
+Expected result on the current synthetic corpus:
+
+- 96 nodes
+- 207 edges
+- 40 source chunks
+
+Inspect:
+
+- graph summary metrics
+- node table
+- edge table
+- filters by node type and relation type
+- selected node detail
+- selected node neighborhood
+- evidence quotes for selected edges
+
+Example graph objects:
+
+- `Vendor Payment Request Form`
+- `ServiceNow`
+- `Severity 1`
+- `15 minutes`
+- `DPO`
+- `Vendor Payment Approval Policy REQUIRES Vendor Payment Request Form`
+- `IT Incident Escalation SOP USES_SYSTEM ServiceNow`
+- `Severity 1 HAS_TIME_REQUIREMENT 15 minutes`
+- `Cross-border Data Handling Policy ESCALATES_TO DPO`
+
 ## Optional CLI Demo Check
 
 Run:
@@ -138,4 +176,10 @@ This verifies the test suite, sample document ingestion, index rebuild, and retr
 
 ```text
 MVP-0 demo checkpoint passed.
+```
+
+To verify Phase 4 graph extraction separately:
+
+```bash
+python scripts/rebuild_graph.py
 ```

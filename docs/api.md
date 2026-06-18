@@ -1,4 +1,4 @@
-# Phase 3 API Reference
+# Phase 4 API Reference
 
 Base URL:
 
@@ -6,7 +6,7 @@ Base URL:
 http://127.0.0.1:8000
 ```
 
-All Phase 3 responses include `request_id`. Structured errors use:
+All Phase 4 responses include `request_id`. Structured errors use:
 
 ```json
 {
@@ -18,7 +18,7 @@ All Phase 3 responses include `request_id`. Structured errors use:
 }
 ```
 
-`/api/v1/query` is intentionally not available until Phase 5, when governed answer generation and GraphRAG are implemented.
+`/api/v1/query` is intentionally not available until Phase 5, when governed answer generation and GraphRAG answer synthesis are implemented.
 
 ## POST `/api/v1/ingest`
 
@@ -296,3 +296,189 @@ Response:
   ]
 }
 ```
+
+## POST `/api/v1/graph/rebuild`
+
+Rebuild the deterministic rule-based graph from processed chunks under `data/processed/` and persist the NetworkX graph artifact under `data/graph/`.
+
+This endpoint is for graph inspection setup. It does not answer questions.
+
+### Request
+
+No request body is required.
+
+### Example
+
+```bash
+curl -X POST 'http://127.0.0.1:8000/api/v1/graph/rebuild'
+```
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "node_count": 96,
+  "edge_count": 207,
+  "source_chunk_count": 40,
+  "artifact_path": "/path/to/enterprise-knowledgeops-copilot/data/graph/knowledge_graph.json"
+}
+```
+
+### Error Behavior
+
+- Returns `INTERNAL_ERROR` if the graph artifact cannot be written.
+- Returns structured errors with `request_id` for validation or runtime failures.
+
+## GET `/api/v1/graph/nodes`
+
+Return paginated graph nodes.
+
+### Query Parameters
+
+- `type`: optional exact node type, for example `System`, `Policy`, `Role`, `TimeRequirement`.
+- `label_contains`: optional case-insensitive label substring.
+- `source_doc_id`: optional document lineage filter.
+- `offset`: default `0`.
+- `limit`: default `100`, minimum `1`, maximum `500`.
+
+### Example
+
+```bash
+curl 'http://127.0.0.1:8000/api/v1/graph/nodes?label_contains=ServiceNow&limit=10'
+```
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "total": 1,
+  "offset": 0,
+  "limit": 10,
+  "items": [
+    {
+      "node_id": "node:system:servicenow:bce79939",
+      "label": "ServiceNow",
+      "type": "System",
+      "source_doc_ids": ["it-incident-escalation-sop-v1-0"],
+      "source_chunk_ids": [
+        "chk:it-incident-escalation-sop-v1-0:purpose-and-scope:01:5a5092dbde:001"
+      ],
+      "mentions": ["ServiceNow"],
+      "confidence": 0.9,
+      "created_by": "rule_based_phase4"
+    }
+  ]
+}
+```
+
+### Error Behavior
+
+- Returns `GRAPH_UNAVAILABLE` if `data/graph/knowledge_graph.json` does not exist yet.
+- Rebuild the graph with `POST /api/v1/graph/rebuild` or `python scripts/rebuild_graph.py`.
+
+## GET `/api/v1/graph/edges`
+
+Return paginated graph edges with source chunk lineage and evidence quotes.
+
+### Query Parameters
+
+- `relation_type`: optional exact relation type, for example `REQUIRES`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `ESCALATES_TO`.
+- `source_doc_id`: optional document lineage filter.
+- `source_node_id`: optional exact source node ID.
+- `target_node_id`: optional exact target node ID.
+- `offset`: default `0`.
+- `limit`: default `100`, minimum `1`, maximum `500`.
+
+### Example
+
+```bash
+curl 'http://127.0.0.1:8000/api/v1/graph/edges?relation_type=USES_SYSTEM&limit=10'
+```
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "total": 3,
+  "offset": 0,
+  "limit": 10,
+  "items": [
+    {
+      "edge_id": "edge:uses-system:56e7625ca37a",
+      "source_node_id": "node:sop:it-incident-escalation-sop:249a9a61",
+      "target_node_id": "node:system:servicenow:bce79939",
+      "relation_type": "USES_SYSTEM",
+      "source_doc_id": "it-incident-escalation-sop-v1-0",
+      "source_chunk_id": "chk:it-incident-escalation-sop-v1-0:severity-1-workflow:01:557ff9999a:001",
+      "evidence_quote": "The IT Service Desk logs the incident in ServiceNow and assigns Severity 1 when the criteria are met.",
+      "confidence": 0.85,
+      "created_by": "rule_based_phase4"
+    }
+  ]
+}
+```
+
+### Error Behavior
+
+- Returns `GRAPH_UNAVAILABLE` if the graph has not been rebuilt.
+- Unknown filter values return an empty result set rather than an error.
+
+## GET `/api/v1/graph/neighborhood`
+
+Return a selected node, neighboring nodes, and connecting edges.
+
+### Query Parameters
+
+- `node_id`: required graph node ID.
+- `depth`: default `1`, minimum `1`, maximum `2`.
+
+Depth is intentionally capped at `2` to keep the local demo inspectable and prevent large accidental graph traversals.
+
+### Example
+
+```bash
+curl 'http://127.0.0.1:8000/api/v1/graph/neighborhood?node_id=node:system:servicenow:bce79939&depth=1'
+```
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "node_id": "node:system:servicenow:bce79939",
+  "depth": 1,
+  "selected_node": {
+    "node_id": "node:system:servicenow:bce79939",
+    "label": "ServiceNow",
+    "type": "System",
+    "source_doc_ids": ["it-incident-escalation-sop-v1-0"],
+    "source_chunk_ids": [
+      "chk:it-incident-escalation-sop-v1-0:purpose-and-scope:01:5a5092dbde:001"
+    ],
+    "mentions": ["ServiceNow"],
+    "confidence": 0.9,
+    "created_by": "rule_based_phase4"
+  },
+  "nodes": [],
+  "edges": []
+}
+```
+
+`nodes` and `edges` contain the selected node neighborhood in the real response.
+
+### Error Behavior
+
+- `depth > 2` returns `INVALID_REQUEST` with validation details.
+- Unknown `node_id` returns `INVALID_REQUEST`.
+- Missing graph artifact returns `GRAPH_UNAVAILABLE`.
+
+## Phase 4 Graph Limitations
+
+- Graph extraction is deterministic and rule-based.
+- Rules are tuned for the synthetic demo corpus.
+- This is portfolio/demo information extraction, not production-grade IE.
+- Graph endpoints are for inspection, not question answering.
+- Neo4j is not implemented in Phase 4.

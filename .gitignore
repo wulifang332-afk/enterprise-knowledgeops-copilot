@@ -17,6 +17,8 @@ data/knowledgeops.db
 data/knowledgeops.db-shm
 data/knowledgeops.db-wal
 data/audit/*.jsonl
+data/graph/*
+!data/graph/.gitkeep
 data/indexes/*
 !data/indexes/.gitkeep
 evaluation/reports/*.json

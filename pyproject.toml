@@ -9,6 +9,7 @@ dependencies = [
   "chromadb>=1.0",
   "fastapi>=0.115",
   "httpx>=0.28",
+  "networkx>=3.0",
   "numpy>=1.24",
   "streamlit>=1.55",
   "uvicorn>=0.34",

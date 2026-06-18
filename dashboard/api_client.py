@@ -34,6 +34,18 @@ class KnowledgeOpsAPIClient:
     def search(self, payload: dict[str, Any]) -> dict[str, Any]:
         return self._request("POST", "/api/v1/search", json=payload)
 
+    def graph_rebuild(self) -> dict[str, Any]:
+        return self._request("POST", "/api/v1/graph/rebuild")
+
+    def graph_nodes(self, params: dict[str, Any] | None = None) -> dict[str, Any]:
+        return self._request("GET", "/api/v1/graph/nodes", params=self._clean(params or {}))
+
+    def graph_edges(self, params: dict[str, Any] | None = None) -> dict[str, Any]:
+        return self._request("GET", "/api/v1/graph/edges", params=self._clean(params or {}))
+
+    def graph_neighborhood(self, *, node_id: str, depth: int = 1) -> dict[str, Any]:
+        return self._request("GET", "/api/v1/graph/neighborhood", params={"node_id": node_id, "depth": depth})
+
     def _request(self, method: str, path: str, **kwargs) -> dict[str, Any]:
         url = self.base_url.rstrip("/") + path
         try:
@@ -57,4 +69,3 @@ class KnowledgeOpsAPIClient:
     @staticmethod
     def _clean(params: dict[str, Any]) -> dict[str, Any]:
         return {key: value for key, value in params.items() if value not in (None, "", [])}
-

@@ -4,9 +4,9 @@
 
 This project is an Enterprise KnowledgeOps platform, not a generic chatbot.
 
-The current MVP-0 focuses on ingestion, retrieval, citations, and a KnowledgeOps dashboard. It turns synthetic enterprise documents into validated, chunked, searchable, and citation-traceable knowledge assets. The query-style search box in Streamlit is only a retrieval workspace for inspecting metadata, chunks, scores, and citations.
+The current build includes the accepted MVP-0 retrieval baseline plus Phase 4 graph inspection. It turns synthetic enterprise documents into validated, chunked, searchable, citation-traceable, and graph-inspectable knowledge assets. The query-style search box and graph pages in Streamlit are inspection workspaces, not a chatbot.
 
-## Current MVP-0 Capabilities
+## Current Capabilities Through Phase 4
 
 - Ingest 8 synthetic enterprise Markdown documents from `data/raw/`.
 - Validate required metadata with Pydantic v2 schemas.
@@ -17,19 +17,22 @@ The current MVP-0 focuses on ingestion, retrieval, citations, and a KnowledgeOps
 - Inspect BM25, vector, and hybrid scores.
 - Inspect citations, quote hashes, offsets, and source chunks.
 - Run a deterministic retrieval evaluation set.
+- Extract a deterministic rule-based knowledge graph from processed chunks.
+- Persist a local NetworkX graph artifact under `data/graph/`.
+- Inspect graph nodes, edges, neighborhoods, relation types, source chunks, and evidence quotes through FastAPI and Streamlit Graph Explorer.
 
 ## Not Implemented Yet
 
 - `/api/v1/query`
 - Answer generation
-- GraphRAG
-- Graph extraction
+- GraphRAG answer synthesis
 - Guardrails
 - Access-control simulation
 - Feedback loop
 - Full evaluation dashboard
+- Neo4j adapter
 
-These are planned for later phases and are intentionally absent from MVP-0.
+These are planned for later phases and are intentionally absent from the current graph-inspection build.
 
 ## Setup
 
@@ -68,6 +71,12 @@ Rebuild indexes:
 python scripts/rebuild_indexes.py
 ```
 
+Rebuild the graph:
+
+```bash
+python scripts/rebuild_graph.py
+```
+
 Run retrieval evaluation:
 
 ```bash
@@ -97,10 +106,11 @@ python scripts/demo_mvp0_check.py
 Latest checkpoint:
 
 ```text
-Tests: 28 passed
+Tests: 40 passed
 BM25 hit_rate@5: 20/20, 100%
 Vector hit_rate@5: 20/20, 100%
 Hybrid hit_rate@5: 20/20, 100%
+Graph rebuild: 96 nodes, 207 edges, 40 source chunks
 MVP-0 demo checkpoint passed
 ```
 
@@ -111,6 +121,18 @@ The 100% retrieval score is on a deterministic synthetic evaluation set. It is u
 - `Vendor Payment Request Form`
 - `ServiceNow Severity 1 15 minutes`
 - `APAC EU cross-border transfer approval`
+
+## Example Graph Objects
+
+- Node: `Vendor Payment Request Form`
+- Node: `ServiceNow`
+- Node: `Severity 1`
+- Node: `15 minutes`
+- Node: `DPO`
+- Edge: `Vendor Payment Approval Policy REQUIRES Vendor Payment Request Form`
+- Edge: `IT Incident Escalation SOP USES_SYSTEM ServiceNow`
+- Edge: `Severity 1 HAS_TIME_REQUIREMENT 15 minutes`
+- Edge: `Cross-border Data Handling Policy ESCALATES_TO DPO`
 
 ## Local URLs
 
@@ -132,10 +154,12 @@ After starting the services:
 - Synthetic data only.
 - Mock embeddings are lexical/hash based.
 - No answer generation yet.
-- No GraphRAG yet.
-- No graph extraction yet.
+- No GraphRAG answer synthesis yet.
 - No guardrails or access-control simulation yet.
 - No feedback loop yet.
 - No full evaluation dashboard yet.
+- No Neo4j adapter yet.
+- Graph extraction is deterministic and rule-based, tuned for the synthetic demo corpus, and not production-grade information extraction.
+- Graph endpoints are for inspection only, not question answering.
 - FastAPI must be running before the Streamlit dashboard can call the backend.
-- Generated local artifacts such as SQLite databases, audit logs, and indexes can be regenerated from the included synthetic documents.
+- Generated local artifacts such as SQLite databases, audit logs, indexes, and graph JSON can be regenerated from the included synthetic documents.
