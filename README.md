@@ -2,15 +2,9 @@
 
 Enterprise KnowledgeOps Copilot
 
-企业知识库自动化构建、可信检索与知识图谱探索平台
+Enterprise KnowledgeOps Copilot | Personal Project
+Built a local-first enterprise knowledge platform with FastAPI and Streamlit, supporting document ingestion, metadata validation, deterministic chunking, BM25/vector/hybrid retrieval, citation inspection, rule-based knowledge graph extraction, graph exploration, and Phase 5A query planning. Implemented `/api/v1/query` to classify enterprise questions, route them to retrieval/graph evidence workflows, return structured evidence packs, and refuse out-of-scope or unsupported requests. Verified clean-clone reproducibility with 71 automated tests.
 
-Enterprise KnowledgeOps Copilot is a local-first enterprise knowledge platform, not a generic chatbot.
-
-The current development build extends the v0.2.2 graph baseline with Phase 5A query planning. It turns synthetic enterprise policy and SOP documents into validated, chunked, searchable, citation-traceable, graph-inspectable, and evidence-pack-ready knowledge assets. It includes a FastAPI backend, Streamlit KnowledgeOps dashboard, BM25/vector/hybrid retrieval, citation inspection, deterministic rule-based graph extraction, a NetworkX graph store, graph inspection APIs, a Streamlit Graph Explorer, and a Streamlit Query Planner.
-
-The query-style search box, graph pages, and Query Planner are inspection workspaces for enterprise knowledge assets. They are not chatbot interfaces and do not perform answer generation.
-
-GraphRAG-style governed answer generation is planned for a later phase. It is not implemented in the current release.
 
 ## Current Capabilities Through Phase 5A
 
