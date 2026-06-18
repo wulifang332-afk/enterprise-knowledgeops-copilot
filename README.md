@@ -1,10 +1,16 @@
 # Enterprise KnowledgeOps Copilot
 
-企业知识库自动化构建与 GraphRAG-ready 智能应用路线图
+Enterprise KnowledgeOps Copilot
 
-This project is an Enterprise KnowledgeOps platform, not a generic chatbot.
+企业知识库自动化构建、可信检索与知识图谱探索平台
 
-The current build includes the accepted MVP-0 retrieval baseline plus Phase 4 graph inspection. It turns synthetic enterprise documents into validated, chunked, searchable, citation-traceable, and graph-inspectable knowledge assets. The query-style search box and graph pages in Streamlit are inspection workspaces, not a chatbot.
+Enterprise KnowledgeOps Copilot is a local-first enterprise knowledge platform, not a generic chatbot.
+
+The current release, v0.2.1-graph, turns synthetic enterprise policy and SOP documents into validated, chunked, searchable, citation-traceable, and graph-inspectable knowledge assets. It includes a FastAPI backend, Streamlit KnowledgeOps dashboard, BM25/vector/hybrid retrieval, citation inspection, deterministic rule-based graph extraction, a NetworkX graph store, graph inspection APIs, and a Streamlit Graph Explorer.
+
+The query-style search box and graph pages are inspection workspaces for enterprise knowledge assets. They are not chatbot interfaces and do not perform answer generation.
+
+GraphRAG-style governed answer generation is planned for a later phase. It is not implemented in the current release.
 
 ## Current Capabilities Through Phase 4
 
