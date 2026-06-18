@@ -10,6 +10,7 @@
 - Phase 4 uses NetworkX as the local graph backend. Neo4j remains a future optional adapter.
 - Phase 4 suppresses generic `MENTIONS` edges when stronger same-pair relations exist and deduplicates document-level metadata edges to reduce graph noise.
 - Processed JSON preserves an existing `ingested_at` value when the source content hash is unchanged. This keeps clean-clone demo runs from dirtying tracked processed artifacts while still allowing the SQLite registry to record a fresh ingestion timestamp.
+- Phase 5A `/api/v1/query` returns evidence packs only. It intentionally does not generate final answers, call external LLMs, or perform GraphRAG synthesis.
 
 ## MVP-0 Checkpoint Commands
 
@@ -22,7 +23,7 @@ python scripts/rebuild_graph.py
 python scripts/demo_mvp0_check.py
 ```
 
-The latest Phase 4 checkpoint reported 40 tests passing, BM25/vector/hybrid retrieval hit_rate@5 of 20/20, a graph rebuild of 96 nodes and 207 edges from 40 chunks, and a passing MVP-0 demo checkpoint.
+The latest Phase 5A checkpoint reported 71 tests passing, BM25/vector/hybrid retrieval hit_rate@5 of 20/20, a graph rebuild of 96 nodes and 207 edges from 40 chunks, and a passing MVP-0 demo checkpoint.
 
 ## Current Known Limitations
 

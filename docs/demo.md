@@ -1,6 +1,6 @@
-# MVP-0 + Phase 4 Demo Guide
+# MVP-0 + Phase 5A Demo Guide
 
-This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, and graph inspection.
+This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, and Phase 5A query evidence planning.
 
 ## Prerequisites
 
@@ -163,6 +163,29 @@ Example graph objects:
 - `IT Incident Escalation SOP USES_SYSTEM ServiceNow`
 - `Severity 1 HAS_TIME_REQUIREMENT 15 minutes`
 - `Cross-border Data Handling Policy ESCALATES_TO DPO`
+
+### 12. Open Query Planner
+
+Use the Streamlit sidebar to open `Query Planner`.
+
+This page is for governed query planning and evidence-pack inspection. It does not generate final answers and does not behave like a chatbot.
+
+Run these example queries:
+
+```text
+Which approval form is required for vendor payments?
+What system is used for Severity 1 incidents?
+How does cross-border data approval work between APAC and EU?
+Show graph evidence around ServiceNow.
+What is the capital of France?
+```
+
+Expected behavior:
+
+- Enterprise questions return a detected intent, selected route, retrieval evidence, graph evidence, citations, and limitations.
+- Out-of-scope questions such as `What is the capital of France?` return a structured refusal.
+- Unsupported final-answer requests return a structured refusal.
+- The page clearly states: `Phase 5A returns evidence packs only. Final answer generation is planned for Phase 5B.`
 
 ## Optional CLI Demo Check
 

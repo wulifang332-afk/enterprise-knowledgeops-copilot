@@ -90,12 +90,20 @@ def test_graph_neighborhood_rejects_depth_above_limit(tmp_path: Path) -> None:
     assert "errors" in payload["details"]
 
 
-def test_query_endpoint_remains_absent_after_phase4(tmp_path: Path) -> None:
+def test_query_endpoint_returns_evidence_pack_after_phase5a(tmp_path: Path) -> None:
     client = make_client(tmp_path)
+    client.post("/api/v1/ingest", json={"ingest_all": True, "rebuild_indexes": True})
+    client.post("/api/v1/graph/rebuild")
 
-    response = client.post("/api/v1/query", json={"query": "Who approves vendor payments?"})
+    response = client.post("/api/v1/query", json={"query": "Which approval form is required for vendor payments?"})
 
-    assert response.status_code == 404
+    assert response.status_code == 200
     payload = response.json()
-    assert payload["error_code"] == "INVALID_REQUEST"
     assert payload["request_id"]
+    assert payload["route"] in {
+        "hybrid_retrieval_with_policy_filters",
+        "hybrid_retrieval_with_graph_context",
+    }
+    assert payload["retrieval_evidence"]
+    assert payload["citations"]
+    assert "answer" not in payload

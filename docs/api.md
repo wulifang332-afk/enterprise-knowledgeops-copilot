@@ -1,4 +1,4 @@
-# Phase 4 API Reference
+# Phase 5A API Reference
 
 Base URL:
 
@@ -6,7 +6,7 @@ Base URL:
 http://127.0.0.1:8000
 ```
 
-All Phase 4 responses include `request_id`. Structured errors use:
+All Phase 5A responses include `request_id`. Structured errors use:
 
 ```json
 {
@@ -18,7 +18,7 @@ All Phase 4 responses include `request_id`. Structured errors use:
 }
 ```
 
-`/api/v1/query` is intentionally not available until Phase 5, when governed answer generation and GraphRAG answer synthesis are implemented.
+`/api/v1/query` is available in Phase 5A as a governed evidence-pack endpoint. It does not generate final natural-language answers. Answer generation and GraphRAG answer synthesis are planned for Phase 5B or later.
 
 ## POST `/api/v1/ingest`
 
@@ -297,6 +297,98 @@ Response:
 }
 ```
 
+## POST `/api/v1/query`
+
+Classify a question, choose a deterministic evidence route, and return a structured evidence pack. This endpoint does not produce a final answer.
+
+### Request
+
+```json
+{
+  "query": "Which approval form is required for vendor payments?",
+  "top_k": 5,
+  "include_graph": true,
+  "filters": {
+    "departments": ["Finance"]
+  }
+}
+```
+
+`filters` uses the same typed search filter object as `/api/v1/search`.
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "query": "Which approval form is required for vendor payments?",
+  "intent": "policy_lookup",
+  "route": "hybrid_retrieval_with_policy_filters",
+  "status": "evidence_ready",
+  "retrieval_evidence": [
+    {
+      "rank": 1,
+      "doc_id": "vendor-payment-approval-policy-v1-0",
+      "section_title": "Purpose and Scope",
+      "hybrid_score": 0.6794635891,
+      "citation": {
+        "citation_id": "CIT-1",
+        "doc_id": "vendor-payment-approval-policy-v1-0",
+        "quote_hash": "48f86308eaad71cf3502199bc7e966431b0a24a588a65f98b02134ce07e27dd7"
+      }
+    }
+  ],
+  "graph_evidence": {
+    "matched_nodes": [
+      {
+        "label": "Vendor Payment Request Form",
+        "type": "Form"
+      }
+    ],
+    "edges": [
+      {
+        "relation_type": "REQUIRES",
+        "source_doc_id": "vendor-payment-approval-policy-v1-0",
+        "source_chunk_id": "chk:vendor-payment-approval-policy-v1-0:required-documents:01:353e30e0d4:001",
+        "evidence_quote": "## Required Documents Every vendor payment request must include a Vendor Payment Request Form..."
+      }
+    ],
+    "relation_types": ["REQUIRES"]
+  },
+  "citations": [
+    {
+      "citation_id": "CIT-1",
+      "doc_id": "vendor-payment-approval-policy-v1-0"
+    }
+  ],
+  "refusal_reason": null,
+  "limitations": [
+    "Phase 5A returns evidence packs only. It does not generate final natural-language answers."
+  ],
+  "next_phase_note": "Final answer generation is planned for Phase 5B."
+}
+```
+
+### Refusal Snippet
+
+```json
+{
+  "intent": "unsupported",
+  "route": "structured_refusal",
+  "status": "refused",
+  "retrieval_evidence": [],
+  "graph_evidence": {
+    "matched_nodes": [],
+    "neighboring_nodes": [],
+    "edges": [],
+    "relation_types": []
+  },
+  "citations": [],
+  "refusal_reason": "UNSUPPORTED_IN_PHASE_5A",
+  "next_phase_note": "Final answer generation is planned for Phase 5B."
+}
+```
+
 ## POST `/api/v1/graph/rebuild`
 
 Rebuild the deterministic rule-based graph from processed chunks under `data/processed/` and persist the NetworkX graph artifact under `data/graph/`.
@@ -475,10 +567,10 @@ curl 'http://127.0.0.1:8000/api/v1/graph/neighborhood?node_id=node:system:servic
 - Unknown `node_id` returns `INVALID_REQUEST`.
 - Missing graph artifact returns `GRAPH_UNAVAILABLE`.
 
-## Phase 4 Graph Limitations
+## Phase 4 Graph Layer Limitations in the Phase 5A Release
 
 - Graph extraction is deterministic and rule-based.
 - Rules are tuned for the synthetic demo corpus.
 - This is portfolio/demo information extraction, not production-grade IE.
 - Graph endpoints are for inspection, not question answering.
-- Neo4j is not implemented in Phase 4.
+- Neo4j is not implemented in the current Phase 5A release.

@@ -7,6 +7,7 @@ from fastapi import Depends
 from backend.app.core.settings import AppSettings
 from backend.app.graph.service import GraphService
 from backend.app.ingestion.service import IngestionService
+from backend.app.query.service import QueryPlanningService
 from backend.app.retrieval.indexing import IndexRebuildService
 from backend.app.retrieval.service import RetrievalSearchService
 
@@ -30,3 +31,7 @@ def get_retrieval_search_service(settings: AppSettings = Depends(get_settings)) 
 
 def get_graph_service(settings: AppSettings = Depends(get_settings)) -> GraphService:
     return GraphService(settings)
+
+
+def get_query_planning_service(settings: AppSettings = Depends(get_settings)) -> QueryPlanningService:
+    return QueryPlanningService(settings)

@@ -6,13 +6,13 @@ Enterprise KnowledgeOps Copilot
 
 Enterprise KnowledgeOps Copilot is a local-first enterprise knowledge platform, not a generic chatbot.
 
-The current release, v0.2.1-graph, turns synthetic enterprise policy and SOP documents into validated, chunked, searchable, citation-traceable, and graph-inspectable knowledge assets. It includes a FastAPI backend, Streamlit KnowledgeOps dashboard, BM25/vector/hybrid retrieval, citation inspection, deterministic rule-based graph extraction, a NetworkX graph store, graph inspection APIs, and a Streamlit Graph Explorer.
+The current development build extends the v0.2.2 graph baseline with Phase 5A query planning. It turns synthetic enterprise policy and SOP documents into validated, chunked, searchable, citation-traceable, graph-inspectable, and evidence-pack-ready knowledge assets. It includes a FastAPI backend, Streamlit KnowledgeOps dashboard, BM25/vector/hybrid retrieval, citation inspection, deterministic rule-based graph extraction, a NetworkX graph store, graph inspection APIs, a Streamlit Graph Explorer, and a Streamlit Query Planner.
 
-The query-style search box and graph pages are inspection workspaces for enterprise knowledge assets. They are not chatbot interfaces and do not perform answer generation.
+The query-style search box, graph pages, and Query Planner are inspection workspaces for enterprise knowledge assets. They are not chatbot interfaces and do not perform answer generation.
 
 GraphRAG-style governed answer generation is planned for a later phase. It is not implemented in the current release.
 
-## Current Capabilities Through Phase 4
+## Current Capabilities Through Phase 5A
 
 - Ingest 8 synthetic enterprise Markdown documents from `data/raw/`.
 - Validate required metadata with Pydantic v2 schemas.
@@ -26,10 +26,13 @@ GraphRAG-style governed answer generation is planned for a later phase. It is no
 - Extract a deterministic rule-based knowledge graph from processed chunks.
 - Persist a local NetworkX graph artifact under `data/graph/`.
 - Inspect graph nodes, edges, neighborhoods, relation types, source chunks, and evidence quotes through FastAPI and Streamlit Graph Explorer.
+- Classify enterprise questions into deterministic Phase 5A intents.
+- Route questions to retrieval, graph, combined evidence, or structured refusal paths.
+- Return `/api/v1/query` evidence packs with retrieval evidence, graph evidence, citations, limitations, and a Phase 5B note.
+- Inspect evidence packs in the Streamlit Query Planner.
 
 ## Not Implemented Yet
 
-- `/api/v1/query`
 - Answer generation
 - GraphRAG answer synthesis
 - Guardrails
@@ -38,7 +41,7 @@ GraphRAG-style governed answer generation is planned for a later phase. It is no
 - Full evaluation dashboard
 - Neo4j adapter
 
-These are planned for later phases and are intentionally absent from the current graph-inspection build.
+These are planned for later phases and are intentionally absent from the current evidence-pack build.
 
 ## Setup
 
@@ -112,7 +115,7 @@ python scripts/demo_mvp0_check.py
 Latest checkpoint:
 
 ```text
-Tests: 40 passed
+Tests: 71 passed
 BM25 hit_rate@5: 20/20, 100%
 Vector hit_rate@5: 20/20, 100%
 Hybrid hit_rate@5: 20/20, 100%
@@ -161,6 +164,7 @@ After starting the services:
 - Mock embeddings are lexical/hash based.
 - No answer generation yet.
 - No GraphRAG answer synthesis yet.
+- `/api/v1/query` returns evidence packs only, not final answers.
 - No guardrails or access-control simulation yet.
 - No feedback loop yet.
 - No full evaluation dashboard yet.

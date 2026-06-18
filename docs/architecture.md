@@ -1,6 +1,6 @@
-# MVP-0 + Phase 4 Architecture
+# Phase 5A Architecture
 
-The current build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, graph extraction, graph persistence, and thin API/UI inspection layers.
+The current Phase 5A build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, Phase 4 graph extraction and persistence, query planning, evidence-pack construction, and thin API/UI inspection layers.
 
 ## Current Components
 
@@ -101,20 +101,22 @@ The current build is a local-first KnowledgeOps pipeline. It focuses on determin
 7. BM25 and Chroma indexes are rebuilt from processed chunks.
 8. Search results are fused and citations are built from chunk offsets.
 9. `scripts/rebuild_graph.py` extracts graph nodes and edges from processed chunks and persists a NetworkX graph artifact under `data/graph/`.
-10. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, and graph inspection.
-11. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer.
+10. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, graph inspection, and Phase 5A query evidence planning.
+11. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer and Query Planner.
 12. `scripts/demo_mvp0_check.py` verifies the MVP-0 retrieval demo path from CLI.
 
-## Graph Layer
+## Phase 4 Graph Layer in the Phase 5A Release
 
-Phase 4 graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
+The Phase 4 graph layer remains part of the current Phase 5A release. Graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
 
 The graph layer is for inspection, lineage review, and portfolio demonstration. It is not production-grade information extraction and does not answer questions.
 
+## Query Planning Layer
+
+Phase 5A adds deterministic query intent classification, evidence route selection, and evidence-pack construction. `/api/v1/query` returns retrieval evidence, graph evidence, citations, refusal reasons, limitations, and a Phase 5B note. It does not synthesize a final natural-language answer.
+
 ## Not Present Yet
 
-- GraphRAG router
-- `/api/v1/query`
 - Answer generation
 - GraphRAG answer synthesis
 - Guardrails
