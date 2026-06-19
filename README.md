@@ -3,10 +3,12 @@
 Enterprise KnowledgeOps Copilot
 
 Enterprise KnowledgeOps Copilot | Personal Project
-Built a local-first enterprise knowledge platform with FastAPI and Streamlit, supporting document ingestion, metadata validation, deterministic chunking, BM25/vector/hybrid retrieval, citation inspection, rule-based knowledge graph extraction, graph exploration, and Phase 5A query planning. Implemented `/api/v1/query` to classify enterprise questions, route them to retrieval/graph evidence workflows, return structured evidence packs, and refuse out-of-scope or unsupported requests. Verified clean-clone reproducibility with 71 automated tests.
+Built a local-first enterprise knowledge platform with FastAPI and Streamlit, supporting document ingestion, metadata validation, deterministic chunking, BM25/vector/hybrid retrieval, citation inspection, rule-based knowledge graph extraction, graph exploration, query planning, structured evidence packs, and Phase 5B citation-grounded answer generation. `/api/v1/query` classifies enterprise questions, routes them to retrieval/graph evidence workflows, preserves evidence-pack behavior by default, and optionally composes deterministic answers only from returned citations. Out-of-scope, unsupported, and insufficient-evidence requests are refused instead of answered.
+
+This is an Enterprise KnowledgeOps platform, not a generic chatbot.
 
 
-## Current Capabilities Through Phase 5A
+## Current Capabilities Through Phase 5B
 
 - Ingest 8 synthetic enterprise Markdown documents from `data/raw/`.
 - Validate required metadata with Pydantic v2 schemas.
@@ -20,22 +22,23 @@ Built a local-first enterprise knowledge platform with FastAPI and Streamlit, su
 - Extract a deterministic rule-based knowledge graph from processed chunks.
 - Persist a local NetworkX graph artifact under `data/graph/`.
 - Inspect graph nodes, edges, neighborhoods, relation types, source chunks, and evidence quotes through FastAPI and Streamlit Graph Explorer.
-- Classify enterprise questions into deterministic Phase 5A intents.
+- Classify enterprise questions into deterministic query intents.
 - Route questions to retrieval, graph, combined evidence, or structured refusal paths.
-- Return `/api/v1/query` evidence packs with retrieval evidence, graph evidence, citations, limitations, and a Phase 5B note.
-- Inspect evidence packs in the Streamlit Query Planner.
+- Return `/api/v1/query` evidence packs with retrieval evidence, graph evidence, citations, limitations, and answer-generation status.
+- Optionally generate citation-grounded answers when `generate_answer=true` and evidence is sufficient.
+- Refuse out-of-scope, unsupported, or insufficient-evidence requests without fabricating an answer.
+- Inspect evidence packs and optional grounded answers in the Streamlit Query Planner.
 
 ## Not Implemented Yet
 
-- Answer generation
 - GraphRAG answer synthesis
-- Guardrails
+- Advanced enterprise guardrails
 - Access-control simulation
 - Feedback loop
 - Full evaluation dashboard
 - Neo4j adapter
 
-These are planned for later phases and are intentionally absent from the current evidence-pack build.
+These are planned for later phases and are intentionally absent from the current citation-grounded evidence build. External LLM synthesis is not required for the default local demo.
 
 ## Setup
 
@@ -109,7 +112,7 @@ python scripts/demo_mvp0_check.py
 Latest checkpoint:
 
 ```text
-Tests: 71 passed
+Tests: 85 passed
 BM25 hit_rate@5: 20/20, 100%
 Vector hit_rate@5: 20/20, 100%
 Hybrid hit_rate@5: 20/20, 100%
@@ -124,6 +127,15 @@ The 100% retrieval score is on a deterministic synthetic evaluation set. It is u
 - `Vendor Payment Request Form`
 - `ServiceNow Severity 1 15 minutes`
 - `APAC EU cross-border transfer approval`
+
+## Example Query Planner Prompts
+
+- `Which approval form is required for vendor payments?`
+- `What system is used for Severity 1 incidents?`
+- `How does cross-border data approval work between APAC and EU?`
+- `What is the capital of France?`
+
+Use `generate_answer=true` to request a citation-grounded answer. Without that flag, `/api/v1/query` returns the Phase 5A evidence pack only.
 
 ## Example Graph Objects
 
@@ -156,10 +168,10 @@ After starting the services:
 
 - Synthetic data only.
 - Mock embeddings are lexical/hash based.
-- No answer generation yet.
+- Answer generation is deterministic and template-based; it is optimized for grounded portfolio demonstration, not conversational fluency.
 - No GraphRAG answer synthesis yet.
-- `/api/v1/query` returns evidence packs only, not final answers.
-- No guardrails or access-control simulation yet.
+- `/api/v1/query` returns evidence packs by default; answers are opt-in with `generate_answer=true`.
+- No advanced guardrails or access-control simulation yet.
 - No feedback loop yet.
 - No full evaluation dashboard yet.
 - No Neo4j adapter yet.

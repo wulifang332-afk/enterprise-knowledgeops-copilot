@@ -6,7 +6,7 @@ from .schema import QueryIntent
 
 
 class RuleBasedQueryClassifier:
-    """Deterministic Phase 5A classifier. It plans evidence routes only."""
+    """Deterministic query classifier for evidence routing and answer eligibility."""
 
     OUT_OF_SCOPE_TERMS = {
         "capital of",

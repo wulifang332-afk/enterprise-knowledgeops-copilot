@@ -90,7 +90,7 @@ def test_graph_neighborhood_rejects_depth_above_limit(tmp_path: Path) -> None:
     assert "errors" in payload["details"]
 
 
-def test_query_endpoint_returns_evidence_pack_after_phase5a(tmp_path: Path) -> None:
+def test_query_endpoint_returns_evidence_pack_without_answer_by_default(tmp_path: Path) -> None:
     client = make_client(tmp_path)
     client.post("/api/v1/ingest", json={"ingest_all": True, "rebuild_indexes": True})
     client.post("/api/v1/graph/rebuild")
@@ -106,4 +106,6 @@ def test_query_endpoint_returns_evidence_pack_after_phase5a(tmp_path: Path) -> N
     }
     assert payload["retrieval_evidence"]
     assert payload["citations"]
-    assert "answer" not in payload
+    assert payload["answer"] is None
+    assert payload["answer_generation_status"] == "not_requested"
+    assert "final_answer" not in payload

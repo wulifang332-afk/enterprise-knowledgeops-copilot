@@ -14,7 +14,7 @@ from dashboard.api_client import APIClientError, KnowledgeOpsAPIClient
 
 st.set_page_config(page_title="Query Planner", page_icon="QP", layout="wide")
 st.title("Query Planner")
-st.caption("Phase 5A returns governed evidence packs only. Final answer generation is planned for Phase 5B.")
+st.caption("Phase 5B can generate citation-grounded answers from returned evidence. Evidence inspection remains visible.")
 
 client = KnowledgeOpsAPIClient()
 
@@ -28,6 +28,7 @@ with st.sidebar:
     st.subheader("Planning Controls")
     top_k = st.slider("Top K Retrieval Evidence", min_value=1, max_value=20, value=5)
     include_graph = st.toggle("Include Graph Evidence", value=True)
+    generate_answer = st.checkbox("Generate citation-grounded answer", value=False)
 
 query = st.text_input(
     "Enterprise knowledge question",
@@ -39,6 +40,7 @@ if st.button("Build Evidence Pack", type="primary"):
         "query": query,
         "top_k": top_k,
         "include_graph": include_graph,
+        "generate_answer": generate_answer,
     }
     with st.spinner("Classifying query, selecting route, and collecting evidence..."):
         try:
@@ -52,14 +54,16 @@ if not pack:
     st.info("Build an evidence pack to inspect routing decisions, cited retrieval evidence, and graph evidence.")
     st.stop()
 
-metrics = st.columns(4)
+metrics = st.columns(5)
 metrics[0].metric("Intent", pack["intent"])
 metrics[1].metric("Route", pack["route"])
 metrics[2].metric("Status", pack["status"])
 metrics[3].metric("Citations", len(pack["citations"]))
+metrics[4].metric("Answer", pack["answer_generation_status"])
 
 st.caption(f"request_id: {pack['request_id']}")
 st.info(pack["next_phase_note"])
+st.caption("Phase 5B answers are generated only from returned evidence. If evidence is insufficient, the system refuses to answer.")
 
 if pack["refusal_reason"]:
     st.warning(f"Refusal reason: {pack['refusal_reason']}")
@@ -68,6 +72,32 @@ if pack["limitations"]:
     with st.expander("Limitations and Phase Boundary", expanded=True):
         for item in pack["limitations"]:
             st.write(f"- {item}")
+
+st.subheader("Citation-Grounded Answer")
+if pack["answer_generation_status"] == "generated":
+    st.success("Answer generated from returned evidence.")
+    st.write(pack["answer"])
+    if pack["grounding_summary"]:
+        st.caption(pack["grounding_summary"])
+    answer_citation_rows = [
+        {
+            "citation_id": citation["citation_id"],
+            "doc_id": citation["doc_id"],
+            "chunk_id": citation["chunk_id"],
+            "title": citation["title"],
+            "section_title": citation["section_title"],
+        }
+        for citation in pack["answer_citations"]
+    ]
+    if answer_citation_rows:
+        st.dataframe(pd.DataFrame(answer_citation_rows), use_container_width=True, hide_index=True)
+elif pack["answer_generation_status"] == "not_requested":
+    st.info("Answer generation was not requested. Enable the checkbox to request a citation-grounded answer.")
+else:
+    reason = pack.get("answer_refusal_reason") or pack.get("refusal_reason") or "NOT_GENERATED"
+    st.warning(f"Answer not generated: {reason}")
+    if pack.get("grounding_summary"):
+        st.caption(pack["grounding_summary"])
 
 st.subheader("Retrieval Evidence")
 retrieval_rows = [

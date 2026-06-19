@@ -2,7 +2,7 @@
 
 This document covers only the current retrieval evaluation implemented before MVP-0 stabilization.
 
-It does not evaluate answer generation, GraphRAG, guardrails, feedback, or full end-to-end RAG quality. Those capabilities are not implemented yet.
+Phase 5B adds opt-in deterministic citation-grounded answer generation. The retrieval evaluation in this document evaluates retrieval quality only and does not yet measure answer quality, citation completeness, or generated-answer faithfulness.
 
 ## Dataset
 

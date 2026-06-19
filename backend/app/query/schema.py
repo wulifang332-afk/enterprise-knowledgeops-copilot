@@ -40,10 +40,25 @@ class RefusalReason(StrEnum):
     UNSUPPORTED_IN_PHASE_5A = "UNSUPPORTED_IN_PHASE_5A"
 
 
+class AnswerGenerationStatus(StrEnum):
+    NOT_REQUESTED = "not_requested"
+    GENERATED = "generated"
+    REFUSED = "refused"
+    INSUFFICIENT_EVIDENCE = "insufficient_evidence"
+
+
+class AnswerRefusalReason(StrEnum):
+    OUT_OF_SCOPE = "OUT_OF_SCOPE"
+    UNSUPPORTED_IN_PHASE_5A = "UNSUPPORTED_IN_PHASE_5A"
+    INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE"
+    NO_CITABLE_EVIDENCE = "NO_CITABLE_EVIDENCE"
+
+
 class QueryRequest(StrictBaseModel):
     query: str = Field(min_length=2, max_length=2000)
     top_k: int = Field(default=5, ge=1, le=20)
     include_graph: bool = True
+    generate_answer: bool = False
     filters: SearchFilters = Field(default_factory=SearchFilters)
 
 
@@ -93,5 +108,11 @@ class EvidencePack(StrictBaseModel):
     citations: list[Citation] = Field(default_factory=list)
     refusal_reason: RefusalReason | None = None
     limitations: list[str] = Field(default_factory=list)
-    next_phase_note: str = "Final answer generation is planned for Phase 5B."
-
+    next_phase_note: str = (
+        "Phase 5B can generate citation-grounded answers when generate_answer=true and evidence is sufficient."
+    )
+    answer: str | None = Field(default=None, min_length=1, max_length=4000)
+    answer_citations: list[Citation] = Field(default_factory=list)
+    answer_generation_status: AnswerGenerationStatus = AnswerGenerationStatus.NOT_REQUESTED
+    answer_refusal_reason: AnswerRefusalReason | None = None
+    grounding_summary: str | None = Field(default=None, min_length=1, max_length=1000)

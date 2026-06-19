@@ -17,8 +17,11 @@ from backend.app.schemas.operational import ErrorResponse
 def create_app() -> FastAPI:
     app = FastAPI(
         title="Enterprise KnowledgeOps Copilot API",
-        version="0.5.0",
-        description="Phase 5A MVP API for ingestion, retrieval search, graph inspection, and query evidence planning.",
+        version="0.5.1",
+        description=(
+            "Phase 5B API for ingestion, retrieval search, graph inspection, query evidence planning, "
+            "and optional citation-grounded answer generation."
+        ),
     )
 
     @app.middleware("http")

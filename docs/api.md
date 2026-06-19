@@ -1,4 +1,4 @@
-# Phase 5A API Reference
+# Phase 5B API Reference
 
 Base URL:
 
@@ -6,7 +6,7 @@ Base URL:
 http://127.0.0.1:8000
 ```
 
-All Phase 5A responses include `request_id`. Structured errors use:
+All Phase 5B responses include `request_id`. Structured errors use:
 
 ```json
 {
@@ -18,7 +18,7 @@ All Phase 5A responses include `request_id`. Structured errors use:
 }
 ```
 
-`/api/v1/query` is available in Phase 5A as a governed evidence-pack endpoint. It does not generate final natural-language answers. Answer generation and GraphRAG answer synthesis are planned for Phase 5B or later.
+`/api/v1/query` is available as a governed evidence-pack endpoint. By default it preserves Phase 5A behavior and returns evidence only. When `generate_answer=true`, Phase 5B can add a deterministic citation-grounded answer if the returned evidence is sufficient. It does not call external LLM APIs and does not perform GraphRAG final-response synthesis.
 
 ## POST `/api/v1/ingest`
 
@@ -299,7 +299,7 @@ Response:
 
 ## POST `/api/v1/query`
 
-Classify a question, choose a deterministic evidence route, and return a structured evidence pack. This endpoint does not produce a final answer.
+Classify a question, choose a deterministic evidence route, and return a structured evidence pack. If `generate_answer=true`, the response can also include a citation-grounded answer composed only from returned evidence.
 
 ### Request
 
@@ -308,6 +308,7 @@ Classify a question, choose a deterministic evidence route, and return a structu
   "query": "Which approval form is required for vendor payments?",
   "top_k": 5,
   "include_graph": true,
+  "generate_answer": false,
   "filters": {
     "departments": ["Finance"]
   }
@@ -315,6 +316,23 @@ Classify a question, choose a deterministic evidence route, and return a structu
 ```
 
 `filters` uses the same typed search filter object as `/api/v1/search`.
+
+`generate_answer` defaults to `false`. When omitted or false, `/api/v1/query` returns the Phase 5A evidence pack behavior with `answer=null` and `answer_generation_status="not_requested"`.
+
+### Answer Generation Status Values
+
+- `not_requested`
+- `generated`
+- `refused`
+- `insufficient_evidence`
+
+`answer_refusal_reason` can be:
+
+- `OUT_OF_SCOPE`
+- `UNSUPPORTED_IN_PHASE_5A`
+- `INSUFFICIENT_EVIDENCE`
+- `NO_CITABLE_EVIDENCE`
+- `null`
 
 ### Response Snippet
 
@@ -363,9 +381,59 @@ Classify a question, choose a deterministic evidence route, and return a structu
   ],
   "refusal_reason": null,
   "limitations": [
-    "Phase 5A returns evidence packs only. It does not generate final natural-language answers."
+    "Phase 5B returns citation-grounded answers only when generate_answer=true and evidence is sufficient."
   ],
-  "next_phase_note": "Final answer generation is planned for Phase 5B."
+  "next_phase_note": "Phase 5B can generate citation-grounded answers when generate_answer=true and evidence is sufficient.",
+  "answer": null,
+  "answer_citations": [],
+  "answer_generation_status": "not_requested",
+  "answer_refusal_reason": null,
+  "grounding_summary": null
+}
+```
+
+### Citation-Grounded Answer Request
+
+```json
+{
+  "query": "Which approval form is required for vendor payments?",
+  "top_k": 5,
+  "include_graph": true,
+  "generate_answer": true
+}
+```
+
+### Citation-Grounded Answer Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "query": "Which approval form is required for vendor payments?",
+  "intent": "policy_lookup",
+  "route": "hybrid_retrieval_with_policy_filters",
+  "status": "evidence_ready",
+  "retrieval_evidence": ["..."],
+  "graph_evidence": {
+    "edges": ["..."]
+  },
+  "citations": [
+    {
+      "citation_id": "CIT-4",
+      "doc_id": "vendor-payment-approval-policy-v1-0",
+      "chunk_id": "chk:vendor-payment-approval-policy-v1-0:required-documents:01:353e30e0d4:001"
+    }
+  ],
+  "answer": "Vendor payment requests require the Vendor Payment Request Form, plus a valid vendor invoice and either an approved purchase order or an executed contract reference [CIT-4].",
+  "answer_citations": [
+    {
+      "citation_id": "CIT-4",
+      "doc_id": "vendor-payment-approval-policy-v1-0",
+      "chunk_id": "chk:vendor-payment-approval-policy-v1-0:required-documents:01:353e30e0d4:001"
+    }
+  ],
+  "answer_generation_status": "generated",
+  "answer_refusal_reason": null,
+  "grounding_summary": "Generated from 1 retrieval citation(s): CIT-4. Source document(s): Vendor Payment Approval Policy. Graph edges considered: 31."
 }
 ```
 
@@ -385,9 +453,15 @@ Classify a question, choose a deterministic evidence route, and return a structu
   },
   "citations": [],
   "refusal_reason": "UNSUPPORTED_IN_PHASE_5A",
-  "next_phase_note": "Final answer generation is planned for Phase 5B."
+  "answer": null,
+  "answer_citations": [],
+  "answer_generation_status": "refused",
+  "answer_refusal_reason": "UNSUPPORTED_IN_PHASE_5A",
+  "next_phase_note": "Phase 5B can generate citation-grounded answers when generate_answer=true and evidence is sufficient."
 }
 ```
+
+Out-of-scope questions such as `What is the capital of France?` return `intent="out_of_scope"`, `status="refused"`, no retrieval evidence, no graph evidence, `answer=null`, and `answer_refusal_reason="OUT_OF_SCOPE"` when answer generation is requested.
 
 ## POST `/api/v1/graph/rebuild`
 
@@ -567,10 +641,10 @@ curl 'http://127.0.0.1:8000/api/v1/graph/neighborhood?node_id=node:system:servic
 - Unknown `node_id` returns `INVALID_REQUEST`.
 - Missing graph artifact returns `GRAPH_UNAVAILABLE`.
 
-## Phase 4 Graph Layer Limitations in the Phase 5A Release
+## Phase 4 Graph Layer Limitations in the Phase 5B Release
 
 - Graph extraction is deterministic and rule-based.
 - Rules are tuned for the synthetic demo corpus.
 - This is portfolio/demo information extraction, not production-grade IE.
 - Graph endpoints are for inspection, not question answering.
-- Neo4j is not implemented in the current Phase 5A release.
+- Neo4j is not implemented in the current Phase 5B release.

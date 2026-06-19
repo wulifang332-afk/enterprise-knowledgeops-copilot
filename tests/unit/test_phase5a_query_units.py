@@ -1,10 +1,22 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
+from backend.app.query.answer import DeterministicAnswerComposer
 from backend.app.query.classifier import RuleBasedQueryClassifier
 from backend.app.query.router import QueryRouter
-from backend.app.query.schema import QueryIntent, QueryRequest, QueryRoute, RefusalReason
+from backend.app.query.schema import (
+    AnswerGenerationStatus,
+    AnswerRefusalReason,
+    EvidencePack,
+    EvidencePackStatus,
+    QueryIntent,
+    QueryRequest,
+    QueryRoute,
+    RefusalReason,
+)
 
 
 def test_query_classifier_is_deterministic_for_phase5a_intents() -> None:
@@ -103,3 +115,40 @@ def test_query_router_routes_multi_hop_to_depth_two_graph_context() -> None:
     assert decision.include_retrieval is True
     assert decision.include_graph is True
     assert decision.graph_depth == 2
+
+
+def test_query_request_defaults_to_no_answer_generation() -> None:
+    request = QueryRequest(query="Which approval form is required for vendor payments?")
+
+    assert request.generate_answer is False
+
+
+def test_answer_composer_refuses_when_evidence_pack_has_no_citable_evidence() -> None:
+    pack = EvidencePack(
+        request_id="empty",
+        query="Which approval form is required for vendor payments?",
+        intent=QueryIntent.POLICY_LOOKUP,
+        route=QueryRoute.HYBRID_RETRIEVAL_WITH_POLICY_FILTERS,
+        status=EvidencePackStatus.EVIDENCE_READY,
+    )
+
+    result = DeterministicAnswerComposer().compose(pack)
+
+    assert result.answer is None
+    assert result.answer_citations == []
+    assert result.answer_generation_status == AnswerGenerationStatus.INSUFFICIENT_EVIDENCE
+    assert result.answer_refusal_reason == AnswerRefusalReason.NO_CITABLE_EVIDENCE
+    assert not hasattr(result, "final_answer")
+
+
+def test_answer_composer_has_no_external_llm_dependency() -> None:
+    import backend.app.query.answer as answer_module
+
+    source_path = answer_module.__file__
+    assert source_path
+    source = Path(source_path).read_text(encoding="utf-8")
+
+    assert "openai" not in source.casefold()
+    assert "anthropic" not in source.casefold()
+    assert "llm" not in source.casefold()
+    assert "httpx" not in source.casefold()

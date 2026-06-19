@@ -1,6 +1,6 @@
-# MVP-0 + Phase 5A Demo Guide
+# MVP-0 + Phase 5B Demo Guide
 
-This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, and Phase 5A query evidence planning.
+This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, query evidence planning, and optional Phase 5B citation-grounded answer generation.
 
 ## Prerequisites
 
@@ -168,7 +168,7 @@ Example graph objects:
 
 Use the Streamlit sidebar to open `Query Planner`.
 
-This page is for governed query planning and evidence-pack inspection. It does not generate final answers and does not behave like a chatbot.
+This page is for governed query planning, evidence-pack inspection, and optional citation-grounded answer generation. It does not behave like a generic chatbot.
 
 Run these example queries:
 
@@ -185,7 +185,26 @@ Expected behavior:
 - Enterprise questions return a detected intent, selected route, retrieval evidence, graph evidence, citations, and limitations.
 - Out-of-scope questions such as `What is the capital of France?` return a structured refusal.
 - Unsupported final-answer requests return a structured refusal.
-- The page clearly states: `Phase 5A returns evidence packs only. Final answer generation is planned for Phase 5B.`
+- With `Generate citation-grounded answer` unchecked, the page preserves Phase 5A evidence-pack behavior.
+- With `Generate citation-grounded answer` checked, supported enterprise questions can return an answer, answer citations, and a grounding summary.
+- If evidence is insufficient, answer generation is refused instead of fabricating a response.
+- The page clearly states that Phase 5B answers are generated only from returned evidence.
+
+Try these answer-generation checks:
+
+```text
+Which approval form is required for vendor payments?
+What system is used for Severity 1 incidents?
+How does cross-border data approval work between APAC and EU?
+Tell me the company's travel reimbursement policy for Mars employees.
+```
+
+Expected answer-generation behavior:
+
+- Vendor payment answer mentions `Vendor Payment Request Form` and includes answer citations.
+- Severity 1 answer mentions `ServiceNow` and includes answer citations.
+- Cross-border answer is cautious and cites APAC/EU/Data Protection Officer evidence from the Cross-border Data Handling Policy.
+- The Mars employees query is refused as insufficient evidence.
 
 ## Optional CLI Demo Check
 

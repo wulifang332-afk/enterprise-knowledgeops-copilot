@@ -28,7 +28,10 @@ class QueryRouter:
                 include_graph=False,
                 filters=merged_filters,
                 refusal_reason=RefusalReason.UNSUPPORTED_IN_PHASE_5A,
-                reason="Phase 5A provides query planning and evidence packs only, not final answer generation.",
+                reason=(
+                    "This request asks for unsupported free-form answer drafting. "
+                    "Use generate_answer=true with an enterprise question for governed citation-grounded answers."
+                ),
             )
         if intent == QueryIntent.FACT_LOOKUP:
             return RouteDecision(
@@ -84,4 +87,3 @@ class QueryRouter:
             filters=merged_filters,
             reason="Graph exploration uses graph node matching and neighborhood evidence without answer synthesis.",
         )
-

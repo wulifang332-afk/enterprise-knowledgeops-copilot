@@ -6,12 +6,15 @@ from backend.app.graph.service import GraphService
 from backend.app.retrieval.service import RetrievalSearchService
 from backend.app.schemas.enums import ErrorCode
 
+from .answer import DeterministicAnswerComposer
 from .classifier import RuleBasedQueryClassifier
 from .evidence_pack import EvidencePackBuilder
 from .router import QueryRouter
 from .schema import EvidencePack, EvidencePackStatus, GraphEvidence, QueryRequest
 
-PHASE_5A_LIMITATION = "Phase 5A returns evidence packs only. It does not generate final natural-language answers."
+PHASE_5B_LIMITATION = (
+    "Phase 5B returns citation-grounded answers only when generate_answer=true and evidence is sufficient."
+)
 
 
 class QueryPlanningService:
@@ -22,14 +25,15 @@ class QueryPlanningService:
         self.retrieval_service = RetrievalSearchService(settings)
         self.graph_service = GraphService(settings)
         self.builder = EvidencePackBuilder()
+        self.answer_composer = DeterministicAnswerComposer()
 
     def plan(self, *, request: QueryRequest, request_id: str) -> EvidencePack:
         intent = self.classifier.classify(request.query)
         decision = self.router.route(request=request, intent=intent)
-        limitations = [PHASE_5A_LIMITATION]
+        limitations = [PHASE_5B_LIMITATION]
 
         if decision.refusal_reason:
-            return EvidencePack(
+            pack = EvidencePack(
                 request_id=request_id,
                 query=request.query,
                 intent=decision.intent,
@@ -38,6 +42,7 @@ class QueryPlanningService:
                 refusal_reason=decision.refusal_reason,
                 limitations=limitations + [decision.reason],
             )
+            return self._maybe_generate_answer(request=request, pack=pack)
 
         retrieval_results = []
         degraded = False
@@ -78,7 +83,7 @@ class QueryPlanningService:
                 limitations.append("Graph evidence is unavailable. Rebuild the graph before using graph context.")
 
         status = EvidencePackStatus.DEGRADED if degraded else EvidencePackStatus.EVIDENCE_READY
-        return EvidencePack(
+        pack = EvidencePack(
             request_id=request_id,
             query=request.query,
             intent=decision.intent,
@@ -90,9 +95,15 @@ class QueryPlanningService:
             refusal_reason=None,
             limitations=limitations,
         )
+        return self._maybe_generate_answer(request=request, pack=pack)
 
     def _neighborhood_lookup(self, node_id: str, depth: int):
         return self.graph_service.neighborhood(node_id=node_id, depth=depth)
+
+    def _maybe_generate_answer(self, *, request: QueryRequest, pack: EvidencePack) -> EvidencePack:
+        if not request.generate_answer:
+            return pack
+        return self.answer_composer.compose(pack)
 
 
 def source_doc_ranks(results) -> dict[str, int]:

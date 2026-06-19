@@ -17,16 +17,16 @@ st.caption("企业知识库自动化构建与 GraphRAG 智能应用平台")
 
 st.markdown(
     """
-This Phase 5A build is a KnowledgeOps workspace for document ingestion, metadata review,
+This Phase 5B build is a KnowledgeOps workspace for document ingestion, metadata review,
 chunk inspection, retrieval scoring, citation traceability, graph inspection, and query
-planning with evidence packs.
+planning with evidence packs and optional citation-grounded answers.
 """
 )
 
 col_a, col_b, col_c = st.columns(3)
 col_a.metric("Raw Documents", len(list((PROJECT_ROOT / "data" / "raw").glob("*.md"))))
 col_b.metric("Processed Documents", len(list((PROJECT_ROOT / "data" / "processed").glob("*.json"))))
-col_c.metric("Current Stage", "Phase 5A")
+col_c.metric("Current Stage", "Phase 5B")
 
 st.subheader("Workflow")
 st.write("1. Ingest synthetic enterprise documents.")
@@ -35,5 +35,6 @@ st.write("3. Search with BM25, vector, or hybrid retrieval.")
 st.write("4. Inspect citations, offsets, quote hashes, and source chunks.")
 st.write("5. Inspect graph nodes, edges, neighborhoods, and evidence quotes.")
 st.write("6. Build query evidence packs with deterministic routing decisions.")
+st.write("7. Optionally generate citation-grounded answers from returned evidence.")
 
-st.info("Phase 5A returns evidence packs only. Final answer generation, GraphRAG synthesis, advanced guardrails, feedback, and full evaluation dashboards are intentionally reserved for later phases.")
+st.info("Phase 5B keeps evidence packs as the default and generates answers only when requested and grounded in returned citations. GraphRAG synthesis, advanced guardrails, feedback, and full evaluation dashboards are intentionally reserved for later phases.")

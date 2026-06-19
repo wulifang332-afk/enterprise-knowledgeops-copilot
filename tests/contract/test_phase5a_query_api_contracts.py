@@ -53,8 +53,11 @@ def test_query_api_returns_evidence_pack_not_final_answer(tmp_path: Path) -> Non
     assert payload["graph_evidence"]["edges"]
     assert payload["citations"]
     assert payload["refusal_reason"] is None
-    assert "Final answer generation is planned for Phase 5B." == payload["next_phase_note"]
-    assert "answer" not in payload
+    assert "Phase 5B can generate citation-grounded answers" in payload["next_phase_note"]
+    assert payload["answer"] is None
+    assert payload["answer_citations"] == []
+    assert payload["answer_generation_status"] == "not_requested"
+    assert payload["answer_refusal_reason"] is None
     assert "final_answer" not in payload
 
     first = payload["retrieval_evidence"][0]
@@ -97,7 +100,8 @@ def test_query_api_process_system_graph_evidence(tmp_path: Path) -> None:
         and nodes.get(edge["target_node_id"], {}).get("label") == "ServiceNow"
         for edge in payload["graph_evidence"]["edges"]
     )
-    assert "answer" not in payload
+    assert payload["answer"] is None
+    assert payload["answer_generation_status"] == "not_requested"
     assert "final_answer" not in payload
 
 
@@ -118,7 +122,7 @@ def test_query_api_structured_refusals(tmp_path: Path) -> None:
     unsupported_payload = unsupported.json()
     assert unsupported_payload["status"] == "refused"
     assert unsupported_payload["refusal_reason"] == "UNSUPPORTED_IN_PHASE_5A"
-    assert "Phase 5A" in " ".join(unsupported_payload["limitations"])
+    assert "free-form answer drafting" in " ".join(unsupported_payload["limitations"])
 
 
 @pytest.mark.parametrize(
@@ -146,7 +150,8 @@ def test_query_api_out_of_scope_enterprise_domain_gate(tmp_path: Path, query: st
     assert payload["refusal_reason"] == "OUT_OF_SCOPE"
     assert payload["retrieval_evidence"] == []
     assert payload["graph_evidence"]["edges"] == []
-    assert "answer" not in payload
+    assert payload["answer"] is None
+    assert payload["answer_generation_status"] == "not_requested"
     assert "final_answer" not in payload
 
 
@@ -179,3 +184,129 @@ def test_query_api_rejects_malformed_filter_shapes(tmp_path: Path) -> None:
     payload = response.json()
     assert payload["error_code"] == "INVALID_REQUEST"
     assert "errors" in payload["details"]
+
+
+def test_query_api_generate_answer_false_keeps_evidence_pack_default(tmp_path: Path) -> None:
+    client = make_client(tmp_path)
+    prepare_client(client)
+
+    response = client.post(
+        "/api/v1/query",
+        json={
+            "query": "Which approval form is required for vendor payments?",
+            "top_k": 5,
+            "include_graph": True,
+            "generate_answer": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "evidence_ready"
+    assert payload["retrieval_evidence"]
+    assert payload["graph_evidence"]["edges"]
+    assert payload["answer"] is None
+    assert payload["answer_citations"] == []
+    assert payload["answer_generation_status"] == "not_requested"
+    assert payload["answer_refusal_reason"] is None
+    assert "final_answer" not in payload
+
+
+def test_query_api_generates_vendor_payment_answer_with_citations(tmp_path: Path) -> None:
+    client = make_client(tmp_path)
+    prepare_client(client)
+
+    response = client.post(
+        "/api/v1/query",
+        json={
+            "query": "Which approval form is required for vendor payments?",
+            "top_k": 5,
+            "include_graph": True,
+            "generate_answer": True,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    evidence_citation_ids = {citation["citation_id"] for citation in payload["citations"]}
+    answer_citation_ids = {citation["citation_id"] for citation in payload["answer_citations"]}
+
+    assert payload["answer_generation_status"] == "generated"
+    assert "Vendor Payment Request Form" in payload["answer"]
+    assert answer_citation_ids
+    assert answer_citation_ids.issubset(evidence_citation_ids)
+    assert all(f"[{citation_id}]" in payload["answer"] for citation_id in answer_citation_ids)
+    assert "final_answer" not in payload
+
+
+def test_query_api_generates_servicenow_answer_with_graph_evidence(tmp_path: Path) -> None:
+    client = make_client(tmp_path)
+    prepare_client(client)
+
+    response = client.post(
+        "/api/v1/query",
+        json={
+            "query": "What system is used for Severity 1 incidents?",
+            "top_k": 5,
+            "include_graph": True,
+            "generate_answer": True,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    nodes = {
+        node["node_id"]: node
+        for node in [*payload["graph_evidence"]["matched_nodes"], *payload["graph_evidence"]["neighboring_nodes"]]
+    }
+    assert payload["answer_generation_status"] == "generated"
+    assert "ServiceNow" in payload["answer"]
+    assert payload["answer_citations"]
+    assert any(
+        edge["relation_type"] == "USES_SYSTEM"
+        and nodes.get(edge["target_node_id"], {}).get("label") == "ServiceNow"
+        for edge in payload["graph_evidence"]["edges"]
+    )
+
+
+def test_query_api_generate_answer_refuses_out_of_scope(tmp_path: Path) -> None:
+    client = make_client(tmp_path)
+    prepare_client(client)
+
+    response = client.post(
+        "/api/v1/query",
+        json={"query": "What is the capital of France?", "generate_answer": True},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["intent"] == "out_of_scope"
+    assert payload["status"] == "refused"
+    assert payload["answer"] is None
+    assert payload["answer_generation_status"] == "refused"
+    assert payload["answer_refusal_reason"] == "OUT_OF_SCOPE"
+    assert payload["retrieval_evidence"] == []
+    assert payload["graph_evidence"]["edges"] == []
+
+
+def test_query_api_generate_answer_refuses_insufficient_evidence(tmp_path: Path) -> None:
+    client = make_client(tmp_path)
+    prepare_client(client)
+
+    response = client.post(
+        "/api/v1/query",
+        json={
+            "query": "Tell me the company's travel reimbursement policy for Mars employees.",
+            "top_k": 5,
+            "include_graph": True,
+            "generate_answer": True,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["answer"] is None
+    assert payload["answer_citations"] == []
+    assert payload["answer_generation_status"] == "insufficient_evidence"
+    assert payload["answer_refusal_reason"] == "INSUFFICIENT_EVIDENCE"
+    assert "mars" in payload["grounding_summary"].casefold()

@@ -1,6 +1,6 @@
-# Phase 5A Architecture
+# Phase 5B Architecture
 
-The current Phase 5A build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, Phase 4 graph extraction and persistence, query planning, evidence-pack construction, and thin API/UI inspection layers.
+The current Phase 5B build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, Phase 4 graph extraction and persistence, query planning, evidence-pack construction, citation-grounded answer generation, and thin API/UI inspection layers.
 
 ## Current Components
 
@@ -20,8 +20,10 @@ The current Phase 5A build is a local-first KnowledgeOps pipeline. It focuses on
 - Graph schema: typed nodes and edges with source document/chunk lineage and evidence quotes.
 - NetworkX graph store: local graph backend persisted under `data/graph/`.
 - Graph rebuild script: `scripts/rebuild_graph.py`.
-- FastAPI: endpoints for ingest, documents, chunks, search, and graph inspection.
-- Streamlit: dashboard pages for ingestion, knowledge exploration, and graph exploration.
+- Query planning service: deterministic intent classification, route selection, evidence-pack construction, and structured refusal.
+- Deterministic answer composer: optional template-based citation-grounded answer generation when `generate_answer=true`.
+- FastAPI: endpoints for ingest, documents, chunks, search, graph inspection, and governed query planning/answer generation.
+- Streamlit: dashboard pages for ingestion, knowledge exploration, graph exploration, and query planning.
 - Demo check script: `scripts/demo_mvp0_check.py` runs tests, ingestion, index rebuild, and retrieval evaluation.
 
 ## ASCII Architecture Diagram
@@ -81,6 +83,18 @@ The current Phase 5A build is a local-first KnowledgeOps pipeline. It focuses on
                               | quote/offset/hash    |                                  |
                               +----------+-----------+                                  |
                                          |                                              |
+                                         v
+                              +----------------------+
+                              | Query Evidence Pack  |
+                              | routing + citations  |
+                              +----------+-----------+
+                                         |
+                                         v
+                              +----------------------+
+                              | Answer Composer      |
+                              | deterministic only   |
+                              +----------+-----------+
+                                         |
                     +--------------------+--------------------+-------------------------+
                     |                                         |
                     v                                         v
@@ -101,25 +115,26 @@ The current Phase 5A build is a local-first KnowledgeOps pipeline. It focuses on
 7. BM25 and Chroma indexes are rebuilt from processed chunks.
 8. Search results are fused and citations are built from chunk offsets.
 9. `scripts/rebuild_graph.py` extracts graph nodes and edges from processed chunks and persists a NetworkX graph artifact under `data/graph/`.
-10. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, graph inspection, and Phase 5A query evidence planning.
+10. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, graph inspection, and Phase 5B query evidence planning with optional citation-grounded answers.
 11. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer and Query Planner.
 12. `scripts/demo_mvp0_check.py` verifies the MVP-0 retrieval demo path from CLI.
 
-## Phase 4 Graph Layer in the Phase 5A Release
+## Phase 4 Graph Layer in the Phase 5B Release
 
-The Phase 4 graph layer remains part of the current Phase 5A release. Graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
+The Phase 4 graph layer remains part of the current Phase 5B release. Graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
 
 The graph layer is for inspection, lineage review, and portfolio demonstration. It is not production-grade information extraction and does not answer questions.
 
-## Query Planning Layer
+## Query Planning And Answer Layer
 
-Phase 5A adds deterministic query intent classification, evidence route selection, and evidence-pack construction. `/api/v1/query` returns retrieval evidence, graph evidence, citations, refusal reasons, limitations, and a Phase 5B note. It does not synthesize a final natural-language answer.
+Phase 5A added deterministic query intent classification, evidence route selection, and evidence-pack construction. Phase 5B keeps that behavior as the default and adds opt-in citation-grounded answer generation when `generate_answer=true`.
+
+The answer composer is deterministic and local. It selects returned retrieval citations, optionally uses graph evidence for routing and prioritization, and refuses when the evidence pack is out of scope, unsupported, missing citable evidence, or insufficient for the query. It does not call external LLM APIs and does not perform GraphRAG final-response synthesis.
 
 ## Not Present Yet
 
-- Answer generation
 - GraphRAG answer synthesis
-- Guardrails
+- Advanced enterprise guardrails
 - Feedback loop
 - Full evaluation dashboard
 - Neo4j adapter

@@ -193,7 +193,7 @@ def test_ingest_rejects_unsafe_paths_through_api_layer(tmp_path: Path) -> None:
     assert payload["results"][0]["error_code"] == "INVALID_FILE_PATH"
 
 
-def test_query_endpoint_returns_phase5a_evidence_pack_after_phase5a(tmp_path: Path) -> None:
+def test_query_endpoint_returns_evidence_pack_without_answer_by_default(tmp_path: Path) -> None:
     client = make_client(tmp_path)
     client.post("/api/v1/ingest", json={"ingest_all": True, "rebuild_indexes": True})
     client.post("/api/v1/graph/rebuild")
@@ -205,5 +205,6 @@ def test_query_endpoint_returns_phase5a_evidence_pack_after_phase5a(tmp_path: Pa
     assert payload["request_id"]
     assert payload["intent"] in {"multi_hop", "policy_lookup"}
     assert payload["retrieval_evidence"]
-    assert "answer" not in payload
+    assert payload["answer"] is None
+    assert payload["answer_generation_status"] == "not_requested"
     assert "final_answer" not in payload
