@@ -12,6 +12,7 @@ from backend.app.api import (
     chunks_router,
     documents_router,
     evaluation_router,
+    feedback_router,
     graph_router,
     ingest_router,
     query_router,
@@ -25,10 +26,10 @@ from backend.app.schemas.operational import ErrorResponse
 def create_app() -> FastAPI:
     app = FastAPI(
         title="Enterprise KnowledgeOps Copilot API",
-        version="0.6.0",
+        version="0.7.0",
         description=(
-            "Phase 6 API for ingestion, retrieval, graph inspection, governed query answering, "
-            "and deterministic quality evaluation."
+            "Phase 7 API for ingestion, retrieval, graph inspection, governed query answering, "
+            "deterministic quality evaluation, and local feedback governance."
         ),
     )
 
@@ -53,6 +54,7 @@ def create_app() -> FastAPI:
     app.include_router(graph_router)
     app.include_router(query_router)
     app.include_router(evaluation_router)
+    app.include_router(feedback_router)
     return app
 
 

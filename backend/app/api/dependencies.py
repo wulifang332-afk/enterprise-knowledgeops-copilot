@@ -6,6 +6,7 @@ from fastapi import Depends
 
 from backend.app.core.settings import AppSettings
 from backend.app.evaluation.service import EvaluationService
+from backend.app.feedback.service import FeedbackService
 from backend.app.graph.service import GraphService
 from backend.app.ingestion.service import IngestionService
 from backend.app.query.service import QueryPlanningService
@@ -40,3 +41,7 @@ def get_query_planning_service(settings: AppSettings = Depends(get_settings)) ->
 
 def get_evaluation_service(settings: AppSettings = Depends(get_settings)) -> EvaluationService:
     return EvaluationService(settings)
+
+
+def get_feedback_service(settings: AppSettings = Depends(get_settings)) -> FeedbackService:
+    return FeedbackService(settings)

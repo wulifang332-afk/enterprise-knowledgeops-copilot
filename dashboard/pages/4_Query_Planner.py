@@ -99,6 +99,69 @@ else:
     if pack.get("grounding_summary"):
         st.caption(pack["grounding_summary"])
 
+with st.expander("Send Feedback for This Result"):
+    st.caption("Feedback is stored locally for governance inspection and does not change evaluation cases automatically.")
+    feedback_columns = st.columns(3)
+    with feedback_columns[0]:
+        feedback_rating = st.selectbox("Rating", ["positive", "negative", "neutral"], index=1, key="qp_feedback_rating")
+    with feedback_columns[1]:
+        feedback_type = st.selectbox(
+            "Feedback type",
+            [
+                "answer_quality",
+                "citation_issue",
+                "retrieval_issue",
+                "graph_issue",
+                "refusal_issue",
+                "routing_issue",
+                "ui_issue",
+                "other",
+            ],
+            key="qp_feedback_type",
+        )
+    with feedback_columns[2]:
+        issue_category = st.selectbox(
+            "Issue category",
+            [
+                "missing_evidence",
+                "wrong_citation",
+                "unsupported_answer",
+                "incorrect_refusal",
+                "should_have_refused",
+                "wrong_intent",
+                "wrong_route",
+                "irrelevant_graph_context",
+                "stale_document",
+                "unclear_answer",
+                "other",
+            ],
+            key="qp_issue_category",
+        )
+    feedback_comment = st.text_area("Comment", key="qp_feedback_comment", height=100)
+    if st.button("Submit Query Feedback"):
+        feedback_payload = {
+            "query": pack["query"],
+            "request_id": pack["request_id"],
+            "intent": pack["intent"],
+            "route": pack["route"],
+            "status": pack["status"],
+            "answer_generation_status": pack["answer_generation_status"],
+            "answer": pack.get("answer"),
+            "citations": pack.get("citations", []),
+            "answer_citations": pack.get("answer_citations", []),
+            "user_rating": feedback_rating,
+            "feedback_type": feedback_type,
+            "issue_category": issue_category,
+            "comment": feedback_comment,
+            "source": "query_planner",
+            "metadata": {"phase": "7", "evidence_count": len(pack["retrieval_evidence"])},
+        }
+        try:
+            submitted_feedback = client.feedback_submit(feedback_payload)
+            st.success(f"Feedback submitted: {submitted_feedback['feedback_id']}")
+        except APIClientError as exc:
+            show_api_error(exc)
+
 st.subheader("Retrieval Evidence")
 retrieval_rows = [
     {

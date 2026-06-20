@@ -17,16 +17,17 @@ st.caption("企业知识库自动化构建与 GraphRAG 智能应用平台")
 
 st.markdown(
     """
-This Phase 6 build is a KnowledgeOps workspace for document ingestion, metadata review,
+This Phase 7 build is a KnowledgeOps workspace for document ingestion, metadata review,
 chunk inspection, retrieval scoring, citation traceability, graph inspection, and query
-planning with evidence packs, optional citation-grounded answers, and deterministic quality evaluation.
+planning with evidence packs, optional citation-grounded answers, deterministic quality evaluation,
+and local feedback governance.
 """
 )
 
 col_a, col_b, col_c = st.columns(3)
 col_a.metric("Raw Documents", len(list((PROJECT_ROOT / "data" / "raw").glob("*.md"))))
 col_b.metric("Processed Documents", len(list((PROJECT_ROOT / "data" / "processed").glob("*.json"))))
-col_c.metric("Current Stage", "Phase 6")
+col_c.metric("Current Stage", "Phase 7")
 
 st.subheader("Workflow")
 st.write("1. Ingest synthetic enterprise documents.")
@@ -37,5 +38,6 @@ st.write("5. Inspect graph nodes, edges, neighborhoods, and evidence quotes.")
 st.write("6. Build query evidence packs with deterministic routing decisions.")
 st.write("7. Optionally generate citation-grounded answers from returned evidence.")
 st.write("8. Run deterministic regression checks in the Evaluation Dashboard.")
+st.write("9. Submit and triage local feedback in the Feedback Governance workspace.")
 
-st.info("Phase 6 adds local quality measurement for retrieval, routing, citations, grounding, and refusals. It does not add an LLM judge, feedback loop, production monitoring, Neo4j, or GraphRAG final-response synthesis.")
+st.info("Phase 7 adds local feedback governance. It does not add authentication, RBAC, SSO, an LLM judge, production monitoring, Neo4j, or GraphRAG final-response synthesis.")

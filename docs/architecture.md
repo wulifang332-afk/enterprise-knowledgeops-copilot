@@ -1,6 +1,6 @@
-# Phase 6 Architecture
+# Phase 7 Architecture
 
-The current Phase 6 build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, Phase 4 graph extraction and persistence, query planning, evidence-pack construction, citation-grounded answer generation, and deterministic quality evaluation.
+The current Phase 7 build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, Phase 4 graph extraction and persistence, query planning, evidence-pack construction, citation-grounded answer generation, deterministic quality evaluation, and local feedback governance.
 
 ## Current Components
 
@@ -23,8 +23,10 @@ The current Phase 6 build is a local-first KnowledgeOps pipeline. It focuses on 
 - Query planning service: deterministic intent classification, route selection, evidence-pack construction, and structured refusal.
 - Deterministic answer composer: optional template-based citation-grounded answer generation when `generate_answer=true`.
 - Evaluation service: versioned cases, deterministic checks, aggregate metrics, and JSON/Markdown reports.
-- FastAPI: endpoints for ingest, documents, chunks, search, graph inspection, governed query planning/answer generation, and evaluation.
-- Streamlit: dashboard pages for ingestion, knowledge exploration, graph exploration, query planning, and quality inspection.
+- Feedback service: local JSONL feedback capture, review queue generation, summary metrics, and review-status updates.
+- Audit logger: local JSONL audit events for ingestion and Phase 7 feedback governance actions.
+- FastAPI: endpoints for ingest, documents, chunks, search, graph inspection, governed query planning/answer generation, evaluation, and feedback.
+- Streamlit: dashboard pages for ingestion, knowledge exploration, graph exploration, query planning, quality inspection, and feedback governance.
 - Demo check script: `scripts/demo_mvp0_check.py` runs tests, ingestion, index rebuild, and retrieval evaluation.
 
 ## ASCII Architecture Diagram
@@ -102,6 +104,12 @@ The current Phase 6 build is a local-first KnowledgeOps pipeline. It focuses on 
                               | cases/checks/reports |
                               +----------+-----------+
                                          |
+                                         v
+                              +----------------------+
+                              | Feedback Governance  |
+                              | local review queue   |
+                              +----------+-----------+
+                                         |
                     +--------------------+--------------------+-------------------------+
                     |                                         |
                     v                                         v
@@ -124,13 +132,15 @@ The current Phase 6 build is a local-first KnowledgeOps pipeline. It focuses on 
 9. `scripts/rebuild_graph.py` extracts graph nodes and edges from processed chunks and persists a NetworkX graph artifact under `data/graph/`.
 10. Phase 6 runs versioned cases through the existing query service and computes deterministic retrieval, routing, citation, grounding, and refusal metrics.
 11. Reports are persisted under ignored `data/evaluation/` JSON/Markdown artifacts.
-12. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, graph inspection, query answering, and evaluation endpoints.
-13. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer, Query Planner, and Evaluation Dashboard.
-14. CLI scripts verify retrieval, graph, Phase 6 quality checks, and the MVP-0 demo path.
+12. Phase 7 feedback records are appended to ignored `data/feedback/feedback.jsonl`; the local review queue is written to ignored `data/feedback/review_queue.json`.
+13. Feedback submission and review updates write local audit entries under ignored `data/audit/audit.jsonl`.
+14. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, graph inspection, query answering, evaluation, and feedback endpoints.
+15. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer, Query Planner, Evaluation Dashboard, and Feedback Governance.
+16. CLI scripts verify retrieval, graph, Phase 6 quality checks, and the MVP-0 demo path.
 
-## Phase 4 Graph Layer in the Phase 6 Release
+## Phase 4 Graph Layer in the Phase 7 Release
 
-The Phase 4 graph layer remains part of the current Phase 6 release. Graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
+The Phase 4 graph layer remains part of the current Phase 7 release. Graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
 
 The graph layer is for inspection, lineage review, and portfolio demonstration. It is not production-grade information extraction and does not answer questions.
 
@@ -144,13 +154,24 @@ The answer composer is deterministic and local. It selects returned retrieval ci
 
 Phase 6 adds a versioned deterministic evaluation dataset with core and independent holdout splits plus a reusable evaluation service. The service executes existing query behavior directly, compares actual outcomes with explicit expectations, aggregates split, per-intent, and top-level metrics, and writes local JSON/Markdown reports.
 
-The evaluation layer checks inspectable signals such as expected sources, routes, citation subsets, required phrases, grounding summaries, refusal reasons, and fabricated-answer rate. Metrics with no applicable cases are represented as unavailable rather than 100%. It does not claim semantic faithfulness, use an LLM judge, collect online feedback, or monitor production traffic.
+The evaluation layer checks inspectable signals such as expected sources, routes, citation subsets, required phrases, grounding summaries, refusal reasons, and fabricated-answer rate. Metrics with no applicable cases are represented as unavailable rather than 100%. It does not claim semantic faithfulness, use an LLM judge, use feedback as an automatic metric source, or monitor production traffic.
+
+## Feedback Governance Layer
+
+Phase 7 adds a local feedback loop for KnowledgeOps quality control. Feedback records capture query context, request IDs, routing and answer-generation status, answers, citations, user rating, feedback type, issue category, reviewer notes, and optional manual evaluation-case links.
+
+Feedback is persisted as local JSONL under ignored `data/feedback/` artifacts. The review queue is derived from open and triaged feedback records. Audit events are written for feedback submission, review-status updates, reviewer-note updates, and manual evaluation-case links.
+
+Local audit logging is implemented for ingestion events and Phase 7 feedback governance events. Retrieval, query, graph, and evaluation activity are inspectable through their outputs and reports, but they are not currently written as audit events.
+
+This layer is intentionally local and deterministic. It does not implement production authentication, SSO, RBAC, ticketing integration, human workflow SaaS, production monitoring, external LLM judging, online experimentation, retraining, automatic prompt optimization, or automatic mutation of the evaluation dataset.
 
 ## Not Present Yet
 
 - GraphRAG answer synthesis
 - Advanced enterprise guardrails
-- Feedback loop
-- Human review workflow
+- Production authentication, SSO, or real RBAC
+- Production human review workflow or ticketing integration
+- External LLM judge
 - Production monitoring and online experimentation
 - Neo4j adapter

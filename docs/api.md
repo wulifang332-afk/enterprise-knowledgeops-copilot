@@ -1,4 +1,4 @@
-# Phase 6 API Reference
+# Phase 7 API Reference
 
 Base URL:
 
@@ -6,7 +6,7 @@ Base URL:
 http://127.0.0.1:8000
 ```
 
-All Phase 6 responses include `request_id`. Structured errors use:
+All Phase 7 responses include `request_id`. Structured errors use:
 
 ```json
 {
@@ -18,7 +18,7 @@ All Phase 6 responses include `request_id`. Structured errors use:
 }
 ```
 
-`/api/v1/query` is available as a governed evidence-pack endpoint. By default it preserves Phase 5A behavior and returns evidence only. When `generate_answer=true`, Phase 5B can add a deterministic citation-grounded answer if the returned evidence is sufficient. It does not call external LLM APIs and does not perform GraphRAG final-response synthesis.
+`/api/v1/query` is available as a governed evidence-pack endpoint. By default it preserves Phase 5A behavior and returns evidence only. When `generate_answer=true`, Phase 5B can add a deterministic citation-grounded answer if the returned evidence is sufficient. Phase 7 adds local feedback governance endpoints. The API does not call external LLM APIs, perform GraphRAG final-response synthesis, or provide production workflow automation.
 
 ## POST `/api/v1/ingest`
 
@@ -538,7 +538,180 @@ Return the versioned canonical evaluation cases for dashboard inspection.
 
 The `items` array above is abbreviated. Metrics with no applicable cases are returned as `null`; clients should render them as `N/A`, not 100%.
 
-These endpoints support local quality inspection. They do not provide production monitoring, online feedback, LLM judging, or automated optimization.
+The evaluation endpoints support local quality inspection. They do not provide production monitoring, LLM judging, automated optimization, or automatic dataset mutation from feedback.
+
+## POST `/api/v1/feedback`
+
+Submit local feedback for answer quality, citation issues, retrieval issues, graph evidence, refusal behavior, routing, UI issues, or other governance observations.
+
+This endpoint stores JSONL records under ignored `data/feedback/` artifacts and writes local audit events under ignored `data/audit/` artifacts. It is not an authenticated production workflow system.
+
+### Request
+
+```json
+{
+  "query": "Which approval form is required for vendor payments?",
+  "request_id": "query-request-id",
+  "intent": "policy_lookup",
+  "route": "hybrid_retrieval_with_policy_filters",
+  "status": "evidence_ready",
+  "answer_generation_status": "generated",
+  "answer": "Vendor payments require the Vendor Payment Request Form.",
+  "citations": [],
+  "answer_citations": [],
+  "user_rating": "negative",
+  "feedback_type": "citation_issue",
+  "issue_category": "wrong_citation",
+  "comment": "The answer cited a chunk that did not show the required form.",
+  "linked_eval_case_id": "holdout_supplier_invoice_form",
+  "source": "query_planner",
+  "metadata": {
+    "phase": "7"
+  }
+}
+```
+
+Required fields are `query`, `user_rating`, `feedback_type`, `issue_category`, and `comment`.
+
+Supported enum values:
+
+- `user_rating`: `positive`, `negative`, `neutral`
+- `feedback_type`: `answer_quality`, `citation_issue`, `retrieval_issue`, `graph_issue`, `refusal_issue`, `routing_issue`, `ui_issue`, `other`
+- `issue_category`: `missing_evidence`, `wrong_citation`, `unsupported_answer`, `incorrect_refusal`, `should_have_refused`, `wrong_intent`, `wrong_route`, `irrelevant_graph_context`, `stale_document`, `unclear_answer`, `other`
+- `source`: `api`, `query_planner`, `evaluation_dashboard`, `manual`
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "feedback_id": "fb:...",
+  "record": {
+    "feedback_id": "fb:...",
+    "review_status": "open",
+    "user_rating": "negative",
+    "feedback_type": "citation_issue",
+    "issue_category": "wrong_citation",
+    "comment": "The answer cited a chunk that did not show the required form."
+  }
+}
+```
+
+Invalid enum values or missing required fields return `INVALID_REQUEST` with validation details.
+
+## GET `/api/v1/feedback`
+
+List feedback records with optional filters.
+
+### Query Parameters
+
+- `review_status`: `open`, `triaged`, `resolved`, `wont_fix`
+- `feedback_type`: one supported feedback type
+- `issue_category`: one supported issue category
+- `user_rating`: `positive`, `negative`, `neutral`
+- `offset`: default `0`
+- `limit`: default `100`, maximum `500`
+
+### Example
+
+```bash
+curl 'http://127.0.0.1:8000/api/v1/feedback?review_status=open&user_rating=negative'
+```
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "total": 1,
+  "offset": 0,
+  "limit": 100,
+  "items": [
+    {
+      "feedback_id": "fb:...",
+      "query": "Which approval form is required for vendor payments?",
+      "review_status": "open",
+      "feedback_type": "citation_issue",
+      "issue_category": "wrong_citation",
+      "user_rating": "negative"
+    }
+  ],
+  "summary": {
+    "total_count": 1,
+    "negative_count": 1,
+    "unresolved_count": 1,
+    "by_issue_category": {
+      "wrong_citation": 1
+    },
+    "by_review_status": {
+      "open": 1
+    },
+    "by_feedback_type": {
+      "citation_issue": 1
+    },
+    "top_issue_categories": [
+      {
+        "issue_category": "wrong_citation",
+        "count": 1
+      }
+    ]
+  }
+}
+```
+
+## GET `/api/v1/feedback/{feedback_id}`
+
+Return one feedback record by ID.
+
+Unknown IDs return `INVALID_REQUEST`:
+
+```json
+{
+  "error_code": "INVALID_REQUEST",
+  "message": "Feedback record not found.",
+  "details": {
+    "feedback_id": "fb:not-found"
+  },
+  "request_id": "...",
+  "timestamp": "..."
+}
+```
+
+## PATCH `/api/v1/feedback/{feedback_id}`
+
+Update review metadata for a feedback record.
+
+Allowed fields:
+
+- `review_status`: `open`, `triaged`, `resolved`, `wont_fix`
+- `reviewer_note`
+- `linked_eval_case_id`
+
+### Request
+
+```json
+{
+  "review_status": "triaged",
+  "reviewer_note": "Candidate for a future evaluation case.",
+  "linked_eval_case_id": "holdout_supplier_invoice_form"
+}
+```
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "record": {
+    "feedback_id": "fb:...",
+    "review_status": "triaged",
+    "reviewer_note": "Candidate for a future evaluation case.",
+    "linked_eval_case_id": "holdout_supplier_invoice_form"
+  }
+}
+```
+
+Updating feedback writes local audit events for status changes, reviewer-note changes, and evaluation-case links. Linked evaluation case IDs are manual references only; the evaluation dataset is not automatically changed.
 
 ## POST `/api/v1/graph/rebuild`
 
@@ -718,10 +891,10 @@ curl 'http://127.0.0.1:8000/api/v1/graph/neighborhood?node_id=node:system:servic
 - Unknown `node_id` returns `INVALID_REQUEST`.
 - Missing graph artifact returns `GRAPH_UNAVAILABLE`.
 
-## Phase 4 Graph Layer Limitations in the Phase 6 Release
+## Phase 4 Graph Layer Limitations in the Phase 7 Release
 
 - Graph extraction is deterministic and rule-based.
 - Rules are tuned for the synthetic demo corpus.
 - This is portfolio/demo information extraction, not production-grade IE.
 - Graph endpoints are for inspection, not question answering.
-- Neo4j is not implemented in the current Phase 6 release.
+- Neo4j is not implemented in the current Phase 7 release.

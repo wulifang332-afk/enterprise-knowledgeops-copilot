@@ -3,12 +3,12 @@
 Enterprise KnowledgeOps Copilot
 
 Enterprise KnowledgeOps Copilot | Personal Project
-Built a local-first enterprise knowledge platform with FastAPI and Streamlit, supporting document ingestion, metadata validation, deterministic chunking, BM25/vector/hybrid retrieval, citation inspection, rule-based knowledge graph extraction, graph exploration, query planning, structured evidence packs, citation-grounded answer generation, and Phase 6 deterministic quality evaluation. `/api/v1/query` classifies enterprise questions, routes them to retrieval/graph evidence workflows, preserves evidence-pack behavior by default, and optionally composes deterministic answers only from returned citations. Out-of-scope, unsupported, and insufficient-evidence requests are refused instead of answered.
+Built a local-first enterprise knowledge platform with FastAPI and Streamlit, supporting document ingestion, metadata validation, deterministic chunking, BM25/vector/hybrid retrieval, citation inspection, rule-based knowledge graph extraction, graph exploration, query planning, structured evidence packs, citation-grounded answer generation, deterministic quality evaluation, and a local feedback governance loop. `/api/v1/query` classifies enterprise questions, routes them to retrieval/graph evidence workflows, preserves evidence-pack behavior by default, and optionally composes deterministic answers only from returned citations. Out-of-scope, unsupported, and insufficient-evidence requests are refused instead of answered.
 
 This is an Enterprise KnowledgeOps platform, not a generic chatbot.
 
 
-## Current Capabilities Through Phase 6
+## Current Capabilities Through Phase 7
 
 - Ingest 8 synthetic enterprise Markdown documents from `data/raw/`.
 - Validate required metadata with Pydantic v2 schemas.
@@ -32,14 +32,18 @@ This is an Enterprise KnowledgeOps platform, not a generic chatbot.
 - Measure retrieval, intent, route, citation, grounding, and refusal signals.
 - Persist JSON and Markdown evaluation reports under ignored local artifacts.
 - Inspect quality metrics and case-level failures in the Streamlit Evaluation Dashboard.
+- Submit local feedback on answer quality, citations, retrieval, graph evidence, refusals, routing, and UI issues.
+- Review and triage feedback records through `/api/v1/feedback` and the Streamlit Feedback Governance page.
+- Write local audit events for feedback submission, status changes, reviewer notes, and manual evaluation-case links.
 
 ## Not Implemented Yet
 
 - GraphRAG answer synthesis
 - Advanced enterprise guardrails
 - Access-control simulation
-- Feedback loop
 - LLM-as-a-judge or semantic faithfulness scoring
+- Production authentication, SSO, or real RBAC
+- Production human workflow, ticketing, or SaaS review integrations
 - Production monitoring and online experimentation
 - Neo4j adapter
 
@@ -123,7 +127,7 @@ python scripts/demo_mvp0_check.py
 Latest checkpoint:
 
 ```text
-Tests: 100 passed
+Tests: 116 passed
 BM25 hit_rate@5: 20/20, 100%
 Vector hit_rate@5: 20/20, 100%
 Hybrid hit_rate@5: 20/20, 100%
@@ -149,6 +153,13 @@ The 100% retrieval score is on a deterministic synthetic evaluation set. It is u
 - `What is the capital of France?`
 
 Use `generate_answer=true` to request a citation-grounded answer. Without that flag, `/api/v1/query` returns the Phase 5A evidence pack only.
+
+## Feedback Governance Examples
+
+- Submit feedback for a Query Planner result from the `Send Feedback for This Result` panel.
+- Open `Feedback & Governance` to list, filter, and triage local feedback records.
+- Link a feedback item to an evaluation case ID manually for future curation.
+- Inspect local audit events under ignored `data/audit/` artifacts when needed.
 
 ## Example Graph Objects
 
@@ -186,11 +197,12 @@ After starting the services:
 - Holdout cases improve regression sensitivity but remain part of the controlled synthetic corpus.
 - `N/A` means no applicable cases existed for that metric in the evaluated dataset or split.
 - Evaluation uses a controlled synthetic dataset and is not a production quality claim.
+- Phase 7 feedback is local JSONL-based governance demonstration only.
+- Feedback can inform future manual evaluation-case curation but does not automatically mutate the evaluation dataset.
 - No GraphRAG answer synthesis yet.
 - `/api/v1/query` returns evidence packs by default; answers are opt-in with `generate_answer=true`.
 - No advanced guardrails or access-control simulation yet.
-- No feedback loop yet.
-- No LLM-as-a-judge, human review workflow, production monitoring, or A/B testing infrastructure.
+- No authentication, SSO, real RBAC, ticketing integration, production human workflow, LLM-as-a-judge, production monitoring, or A/B testing infrastructure.
 - No Neo4j adapter yet.
 - Graph extraction is deterministic and rule-based, tuned for the synthetic demo corpus, and not production-grade information extraction.
 - Graph endpoints are for inspection only, not question answering.

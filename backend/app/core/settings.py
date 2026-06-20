@@ -68,6 +68,10 @@ class AppSettings(BaseModel):
     def evaluation_dir(self) -> Path:
         return self.data_dir / "evaluation"
 
+    @property
+    def feedback_dir(self) -> Path:
+        return self.data_dir / "feedback"
+
     def ensure_data_dirs(self) -> None:
         for path in (
             self.data_dir,
@@ -77,5 +81,6 @@ class AppSettings(BaseModel):
             self.indexes_dir,
             self.graph_dir,
             self.evaluation_dir,
+            self.feedback_dir,
         ):
             path.mkdir(parents=True, exist_ok=True)

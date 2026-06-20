@@ -20,7 +20,7 @@ DEFAULT_DATASET_RELATIVE_PATH = Path("evaluation/datasets/phase6_eval_cases.json
 REPORT_LIMITATIONS = [
     "Metrics are deterministic checks over a synthetic enterprise corpus.",
     "Retrieval and citation checks do not establish semantic answer faithfulness.",
-    "No LLM-as-a-judge, human feedback loop, production monitoring, or online experimentation is used.",
+    "No LLM-as-a-judge, feedback-driven metric source, production monitoring, or online experimentation is used.",
 ]
 
 

@@ -132,6 +132,12 @@ The JSON report includes run metadata, aggregate metrics, per-intent metrics, an
 
 The command exits non-zero for execution errors. Metric degradation is reported without failing the command unless `--fail-on-regression` is supplied.
 
+## Relationship To Phase 7 Feedback
+
+Phase 7 feedback records can be manually linked to evaluation case IDs to support future curation decisions. This linkage is informational only. Submitting or triaging feedback does not automatically add, remove, or modify evaluation cases.
+
+The evaluation harness does not use feedback as a metric input, does not implement an external LLM judge, and does not perform production monitoring or online experimentation.
+
 ## Phase 6 Current Result
 
 Latest deterministic run:
@@ -153,4 +159,4 @@ Fabricated-answer rate: 0%
 
 This is a controlled synthetic evaluation. The 100% score is useful for regression testing and demonstrating that the MVP-0 retrieval pipeline works on the sample corpus.
 
-It is not a production validation claim and should not be interpreted as expected performance on real enterprise documents. Phase 6 does not measure free-form semantic correctness, complete policy interpretation, or production safety. No human feedback loop, production monitoring, online experimentation, or external evaluator is implemented.
+It is not a production validation claim and should not be interpreted as expected performance on real enterprise documents. Phase 6 does not measure free-form semantic correctness, complete policy interpretation, or production safety. Phase 7 adds local feedback governance, but no production human review workflow, production monitoring, online experimentation, or external evaluator is implemented.

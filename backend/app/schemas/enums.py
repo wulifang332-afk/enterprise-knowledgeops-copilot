@@ -48,6 +48,9 @@ class AuditEventType(StrEnum):
     GRAPH_EXTRACTION = "graph_extraction"
     EVALUATION_RUN = "evaluation_run"
     FEEDBACK_SUBMISSION = "feedback_submission"
+    FEEDBACK_STATUS_UPDATED = "feedback_status_updated"
+    FEEDBACK_REVIEWER_NOTE_UPDATED = "feedback_reviewer_note_updated"
+    FEEDBACK_EVAL_LINKED = "feedback_eval_linked"
 
 
 class IngestionStatus(StrEnum):

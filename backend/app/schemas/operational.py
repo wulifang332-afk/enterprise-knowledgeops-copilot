@@ -49,7 +49,9 @@ class AuditEvent(OperationalBaseModel):
     actor_id: str | None = None
     outcome: str
     resource_ids: list[str] = Field(default_factory=list)
+    feedback_id: str | None = None
+    summary: str | None = Field(default=None, max_length=500)
+    metadata: dict[str, Any] = Field(default_factory=dict)
     details: dict[str, Any] = Field(default_factory=dict)
     error_code: ErrorCode | None = None
     duration_ms: int | None = None
-

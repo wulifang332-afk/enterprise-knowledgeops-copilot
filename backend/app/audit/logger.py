@@ -23,6 +23,9 @@ class AuditLogger:
         outcome: str,
         resource_ids: list[str] | None = None,
         details: dict[str, Any] | None = None,
+        feedback_id: str | None = None,
+        summary: str | None = None,
+        metadata: dict[str, Any] | None = None,
         error_code: ErrorCode | None = None,
         duration_ms: int | None = None,
     ) -> None:
@@ -31,6 +34,9 @@ class AuditLogger:
             request_id=request_id,
             outcome=outcome,
             resource_ids=resource_ids or [],
+            feedback_id=feedback_id,
+            summary=summary,
+            metadata=self._redact(metadata or {}),
             details=self._redact(details or {}),
             error_code=error_code,
             duration_ms=duration_ms,
@@ -47,4 +53,3 @@ class AuditLogger:
     def _redact(details: dict[str, Any]) -> dict[str, Any]:
         blocked = {"content", "text", "document_body", "raw_content"}
         return {key: value for key, value in details.items() if key not in blocked}
-

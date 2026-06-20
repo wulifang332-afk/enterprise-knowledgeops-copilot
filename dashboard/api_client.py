@@ -46,6 +46,18 @@ class KnowledgeOpsAPIClient:
     def evaluation_cases(self) -> dict[str, Any]:
         return self._request("GET", "/api/v1/evaluation/cases")
 
+    def feedback_submit(self, payload: dict[str, Any]) -> dict[str, Any]:
+        return self._request("POST", "/api/v1/feedback", json=payload)
+
+    def feedback_list(self, params: dict[str, Any] | None = None) -> dict[str, Any]:
+        return self._request("GET", "/api/v1/feedback", params=self._clean(params or {}))
+
+    def feedback_get(self, feedback_id: str) -> dict[str, Any]:
+        return self._request("GET", f"/api/v1/feedback/{feedback_id}")
+
+    def feedback_update(self, feedback_id: str, payload: dict[str, Any]) -> dict[str, Any]:
+        return self._request("PATCH", f"/api/v1/feedback/{feedback_id}", json=payload)
+
     def graph_rebuild(self) -> dict[str, Any]:
         return self._request("POST", "/api/v1/graph/rebuild")
 

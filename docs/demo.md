@@ -1,6 +1,6 @@
-# MVP-0 + Phase 6 Demo Guide
+# MVP-0 + Phase 7 Demo Guide
 
-This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, query evidence planning, citation-grounded answers, and deterministic quality control.
+This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, query evidence planning, citation-grounded answers, deterministic quality control, and local feedback governance.
 
 ## Prerequisites
 
@@ -189,6 +189,7 @@ Expected behavior:
 - With `Generate citation-grounded answer` checked, supported enterprise questions can return an answer, answer citations, and a grounding summary.
 - If evidence is insufficient, answer generation is refused instead of fabricating a response.
 - The page clearly states that Phase 5B answers are generated only from returned evidence.
+- The `Send Feedback for This Result` panel can submit local governance feedback for the latest evidence pack or answer.
 
 Try these answer-generation checks:
 
@@ -210,7 +211,7 @@ Expected answer-generation behavior:
 
 Use the Streamlit sidebar to open `Evaluation Dashboard`.
 
-This page is an internal quality workspace, not a chatbot or feedback collection interface.
+This page is an internal quality workspace, not a chatbot or production monitoring interface.
 
 Click `Run Evaluation` to execute the versioned `phase6-v1` dataset. The current deterministic baseline should show:
 
@@ -237,9 +238,41 @@ Inspect:
 - generated answers and grounding summaries
 - failed checks, when present
 
-Use `Reload Latest` to load the last local report without rerunning the dataset. The dashboard does not implement LLM judging, user feedback, production monitoring, or online experimentation.
+Use `Reload Latest` to load the last local report without rerunning the dataset. The dashboard does not implement LLM judging, production monitoring, or online experimentation.
 
 The holdout split uses independently phrased synthetic scenarios to improve regression sensitivity. It is still controlled synthetic evaluation, not proof of broad semantic faithfulness. `N/A` indicates that no applicable cases existed for a metric.
+
+### 14. Open Feedback & Governance
+
+Use the Streamlit sidebar to open `Feedback & Governance`.
+
+This page is a local governance workspace for reviewing quality issues. It is not a production ticketing system or authenticated human workflow tool.
+
+Submit a sample feedback item:
+
+- query/request context: `Which approval form is required for vendor payments?`
+- rating: `negative`
+- feedback type: `citation_issue`
+- issue category: `wrong_citation`
+- comment: `Citation should be reviewed before this answer is reused.`
+
+Inspect:
+
+- feedback count by issue category
+- feedback count by review status
+- negative feedback count
+- unresolved feedback count
+- review queue table
+- selected feedback detail
+
+Use the triage panel to set review status to `triaged`, add a reviewer note, and optionally link a manual evaluation case ID such as `holdout_supplier_invoice_form`.
+
+Expected behavior:
+
+- feedback is stored locally under ignored `data/feedback/` artifacts
+- audit events are written under ignored `data/audit/` artifacts
+- evaluation datasets are not automatically changed
+- no authentication, RBAC, SSO, ticketing integration, LLM judge, monitoring, or online experimentation is involved
 
 ## Optional CLI Demo Check
 
