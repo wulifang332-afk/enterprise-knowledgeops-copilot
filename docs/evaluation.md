@@ -1,18 +1,23 @@
-# Evaluation Reference
+# Evaluation And Governance Reference
 
-The project has two deterministic local evaluation layers:
+The project includes deterministic local evaluation and local feedback governance. Both are designed for portfolio-grade regression inspection, not production validation.
 
-- Phase 2 retrieval evaluation compares BM25, vector, and hybrid retrieval.
-- Phase 6 evaluation checks retrieval, routing, citations, answer-grounding rules, and refusal behavior across canonical enterprise scenarios.
+## Evaluation Layers
 
-Neither layer uses an LLM-as-a-judge. Deterministic citation checks are not equivalent to semantic answer faithfulness.
+| Layer | Dataset | Purpose |
+|---|---|---|
+| Phase 2 retrieval evaluation | `evaluation/datasets/phase2_retrieval_cases.json` | Compare BM25, vector, and hybrid retrieval hit rate |
+| Phase 6 query evaluation | `evaluation/datasets/phase6_eval_cases.json` | Check routing, retrieval evidence, citations, answer-grounding rules, and refusals |
+| Phase 7 feedback governance | `data/feedback/*.jsonl` local artifacts | Capture human review observations for future manual curation |
 
-## Phase 2 Retrieval Dataset
+No layer uses an external LLM-as-a-judge.
 
-Dataset file:
+## Phase 2 Retrieval Evaluation
 
-```text
-evaluation/datasets/phase2_retrieval_cases.json
+Run:
+
+```bash
+python scripts/run_retrieval_eval.py
 ```
 
 Dataset size:
@@ -21,37 +26,13 @@ Dataset size:
 20 retrieval cases
 ```
 
-The cases are synthetic and tied to deterministic Phase 1 chunk IDs. They cover exact terms, policy names, form names, systems, thresholds, acronyms, and region names.
-
-## Phase 2 Metrics
-
-### hit_rate@5
-
-A retrieval case is counted as a hit if at least one expected chunk ID or expected document ID appears in the top 5 results.
+Metric:
 
 ```text
-hit_rate@5 = cases_with_hit_in_top_5 / total_cases
+hit_rate@5 = cases_with_expected_doc_or_chunk_in_top_5 / total_cases
 ```
 
-### Baseline Comparison
-
-The script compares:
-
-- BM25 retrieval
-- Vector retrieval
-- Hybrid retrieval
-
-The acceptance rule is:
-
-```text
-hybrid hit_rate@5 >= BM25 hit_rate@5
-hybrid hit_rate@5 >= vector hit_rate@5
-hybrid hit_rate@5 >= 80%
-```
-
-## Phase 2 Current Result
-
-Latest run:
+Current deterministic result:
 
 ```text
 BM25:   20/20, hit_rate@5 = 100%
@@ -59,23 +40,29 @@ Vector: 20/20, hit_rate@5 = 100%
 Hybrid: 20/20, hit_rate@5 = 100%
 ```
 
-Hybrid is not below the BM25 or vector baselines on this dataset.
+Interpretation:
 
-## Phase 2 Run Command
+- Useful for regression testing exact terms, acronyms, thresholds, systems, form names, and policy names.
+- Not a production retrieval accuracy claim.
+
+## Phase 6 Query Evaluation
+
+Run:
 
 ```bash
-python scripts/run_retrieval_eval.py
+python scripts/run_phase6_eval.py
 ```
 
-## Phase 6 Evaluation Dataset
-
-Dataset file:
+Dataset:
 
 ```text
-evaluation/datasets/phase6_eval_cases.json
+phase6-v1
+22 cases total
+17 core cases
+5 holdout cases
 ```
 
-The versioned `phase6-v1` dataset contains 22 deterministic cases: 17 core regression cases and 5 independently phrased holdout cases. The combined Phase 6 dataset covers:
+The combined dataset covers:
 
 - policy lookup
 - process lookup
@@ -86,13 +73,11 @@ The versioned `phase6-v1` dataset contains 22 deterministic cases: 17 core regre
 - unsupported-request refusal
 - insufficient-evidence refusal
 
-Each case declares expected intent, route, status, retrieval documents or chunks where applicable, graph relations, answer phrases, citations, and refusal outcomes.
-
-The holdout split adds paraphrase, keyword-light, adversarial out-of-scope, and insufficient-evidence cases to improve regression sensitivity. It is intentionally small and does not independently cover every category. The holdout cases remain grounded in or intentionally rejected against the same controlled synthetic corpus.
+The holdout split adds paraphrase, keyword-light, adversarial out-of-scope, and insufficient-evidence cases to improve regression sensitivity. It is intentionally small and does not independently cover every category.
 
 ## Phase 6 Metrics
 
-The Phase 6 report includes:
+The report includes:
 
 - `intent_accuracy`
 - `route_accuracy`
@@ -106,41 +91,11 @@ The Phase 6 report includes:
 - `refusal_accuracy`
 - per-category refusal accuracy
 - `fabricated_answer_rate`
-- core and holdout case totals and pass rates
+- core and holdout pass rates
 
-Grounding checks verify deterministic properties only: answers are generated only from evidence-ready packs, required phrases are present, forbidden known phrases are absent, answer citations are a subset of evidence-pack citations, expected citation documents are present, and a grounding summary exists.
+Unavailable metrics are represented as `null` in JSON and `N/A` in Markdown, CLI output, and Streamlit. Zero-denominator metrics are never rendered as 100%.
 
-When no applicable cases exist for a metric, its value is `null` in JSON and `N/A` in Markdown, CLI, and Streamlit. A zero denominator is never rendered as 100%.
-
-## Phase 6 Reports
-
-Run:
-
-```bash
-python scripts/run_phase6_eval.py
-```
-
-Generated, ignored artifacts:
-
-```text
-data/evaluation/latest_report.json
-data/evaluation/latest_report.md
-data/evaluation/history/<run_id>.json
-```
-
-The JSON report includes run metadata, aggregate metrics, per-intent metrics, an intent confusion summary, per-case expected and actual outcomes, failed checks, citations, graph relations, and limitations.
-
-The command exits non-zero for execution errors. Metric degradation is reported without failing the command unless `--fail-on-regression` is supplied.
-
-## Relationship To Phase 7 Feedback
-
-Phase 7 feedback records can be manually linked to evaluation case IDs to support future curation decisions. This linkage is informational only. Submitting or triaging feedback does not automatically add, remove, or modify evaluation cases.
-
-The evaluation harness does not use feedback as a metric input, does not implement an external LLM judge, and does not perform production monitoring or online experimentation.
-
-## Phase 6 Current Result
-
-Latest deterministic run:
+Current deterministic result:
 
 ```text
 Cases passed: 22/22
@@ -155,8 +110,46 @@ Refusal accuracy: 100%
 Fabricated-answer rate: 0%
 ```
 
-## Important Interpretation Note
+## Reports
 
-This is a controlled synthetic evaluation. The 100% score is useful for regression testing and demonstrating that the MVP-0 retrieval pipeline works on the sample corpus.
+Generated, ignored artifacts:
 
-It is not a production validation claim and should not be interpreted as expected performance on real enterprise documents. Phase 6 does not measure free-form semantic correctness, complete policy interpretation, or production safety. Phase 7 adds local feedback governance, but no production human review workflow, production monitoring, online experimentation, or external evaluator is implemented.
+```text
+data/evaluation/latest_report.json
+data/evaluation/latest_report.md
+data/evaluation/history/<run_id>.json
+```
+
+The JSON report includes run metadata, aggregate metrics, per-intent metrics, confusion summaries, per-case expected and actual outcomes, failed checks, citations, graph relations, and limitations.
+
+## Phase 7 Feedback Governance
+
+Feedback records can be submitted from the Query Planner or Feedback Governance dashboard, or directly through `/api/v1/feedback`.
+
+Feedback stores:
+
+```text
+data/feedback/feedback.jsonl
+data/feedback/review_queue.json
+data/feedback/feedback_corrupt.jsonl
+```
+
+These files are ignored by Git. `data/feedback/.gitkeep` is tracked so the directory exists in a clean clone.
+
+Feedback can include manual links to evaluation case IDs. These links are informational only:
+
+- feedback does not automatically add evaluation cases
+- feedback does not mutate the dataset
+- feedback is not used as an automatic metric source
+- feedback can support future manual curation decisions
+
+## Important Interpretation Notes
+
+- The evaluation corpus is synthetic and controlled.
+- High metric values are deterministic regression signals, not broad semantic faithfulness proof.
+- Citation checks verify structured properties, not full legal or policy correctness.
+- Grounding checks verify required phrases, citation subsets, refusal status, and fabricated-answer flags.
+- No external LLM judge is implemented.
+- No production monitoring or online experimentation is implemented.
+- No production human workflow engine is implemented.
+- The feedback loop is local JSONL governance demonstration only.

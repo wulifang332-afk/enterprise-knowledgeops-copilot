@@ -16,10 +16,12 @@
 - Phase 6 reports are generated under `data/evaluation/` and intentionally ignored by Git.
 - Phase 7 feedback uses a local JSONL store and derived review queue under `data/feedback/`. It is intentionally not a production workflow system.
 - Phase 7 feedback can store manual links to evaluation case IDs, but it does not automatically mutate the evaluation dataset.
+- Phase 7 feedback listing skips malformed JSONL lines and writes local corrupt-line notes to `data/feedback/feedback_corrupt.jsonl`.
+- Phase 8 is documentation and portfolio packaging only. It does not change product behavior.
 
-## MVP-0 Checkpoint Commands
+## Portfolio Checkpoint Commands
 
-Use these commands before creating an MVP-0 commit:
+Use these commands before creating the final portfolio release commit:
 
 ```bash
 python -m pytest
@@ -29,7 +31,7 @@ python scripts/run_phase6_eval.py
 python scripts/demo_mvp0_check.py
 ```
 
-The Phase 7 checkpoint reported 116 tests passing, BM25/vector/hybrid retrieval hit_rate@5 of 20/20, a graph rebuild of 96 nodes and 207 edges from 40 chunks, 22/22 Phase 6 cases passing (17 core and 5 holdout), and a passing MVP-0 demo checkpoint.
+The Phase 8 packaging checkpoint reported 118 tests passing, BM25/vector/hybrid retrieval hit_rate@5 of 20/20, a graph rebuild of 96 nodes and 207 edges from 40 chunks, 22/22 Phase 6 cases passing (17 core and 5 holdout), and a passing MVP-0 demo checkpoint.
 
 ## Current Known Limitations
 
@@ -64,6 +66,7 @@ The following local artifacts are generated and can be regenerated:
 - `data/evaluation/history/*.json`
 - `data/feedback/feedback.jsonl`
 - `data/feedback/review_queue.json`
+- `data/feedback/feedback_corrupt.jsonl`
 - `data/audit/*.jsonl`
 
 Processed JSON under `data/processed/` is currently kept as a demo artifact so retrieval and API examples can run immediately. It can be regenerated with:

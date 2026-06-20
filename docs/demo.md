@@ -1,31 +1,57 @@
-# MVP-0 + Phase 7 Demo Guide
+# End-To-End Demo Guide
 
-This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, query evidence planning, citation-grounded answers, deterministic quality control, and local feedback governance.
+This guide demonstrates Enterprise KnowledgeOps Copilot as a knowledge operations workflow, not a chat UI. The demo moves from synthetic enterprise documents to retrieval, citations, graph inspection, governed query planning, grounded answers, evaluation, and local feedback governance.
 
-## Prerequisites
-
-Use Python 3.11 or newer. In this environment, use `python` instead of `python3`.
+## 1. Install
 
 ```bash
 cd enterprise-knowledgeops-copilot
 python --version
+python -m pip install -e ".[dev]"
 ```
 
-## Step-by-Step Demo Flow
+The project runs locally without external API keys.
 
-### 1. Start Backend
+## 2. Rebuild Retrieval Indexes
+
+```bash
+python scripts/rebuild_indexes.py
+```
+
+Expected result:
+
+```text
+status: success
+chunk_count: 40
+```
+
+## 3. Rebuild Graph
+
+```bash
+python scripts/rebuild_graph.py
+```
+
+Expected result:
+
+```text
+node_count: 96
+edge_count: 207
+source_chunk_count: 40
+```
+
+## 4. Start FastAPI
 
 ```bash
 uvicorn backend.main:app --reload
 ```
 
-The API should be available at:
+Open:
 
 ```text
-http://127.0.0.1:8000
+http://127.0.0.1:8000/docs
 ```
 
-### 2. Start Streamlit
+## 5. Start Streamlit
 
 In a second terminal:
 
@@ -39,65 +65,30 @@ Open:
 http://localhost:8501
 ```
 
-### 3. Open Document Ingestion Page
+## 6. Ingest And Inspect Documents
 
-Use the Streamlit sidebar to open `Document Ingestion`.
+Open `Document Ingestion` in Streamlit.
 
-This page shows:
+Use the page to:
 
-- Raw Markdown files under `data/raw/`.
-- Ingestion action.
-- Per-file ingestion status.
-- Document registry table.
-- Selected document metadata.
-- Selected document chunks.
+- view raw Markdown files under `data/raw/`
+- click `Ingest All Documents`
+- inspect per-file ingestion status
+- inspect the document registry
+- inspect selected document metadata
+- inspect selected chunks, offsets, and source text
 
-### 4. Ingest All 8 Documents
+Expected clean-run corpus:
 
-Click `Ingest All Documents`.
+```text
+8 synthetic enterprise documents
+40 processed chunks
+0 failed files
+```
 
-Expected result:
+## 7. Search With Citations
 
-- 8 documents ingested on a clean run, or 8 skipped if already ingested.
-- 0 failed files.
-- Index rebuild succeeds.
-
-### 5. Inspect Metadata
-
-Select a document from the registry.
-
-Check fields such as:
-
-- `doc_id`
-- `title`
-- `department`
-- `regions`
-- `policy_type`
-- `access_level`
-- `owner`
-- `source_file`
-- `content_sha256`
-
-### 6. Inspect Chunks
-
-On the same page, inspect chunk rows.
-
-Check:
-
-- `chunk_id`
-- `section_title`
-- `token_count`
-- `start_char`
-- `end_char`
-- source chunk text
-
-### 7. Open Knowledge Explorer
-
-Use the Streamlit sidebar to open `Knowledge Explorer`.
-
-This page is for retrieval operations and citation inspection. It is not a chat UI.
-
-### 8. Run Example Queries
+Open `Knowledge Explorer`.
 
 Run these queries in BM25, Vector, and Hybrid modes:
 
@@ -107,50 +98,37 @@ ServiceNow Severity 1 15 minutes
 APAC EU cross-border transfer approval
 ```
 
-### 9. Inspect Citations and Source Text
+Inspect:
 
-For each result, inspect:
-
-- `citation_id`
-- `doc_id`
-- `chunk_id`
-- `title`
-- `section_title`
-- `source_file`
-- `version`
-- `effective_date`
-- `quote`
-- `start_char`
-- `end_char`
+- rank
+- BM25/vector/hybrid scores
+- citation ID
+- document ID
+- chunk ID
+- title and section
+- quote
+- `start_char` and `end_char`
 - `quote_hash`
+- source chunk text
 
-The `quote` should match the source chunk text. Offsets and quote hashes provide traceability from search result back to the normalized source document content.
+The key product point: retrieval results are inspectable and traceable back to source chunks.
 
-### 10. Open Knowledge Graph Explorer
+## 8. Explore The Knowledge Graph
 
-Use the Streamlit sidebar to open `Knowledge Graph Explorer`.
+Open `Knowledge Graph Explorer`.
 
-This page is for graph inspection only. It does not answer questions and does not perform GraphRAG synthesis.
-
-### 11. Rebuild And Inspect Graph
-
-Click `Rebuild Graph From Processed Chunks`.
-
-Expected result on the current synthetic corpus:
-
-- 96 nodes
-- 207 edges
-- 40 source chunks
+Click `Rebuild Graph From Processed Chunks` if needed.
 
 Inspect:
 
 - graph summary metrics
 - node table
 - edge table
-- filters by node type and relation type
+- node type filters
+- relation type filters
 - selected node detail
 - selected node neighborhood
-- evidence quotes for selected edges
+- edge evidence quotes
 
 Example graph objects:
 
@@ -164,34 +142,36 @@ Example graph objects:
 - `Severity 1 HAS_TIME_REQUIREMENT 15 minutes`
 - `Cross-border Data Handling Policy ESCALATES_TO DPO`
 
-### 12. Open Query Planner
+The graph is for inspection and evidence enrichment. It is not production GraphRAG answer synthesis.
 
-Use the Streamlit sidebar to open `Query Planner`.
+## 9. Build A Query Planner Evidence Pack
 
-This page is for governed query planning, evidence-pack inspection, and optional citation-grounded answer generation. It does not behave like a generic chatbot.
+Open `Query Planner`.
 
-Run these example queries:
+Leave `Generate citation-grounded answer` unchecked first.
+
+Run:
 
 ```text
 Which approval form is required for vendor payments?
-What system is used for Severity 1 incidents?
-How does cross-border data approval work between APAC and EU?
-Show graph evidence around ServiceNow.
-What is the capital of France?
 ```
 
-Expected behavior:
+Inspect:
 
-- Enterprise questions return a detected intent, selected route, retrieval evidence, graph evidence, citations, and limitations.
-- Out-of-scope questions such as `What is the capital of France?` return a structured refusal.
-- Unsupported final-answer requests return a structured refusal.
-- With `Generate citation-grounded answer` unchecked, the page preserves Phase 5A evidence-pack behavior.
-- With `Generate citation-grounded answer` checked, supported enterprise questions can return an answer, answer citations, and a grounding summary.
-- If evidence is insufficient, answer generation is refused instead of fabricating a response.
-- The page clearly states that Phase 5B answers are generated only from returned evidence.
-- The `Send Feedback for This Result` panel can submit local governance feedback for the latest evidence pack or answer.
+- detected intent
+- selected route
+- retrieval evidence
+- graph evidence
+- citations
+- limitations
 
-Try these answer-generation checks:
+Expected behavior: the page returns an evidence pack, not a free-form chatbot answer.
+
+## 10. Generate A Citation-Grounded Answer
+
+Check `Generate citation-grounded answer`.
+
+Run:
 
 ```text
 Which approval form is required for vendor payments?
@@ -200,61 +180,90 @@ How does cross-border data approval work between APAC and EU?
 Tell me the company's travel reimbursement policy for Mars employees.
 ```
 
-Expected answer-generation behavior:
+Expected behavior:
 
-- Vendor payment answer mentions `Vendor Payment Request Form` and includes answer citations.
-- Severity 1 answer mentions `ServiceNow` and includes answer citations.
-- Cross-border answer is cautious and cites APAC/EU/Data Protection Officer evidence from the Cross-border Data Handling Policy.
-- The Mars employees query is refused as insufficient evidence.
+- vendor payment answer mentions `Vendor Payment Request Form`
+- Severity 1 answer mentions `ServiceNow`
+- cross-border answer uses APAC/EU/Data Protection Officer evidence
+- insufficient-evidence queries are refused instead of fabricated
+- answer citations are shown and trace back to evidence-pack citations
 
-### 13. Open Evaluation Dashboard
-
-Use the Streamlit sidebar to open `Evaluation Dashboard`.
-
-This page is an internal quality workspace, not a chatbot or production monitoring interface.
-
-Click `Run Evaluation` to execute the versioned `phase6-v1` dataset. The current deterministic baseline should show:
+Out-of-scope check:
 
 ```text
-22/22 cases passed
-Core: 17/17 passed
-Holdout: 5/5 passed
-Intent accuracy: 100%
-Route accuracy: 100%
-Retrieval hit@k: 100%
-Citation validity: 100%
-Grounded-answer pass rate: 100%
-Refusal accuracy: 100%
-Fabricated-answer rate: 0%
+What is the capital of France?
 ```
 
-Inspect:
+Expected behavior:
 
-- per-intent metrics
-- core versus holdout pass rates
+- `intent=out_of_scope`
+- `status=refused`
+- no retrieval evidence
+- no graph evidence
+- no answer
+
+## 11. Run Evaluation
+
+From the CLI:
+
+```bash
+python scripts/run_phase6_eval.py
+```
+
+Expected current baseline:
+
+```text
+Phase 6 evaluation: 22/22 cases passed
+Core: 17/17 passed
+Holdout: 5/5 passed
+Intent accuracy: 100.0%
+Route accuracy: 100.0%
+Retrieval hit@k: 100.0%
+Citation validity: 100.0%
+Grounded answer pass: 100.0%
+Refusal accuracy: 100.0%
+Fabricated answer rate: 0.0%
+```
+
+## 12. Inspect Evaluation Dashboard
+
+Open `Evaluation Dashboard`.
+
+Use:
+
+- `Run Evaluation`
+- `Reload Latest`
+- split metrics for core and holdout
+- per-intent breakdown
 - case-level expected versus actual outcomes
-- retrieval and citation results
-- graph relations
-- generated answers and grounding summaries
-- failed checks, when present
+- failed-case inspection
+- limitations section
 
-Use `Reload Latest` to load the last local report without rerunning the dataset. The dashboard does not implement LLM judging, production monitoring, or online experimentation.
+The evaluation dashboard is deterministic regression inspection, not an LLM judge and not production monitoring.
 
-The holdout split uses independently phrased synthetic scenarios to improve regression sensitivity. It is still controlled synthetic evaluation, not proof of broad semantic faithfulness. `N/A` indicates that no applicable cases existed for a metric.
+## 13. Submit Feedback
 
-### 14. Open Feedback & Governance
+Use either:
 
-Use the Streamlit sidebar to open `Feedback & Governance`.
+- `Send Feedback for This Result` on the Query Planner page; or
+- the submission panel in `Feedback & Governance`.
 
-This page is a local governance workspace for reviewing quality issues. It is not a production ticketing system or authenticated human workflow tool.
+Example feedback:
 
-Submit a sample feedback item:
+```text
+query/request context: Which approval form is required for vendor payments?
+rating: negative
+feedback type: citation_issue
+issue category: wrong_citation
+comment: Citation should be reviewed before this answer is reused.
+linked eval case ID: holdout_supplier_invoice_form
+```
 
-- query/request context: `Which approval form is required for vendor payments?`
-- rating: `negative`
-- feedback type: `citation_issue`
-- issue category: `wrong_citation`
-- comment: `Citation should be reviewed before this answer is reused.`
+Feedback is stored locally under ignored `data/feedback/` artifacts.
+
+## 14. Review Feedback Governance Dashboard
+
+Open `Feedback & Governance`.
 
 Inspect:
 
@@ -264,38 +273,46 @@ Inspect:
 - unresolved feedback count
 - review queue table
 - selected feedback detail
+- loaded filter set
 
-Use the triage panel to set review status to `triaged`, add a reviewer note, and optionally link a manual evaluation case ID such as `holdout_supplier_invoice_form`.
+Use the triage panel to update:
+
+- review status
+- reviewer note
+- linked evaluation case ID
 
 Expected behavior:
 
-- feedback is stored locally under ignored `data/feedback/` artifacts
-- audit events are written under ignored `data/audit/` artifacts
+- local feedback store updates
+- local audit events are written under ignored `data/audit/`
 - evaluation datasets are not automatically changed
-- no authentication, RBAC, SSO, ticketing integration, LLM judge, monitoring, or online experimentation is involved
+- no authentication, RBAC, SSO, ticketing integration, LLM judge, production monitoring, or online experimentation is involved
 
-## Optional CLI Demo Check
+## 15. Final Portfolio Check
 
 Run:
 
 ```bash
+python -m pytest
+python scripts/rebuild_indexes.py
+python scripts/rebuild_graph.py
+python scripts/run_retrieval_eval.py
+python scripts/run_phase6_eval.py
 python scripts/demo_mvp0_check.py
 ```
 
-This verifies the test suite, sample document ingestion, index rebuild, and retrieval evaluation in one command. A successful run ends with:
+Current expected results:
 
 ```text
-MVP-0 demo checkpoint passed.
+118 tests passed
+retrieval eval: BM25/vector/hybrid all 20/20
+graph rebuild: 96 nodes, 207 edges, 40 source chunks
+Phase 6 eval: 22/22
+MVP-0 demo checkpoint passed
 ```
 
-To verify Phase 4 graph extraction separately:
+## Demo Talk Track
 
-```bash
-python scripts/rebuild_graph.py
-```
+In interviews, frame the project as:
 
-To run Phase 6 evaluation from the CLI:
-
-```bash
-python scripts/run_phase6_eval.py
-```
+> This is an Enterprise KnowledgeOps platform, not a chatbot. The query interface is one workflow on top of document ingestion, metadata governance, chunk traceability, hybrid retrieval, citation discipline, graph inspection, deterministic evaluation, and local feedback governance.
