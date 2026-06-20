@@ -1,6 +1,6 @@
-# MVP-0 + Phase 5B Demo Guide
+# MVP-0 + Phase 6 Demo Guide
 
-This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, query evidence planning, and optional Phase 5B citation-grounded answer generation.
+This demo shows a KnowledgeOps workflow, not a chat interface. The purpose is to demonstrate document ingestion, metadata governance, chunk traceability, retrieval scoring, citation inspection, graph inspection, query evidence planning, citation-grounded answers, and deterministic quality control.
 
 ## Prerequisites
 
@@ -206,6 +206,41 @@ Expected answer-generation behavior:
 - Cross-border answer is cautious and cites APAC/EU/Data Protection Officer evidence from the Cross-border Data Handling Policy.
 - The Mars employees query is refused as insufficient evidence.
 
+### 13. Open Evaluation Dashboard
+
+Use the Streamlit sidebar to open `Evaluation Dashboard`.
+
+This page is an internal quality workspace, not a chatbot or feedback collection interface.
+
+Click `Run Evaluation` to execute the versioned `phase6-v1` dataset. The current deterministic baseline should show:
+
+```text
+22/22 cases passed
+Core: 17/17 passed
+Holdout: 5/5 passed
+Intent accuracy: 100%
+Route accuracy: 100%
+Retrieval hit@k: 100%
+Citation validity: 100%
+Grounded-answer pass rate: 100%
+Refusal accuracy: 100%
+Fabricated-answer rate: 0%
+```
+
+Inspect:
+
+- per-intent metrics
+- core versus holdout pass rates
+- case-level expected versus actual outcomes
+- retrieval and citation results
+- graph relations
+- generated answers and grounding summaries
+- failed checks, when present
+
+Use `Reload Latest` to load the last local report without rerunning the dataset. The dashboard does not implement LLM judging, user feedback, production monitoring, or online experimentation.
+
+The holdout split uses independently phrased synthetic scenarios to improve regression sensitivity. It is still controlled synthetic evaluation, not proof of broad semantic faithfulness. `N/A` indicates that no applicable cases existed for a metric.
+
 ## Optional CLI Demo Check
 
 Run:
@@ -224,4 +259,10 @@ To verify Phase 4 graph extraction separately:
 
 ```bash
 python scripts/rebuild_graph.py
+```
+
+To run Phase 6 evaluation from the CLI:
+
+```bash
+python scripts/run_phase6_eval.py
 ```

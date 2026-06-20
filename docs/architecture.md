@@ -1,6 +1,6 @@
-# Phase 5B Architecture
+# Phase 6 Architecture
 
-The current Phase 5B build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, Phase 4 graph extraction and persistence, query planning, evidence-pack construction, citation-grounded answer generation, and thin API/UI inspection layers.
+The current Phase 6 build is a local-first KnowledgeOps pipeline. It focuses on deterministic ingestion, metadata validation, chunk traceability, retrieval, citation inspection, Phase 4 graph extraction and persistence, query planning, evidence-pack construction, citation-grounded answer generation, and deterministic quality evaluation.
 
 ## Current Components
 
@@ -22,8 +22,9 @@ The current Phase 5B build is a local-first KnowledgeOps pipeline. It focuses on
 - Graph rebuild script: `scripts/rebuild_graph.py`.
 - Query planning service: deterministic intent classification, route selection, evidence-pack construction, and structured refusal.
 - Deterministic answer composer: optional template-based citation-grounded answer generation when `generate_answer=true`.
-- FastAPI: endpoints for ingest, documents, chunks, search, graph inspection, and governed query planning/answer generation.
-- Streamlit: dashboard pages for ingestion, knowledge exploration, graph exploration, and query planning.
+- Evaluation service: versioned cases, deterministic checks, aggregate metrics, and JSON/Markdown reports.
+- FastAPI: endpoints for ingest, documents, chunks, search, graph inspection, governed query planning/answer generation, and evaluation.
+- Streamlit: dashboard pages for ingestion, knowledge exploration, graph exploration, query planning, and quality inspection.
 - Demo check script: `scripts/demo_mvp0_check.py` runs tests, ingestion, index rebuild, and retrieval evaluation.
 
 ## ASCII Architecture Diagram
@@ -95,6 +96,12 @@ The current Phase 5B build is a local-first KnowledgeOps pipeline. It focuses on
                               | deterministic only   |
                               +----------+-----------+
                                          |
+                                         v
+                              +----------------------+
+                              | Evaluation Harness   |
+                              | cases/checks/reports |
+                              +----------+-----------+
+                                         |
                     +--------------------+--------------------+-------------------------+
                     |                                         |
                     v                                         v
@@ -115,13 +122,15 @@ The current Phase 5B build is a local-first KnowledgeOps pipeline. It focuses on
 7. BM25 and Chroma indexes are rebuilt from processed chunks.
 8. Search results are fused and citations are built from chunk offsets.
 9. `scripts/rebuild_graph.py` extracts graph nodes and edges from processed chunks and persists a NetworkX graph artifact under `data/graph/`.
-10. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, graph inspection, and Phase 5B query evidence planning with optional citation-grounded answers.
-11. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer and Query Planner.
-12. `scripts/demo_mvp0_check.py` verifies the MVP-0 retrieval demo path from CLI.
+10. Phase 6 runs versioned cases through the existing query service and computes deterministic retrieval, routing, citation, grounding, and refusal metrics.
+11. Reports are persisted under ignored `data/evaluation/` JSON/Markdown artifacts.
+12. FastAPI exposes ingestion, registry browsing, chunk browsing, retrieval, graph inspection, query answering, and evaluation endpoints.
+13. Streamlit provides the KnowledgeOps dashboard, including Graph Explorer, Query Planner, and Evaluation Dashboard.
+14. CLI scripts verify retrieval, graph, Phase 6 quality checks, and the MVP-0 demo path.
 
-## Phase 4 Graph Layer in the Phase 5B Release
+## Phase 4 Graph Layer in the Phase 6 Release
 
-The Phase 4 graph layer remains part of the current Phase 5B release. Graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
+The Phase 4 graph layer remains part of the current Phase 6 release. Graph extraction is deterministic and rule-based. It creates typed nodes for policies, SOPs, departments, roles, systems, forms, regions, thresholds, time requirements, data types, risk types, and processes. It creates typed edges such as `REQUIRES`, `OWNS`, `APPLIES_TO`, `USES_SYSTEM`, `HAS_TIME_REQUIREMENT`, `HAS_ACCESS_LEVEL`, `GOVERNS`, `ESCALATES_TO`, and fallback `MENTIONS`.
 
 The graph layer is for inspection, lineage review, and portfolio demonstration. It is not production-grade information extraction and does not answer questions.
 
@@ -131,10 +140,17 @@ Phase 5A added deterministic query intent classification, evidence route selecti
 
 The answer composer is deterministic and local. It selects returned retrieval citations, optionally uses graph evidence for routing and prioritization, and refuses when the evidence pack is out of scope, unsupported, missing citable evidence, or insufficient for the query. It does not call external LLM APIs and does not perform GraphRAG final-response synthesis.
 
+## Evaluation Layer
+
+Phase 6 adds a versioned deterministic evaluation dataset with core and independent holdout splits plus a reusable evaluation service. The service executes existing query behavior directly, compares actual outcomes with explicit expectations, aggregates split, per-intent, and top-level metrics, and writes local JSON/Markdown reports.
+
+The evaluation layer checks inspectable signals such as expected sources, routes, citation subsets, required phrases, grounding summaries, refusal reasons, and fabricated-answer rate. Metrics with no applicable cases are represented as unavailable rather than 100%. It does not claim semantic faithfulness, use an LLM judge, collect online feedback, or monitor production traffic.
+
 ## Not Present Yet
 
 - GraphRAG answer synthesis
 - Advanced enterprise guardrails
 - Feedback loop
-- Full evaluation dashboard
+- Human review workflow
+- Production monitoring and online experimentation
 - Neo4j adapter

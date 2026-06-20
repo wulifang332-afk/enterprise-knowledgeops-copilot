@@ -5,6 +5,7 @@ from functools import lru_cache
 from fastapi import Depends
 
 from backend.app.core.settings import AppSettings
+from backend.app.evaluation.service import EvaluationService
 from backend.app.graph.service import GraphService
 from backend.app.ingestion.service import IngestionService
 from backend.app.query.service import QueryPlanningService
@@ -35,3 +36,7 @@ def get_graph_service(settings: AppSettings = Depends(get_settings)) -> GraphSer
 
 def get_query_planning_service(settings: AppSettings = Depends(get_settings)) -> QueryPlanningService:
     return QueryPlanningService(settings)
+
+
+def get_evaluation_service(settings: AppSettings = Depends(get_settings)) -> EvaluationService:
+    return EvaluationService(settings)

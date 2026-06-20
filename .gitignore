@@ -21,5 +21,7 @@ data/graph/*
 !data/graph/.gitkeep
 data/indexes/*
 !data/indexes/.gitkeep
+data/evaluation/*
+!data/evaluation/.gitkeep
 evaluation/reports/*.json
 evaluation/reports/*.jsonl

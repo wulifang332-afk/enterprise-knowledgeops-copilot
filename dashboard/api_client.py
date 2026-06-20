@@ -37,6 +37,15 @@ class KnowledgeOpsAPIClient:
     def query(self, payload: dict[str, Any]) -> dict[str, Any]:
         return self._request("POST", "/api/v1/query", json=payload)
 
+    def evaluation_run(self) -> dict[str, Any]:
+        return self._request("POST", "/api/v1/evaluation/run")
+
+    def evaluation_latest(self) -> dict[str, Any]:
+        return self._request("GET", "/api/v1/evaluation/latest")
+
+    def evaluation_cases(self) -> dict[str, Any]:
+        return self._request("GET", "/api/v1/evaluation/cases")
+
     def graph_rebuild(self) -> dict[str, Any]:
         return self._request("POST", "/api/v1/graph/rebuild")
 

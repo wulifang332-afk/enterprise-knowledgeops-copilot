@@ -3,12 +3,12 @@
 Enterprise KnowledgeOps Copilot
 
 Enterprise KnowledgeOps Copilot | Personal Project
-Built a local-first enterprise knowledge platform with FastAPI and Streamlit, supporting document ingestion, metadata validation, deterministic chunking, BM25/vector/hybrid retrieval, citation inspection, rule-based knowledge graph extraction, graph exploration, query planning, structured evidence packs, and Phase 5B citation-grounded answer generation. `/api/v1/query` classifies enterprise questions, routes them to retrieval/graph evidence workflows, preserves evidence-pack behavior by default, and optionally composes deterministic answers only from returned citations. Out-of-scope, unsupported, and insufficient-evidence requests are refused instead of answered.
+Built a local-first enterprise knowledge platform with FastAPI and Streamlit, supporting document ingestion, metadata validation, deterministic chunking, BM25/vector/hybrid retrieval, citation inspection, rule-based knowledge graph extraction, graph exploration, query planning, structured evidence packs, citation-grounded answer generation, and Phase 6 deterministic quality evaluation. `/api/v1/query` classifies enterprise questions, routes them to retrieval/graph evidence workflows, preserves evidence-pack behavior by default, and optionally composes deterministic answers only from returned citations. Out-of-scope, unsupported, and insufficient-evidence requests are refused instead of answered.
 
 This is an Enterprise KnowledgeOps platform, not a generic chatbot.
 
 
-## Current Capabilities Through Phase 5B
+## Current Capabilities Through Phase 6
 
 - Ingest 8 synthetic enterprise Markdown documents from `data/raw/`.
 - Validate required metadata with Pydantic v2 schemas.
@@ -28,6 +28,10 @@ This is an Enterprise KnowledgeOps platform, not a generic chatbot.
 - Optionally generate citation-grounded answers when `generate_answer=true` and evidence is sufficient.
 - Refuse out-of-scope, unsupported, or insufficient-evidence requests without fabricating an answer.
 - Inspect evidence packs and optional grounded answers in the Streamlit Query Planner.
+- Run a versioned deterministic regression dataset with 17 core and 5 independent holdout cases.
+- Measure retrieval, intent, route, citation, grounding, and refusal signals.
+- Persist JSON and Markdown evaluation reports under ignored local artifacts.
+- Inspect quality metrics and case-level failures in the Streamlit Evaluation Dashboard.
 
 ## Not Implemented Yet
 
@@ -35,7 +39,8 @@ This is an Enterprise KnowledgeOps platform, not a generic chatbot.
 - Advanced enterprise guardrails
 - Access-control simulation
 - Feedback loop
-- Full evaluation dashboard
+- LLM-as-a-judge or semantic faithfulness scoring
+- Production monitoring and online experimentation
 - Neo4j adapter
 
 These are planned for later phases and are intentionally absent from the current citation-grounded evidence build. External LLM synthesis is not required for the default local demo.
@@ -89,6 +94,12 @@ Run retrieval evaluation:
 python scripts/run_retrieval_eval.py
 ```
 
+Run the Phase 6 deterministic evaluation:
+
+```bash
+python scripts/run_phase6_eval.py
+```
+
 Start FastAPI:
 
 ```bash
@@ -112,11 +123,13 @@ python scripts/demo_mvp0_check.py
 Latest checkpoint:
 
 ```text
-Tests: 85 passed
+Tests: 100 passed
 BM25 hit_rate@5: 20/20, 100%
 Vector hit_rate@5: 20/20, 100%
 Hybrid hit_rate@5: 20/20, 100%
 Graph rebuild: 96 nodes, 207 edges, 40 source chunks
+Phase 6 evaluation: 22/22 cases passed (17 core, 5 holdout)
+Fabricated-answer rate: 0%
 MVP-0 demo checkpoint passed
 ```
 
@@ -169,11 +182,15 @@ After starting the services:
 - Synthetic data only.
 - Mock embeddings are lexical/hash based.
 - Answer generation is deterministic and template-based; it is optimized for grounded portfolio demonstration, not conversational fluency.
+- Phase 6 grounding checks are deterministic and citation-based; they do not establish semantic answer faithfulness.
+- Holdout cases improve regression sensitivity but remain part of the controlled synthetic corpus.
+- `N/A` means no applicable cases existed for that metric in the evaluated dataset or split.
+- Evaluation uses a controlled synthetic dataset and is not a production quality claim.
 - No GraphRAG answer synthesis yet.
 - `/api/v1/query` returns evidence packs by default; answers are opt-in with `generate_answer=true`.
 - No advanced guardrails or access-control simulation yet.
 - No feedback loop yet.
-- No full evaluation dashboard yet.
+- No LLM-as-a-judge, human review workflow, production monitoring, or A/B testing infrastructure.
 - No Neo4j adapter yet.
 - Graph extraction is deterministic and rule-based, tuned for the synthetic demo corpus, and not production-grade information extraction.
 - Graph endpoints are for inspection only, not question answering.

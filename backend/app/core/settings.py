@@ -64,6 +64,18 @@ class AppSettings(BaseModel):
     def graph_dir(self) -> Path:
         return self.data_dir / "graph"
 
+    @property
+    def evaluation_dir(self) -> Path:
+        return self.data_dir / "evaluation"
+
     def ensure_data_dirs(self) -> None:
-        for path in (self.data_dir, self.raw_dir, self.processed_dir, self.audit_dir, self.indexes_dir, self.graph_dir):
+        for path in (
+            self.data_dir,
+            self.raw_dir,
+            self.processed_dir,
+            self.audit_dir,
+            self.indexes_dir,
+            self.graph_dir,
+            self.evaluation_dir,
+        ):
             path.mkdir(parents=True, exist_ok=True)

@@ -1,4 +1,4 @@
-# Phase 5B API Reference
+# Phase 6 API Reference
 
 Base URL:
 
@@ -6,7 +6,7 @@ Base URL:
 http://127.0.0.1:8000
 ```
 
-All Phase 5B responses include `request_id`. Structured errors use:
+All Phase 6 responses include `request_id`. Structured errors use:
 
 ```json
 {
@@ -123,6 +123,8 @@ curl 'http://127.0.0.1:8000/api/v1/documents?department=Finance&limit=10'
 ```
 
 ### Response Snippet
+
+The response below is abbreviated. `per_intent_metrics`, `intent_confusion_summary`, `per_case_results`, `failures`, and `limitations` are omitted for readability; the real response includes them.
 
 ```json
 {
@@ -463,6 +465,81 @@ Classify a question, choose a deterministic evidence route, and return a structu
 
 Out-of-scope questions such as `What is the capital of France?` return `intent="out_of_scope"`, `status="refused"`, no retrieval evidence, no graph evidence, `answer=null`, and `answer_refusal_reason="OUT_OF_SCOPE"` when answer generation is requested.
 
+## POST `/api/v1/evaluation/run`
+
+Run the versioned deterministic Phase 6 dataset through the existing query service, persist local JSON/Markdown reports, and return the report. The response does not expose report filesystem paths.
+
+### Response Snippet
+
+```json
+{
+  "request_id": "...",
+  "report": {
+    "run_id": "phase6-20260619T000000Z",
+    "timestamp": "2026-06-19T00:00:00Z",
+    "dataset_version": "phase6-v1",
+    "total_cases": 22,
+    "passed_cases": 22,
+    "failed_cases": 0,
+    "metrics": {
+      "intent_accuracy": 1.0,
+      "route_accuracy": 1.0,
+      "retrieval_hit_at_k": 1.0,
+      "citation_validity_rate": 1.0,
+      "grounded_answer_pass_rate": 1.0,
+      "refusal_accuracy": 1.0,
+      "fabricated_answer_rate": 0.0
+    },
+    "split_metrics": {
+      "core": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "holdout": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "pass_rate": 1.0
+      }
+    }
+  }
+}
+```
+
+Missing indexes or graph artifacts return `INDEX_UNAVAILABLE` with rebuild guidance. Invalid datasets return `INVALID_EVALUATION_CASE`.
+
+## GET `/api/v1/evaluation/latest`
+
+Return the latest persisted Phase 6 report. If no report exists, the endpoint returns structured `INVALID_REQUEST`.
+
+## GET `/api/v1/evaluation/cases`
+
+Return the versioned canonical evaluation cases for dashboard inspection.
+
+```json
+{
+  "request_id": "...",
+  "dataset_version": "phase6-v1",
+  "total_cases": 22,
+  "items": [
+    {
+      "case_id": "policy_vendor_payment_form",
+      "split": "core"
+    },
+    {
+      "case_id": "holdout_supplier_invoice_form",
+      "split": "holdout"
+    }
+  ]
+}
+```
+
+The `items` array above is abbreviated. Metrics with no applicable cases are returned as `null`; clients should render them as `N/A`, not 100%.
+
+These endpoints support local quality inspection. They do not provide production monitoring, online feedback, LLM judging, or automated optimization.
+
 ## POST `/api/v1/graph/rebuild`
 
 Rebuild the deterministic rule-based graph from processed chunks under `data/processed/` and persist the NetworkX graph artifact under `data/graph/`.
@@ -641,10 +718,10 @@ curl 'http://127.0.0.1:8000/api/v1/graph/neighborhood?node_id=node:system:servic
 - Unknown `node_id` returns `INVALID_REQUEST`.
 - Missing graph artifact returns `GRAPH_UNAVAILABLE`.
 
-## Phase 4 Graph Layer Limitations in the Phase 5B Release
+## Phase 4 Graph Layer Limitations in the Phase 6 Release
 
 - Graph extraction is deterministic and rule-based.
 - Rules are tuned for the synthetic demo corpus.
 - This is portfolio/demo information extraction, not production-grade IE.
 - Graph endpoints are for inspection, not question answering.
-- Neo4j is not implemented in the current Phase 5B release.
+- Neo4j is not implemented in the current Phase 6 release.

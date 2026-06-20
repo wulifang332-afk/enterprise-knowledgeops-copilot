@@ -12,6 +12,8 @@
 - Processed JSON preserves an existing `ingested_at` value when the source content hash is unchanged. This keeps clean-clone demo runs from dirtying tracked processed artifacts while still allowing the SQLite registry to record a fresh ingestion timestamp.
 - Phase 5A `/api/v1/query` behavior remains the default: evidence packs only when `generate_answer` is omitted or false.
 - Phase 5B answer generation is deterministic, template-based, and local. It does not call external LLMs or perform GraphRAG final-response synthesis.
+- Phase 6 uses a versioned deterministic dataset and direct query-service execution. It does not use an LLM judge or external evaluator API.
+- Phase 6 reports are generated under `data/evaluation/` and intentionally ignored by Git.
 
 ## MVP-0 Checkpoint Commands
 
@@ -21,10 +23,11 @@ Use these commands before creating an MVP-0 commit:
 python -m pytest
 python scripts/run_retrieval_eval.py
 python scripts/rebuild_graph.py
+python scripts/run_phase6_eval.py
 python scripts/demo_mvp0_check.py
 ```
 
-The latest Phase 5B checkpoint reported 85 tests passing, BM25/vector/hybrid retrieval hit_rate@5 of 20/20, a graph rebuild of 96 nodes and 207 edges from 40 chunks, and a passing MVP-0 demo checkpoint.
+The Phase 6 checkpoint reported 100 tests passing, BM25/vector/hybrid retrieval hit_rate@5 of 20/20, a graph rebuild of 96 nodes and 207 edges from 40 chunks, 22/22 Phase 6 cases passing (17 core and 5 holdout), and a passing MVP-0 demo checkpoint.
 
 ## Current Known Limitations
 
@@ -39,7 +42,8 @@ The latest Phase 5B checkpoint reported 85 tests passing, BM25/vector/hybrid ret
 - No access-control simulation yet.
 - No advanced enterprise guardrails yet.
 - No feedback loop yet.
-- No full evaluation dashboard yet.
+- No LLM-as-a-judge, human review workflow, production monitoring, or online experimentation.
+- Evaluation metrics render `N/A` when no applicable cases exist; zero denominators are never reported as 100%.
 - No Neo4j adapter yet.
 - Streamlit pages require the FastAPI backend to be running.
 
@@ -52,6 +56,9 @@ The following local artifacts are generated and can be regenerated:
 - `data/knowledgeops.db-wal`
 - `data/indexes/`
 - `data/graph/knowledge_graph.json`
+- `data/evaluation/latest_report.json`
+- `data/evaluation/latest_report.md`
+- `data/evaluation/history/*.json`
 - `data/audit/*.jsonl`
 
 Processed JSON under `data/processed/` is currently kept as a demo artifact so retrieval and API examples can run immediately. It can be regenerated with:
