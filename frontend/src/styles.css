@@ -767,6 +767,64 @@ select {
   margin-top: 16px;
 }
 
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.readiness-alert,
+.readiness-persona-summary,
+.readiness-result {
+  margin-top: 16px;
+}
+
+.readiness-form .status-text {
+  margin: 12px 0 0;
+}
+
+.boundary-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: #33404d;
+}
+
+.simulation-panel {
+  display: grid;
+  gap: 14px;
+  border: 1px solid #d8dde3;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 20px;
+}
+
+.simulation-panel__toggle {
+  margin-top: 0;
+}
+
+.simulation-panel__controls,
+.simulation-panel__persona,
+.simulation-panel__details {
+  margin-top: 2px;
+}
+
+.simulation-panel__status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #e3e7eb;
+  border-radius: 8px;
+  background: #f8fafb;
+  padding: 12px;
+}
+
+.simulation-panel__status p {
+  margin: 0;
+  color: #33404d;
+}
+
 @media (max-width: 900px) {
   .app-header__inner,
   .section__header,
@@ -787,6 +845,7 @@ select {
 
   .lifecycle,
   .feature-grid,
+  .persona-grid,
   .metric-grid,
   .pipeline-status,
   .breakdown-grid {
@@ -808,6 +867,11 @@ select {
   .evidence-column--wide {
     grid-column: auto;
   }
+
+  .simulation-panel__status {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 560px) {
@@ -818,6 +882,7 @@ select {
 
   .lifecycle,
   .feature-grid,
+  .persona-grid,
   .metric-grid,
   .pipeline-status,
   .breakdown-grid {

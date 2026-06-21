@@ -6,6 +6,7 @@ const routes = [
   { path: "/search", label: "Search" },
   { path: "/graph", label: "Graph" },
   { path: "/query", label: "Query" },
+  { path: "/readiness", label: "Readiness" },
   { path: "/evaluation", label: "Evaluation" },
   { path: "/governance", label: "Governance" }
 ];

@@ -68,10 +68,10 @@ export type SearchResponse = {
   results: RetrievalResult[];
 };
 
-export function searchKnowledge(query: string): Promise<SearchResponse> {
+export function searchKnowledge(query: string, filters: SearchFilters = {}): Promise<SearchResponse> {
   return postJson<SearchResponse, SearchRequest>("/api/v1/search", {
     query,
-    filters: {},
+    filters,
     top_k: 5,
     retrieval_mode: "hybrid"
   });

@@ -1,6 +1,13 @@
 import { FormEvent, useState } from "react";
 
 import { searchKnowledge, type RetrievalResult, type SearchResponse } from "../api";
+import {
+  AccessPolicySimulationPanel,
+  filtersFromAccessPolicy,
+  isAccessPolicyBlocked,
+  useAccessPolicySimulation,
+  type SimulationApplicationStatus
+} from "../components/AccessPolicySimulationPanel";
 
 type SearchState = {
   response: SearchResponse | null;
@@ -8,19 +15,24 @@ type SearchState = {
   error: string | null;
   emptyQuery: boolean;
   hasSearched: boolean;
+  accessPolicyStatus: SimulationApplicationStatus;
+  accessPolicyMessage: string;
 };
 
 export function SearchCitationsPage() {
   const [query, setQuery] = useState("");
+  const accessPolicy = useAccessPolicySimulation();
   const [state, setState] = useState<SearchState>({
     response: null,
     loading: false,
     error: null,
     emptyQuery: false,
-    hasSearched: false
+    hasSearched: false,
+    accessPolicyStatus: "disabled",
+    accessPolicyMessage: "Access policy simulation is disabled. Search requests are unchanged."
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmedQuery = query.trim();
 
@@ -30,7 +42,11 @@ export function SearchCitationsPage() {
         loading: false,
         error: null,
         emptyQuery: true,
-        hasSearched: true
+        hasSearched: true,
+        accessPolicyStatus: accessPolicy.enabled ? "ready" : "disabled",
+        accessPolicyMessage: accessPolicy.enabled
+          ? "Access policy simulation was not run because the query was empty."
+          : "Access policy simulation is disabled. Search requests are unchanged."
       });
       return;
     }
@@ -40,17 +56,60 @@ export function SearchCitationsPage() {
       loading: true,
       error: null,
       emptyQuery: false,
-      hasSearched: true
+      hasSearched: true,
+      accessPolicyStatus: accessPolicy.enabled ? "ready" : "disabled",
+      accessPolicyMessage: accessPolicy.enabled
+        ? "Preparing simulation-only filters before retrieval."
+        : "Access policy simulation is disabled. Search requests are unchanged."
     });
 
-    searchKnowledge(trimmedQuery)
+    let filters = {};
+    let accessPolicyStatus: SimulationApplicationStatus = "disabled";
+    let accessPolicyMessage = "Access policy simulation is disabled. Search requests are unchanged.";
+
+    if (accessPolicy.enabled) {
+      const policy = await accessPolicy.runSimulation();
+      if (!policy) {
+        setState({
+          response: null,
+          loading: false,
+          error: "Access policy simulation is unavailable. Disable simulation to run default search.",
+          emptyQuery: false,
+          hasSearched: true,
+          accessPolicyStatus: "unavailable",
+          accessPolicyMessage: "No retrieval request was sent because simulation-only filters could not be generated."
+        });
+        return;
+      }
+      if (isAccessPolicyBlocked(policy)) {
+        setState({
+          response: null,
+          loading: false,
+          error: null,
+          emptyQuery: false,
+          hasSearched: true,
+          accessPolicyStatus: "blocked",
+          accessPolicyMessage:
+            "No retrieval request was sent because the simulated policy produced no allowed filters."
+        });
+        return;
+      }
+      filters = filtersFromAccessPolicy(policy);
+      accessPolicyStatus = "applied";
+      accessPolicyMessage =
+        "Simulation-only allowed_filters were applied to POST /api/v1/search before retrieval.";
+    }
+
+    searchKnowledge(trimmedQuery, filters)
       .then((response) => {
         setState({
           response,
           loading: false,
           error: null,
           emptyQuery: false,
-          hasSearched: true
+          hasSearched: true,
+          accessPolicyStatus,
+          accessPolicyMessage
         });
       })
       .catch((error: unknown) => {
@@ -59,7 +118,9 @@ export function SearchCitationsPage() {
           loading: false,
           error: messageFor(error),
           emptyQuery: false,
-          hasSearched: true
+          hasSearched: true,
+          accessPolicyStatus,
+          accessPolicyMessage
         });
       });
   }
@@ -104,6 +165,20 @@ export function SearchCitationsPage() {
         </form>
       </section>
 
+      <section className="section" aria-labelledby="search-access-policy-title">
+        <div className="section__header">
+          <h2 className="section__title" id="search-access-policy-title">
+            Access Policy Simulation
+          </h2>
+          <p className="section__note">Optional, simulation-only metadata filters</p>
+        </div>
+        <AccessPolicySimulationPanel
+          controller={accessPolicy}
+          applicationStatus={state.accessPolicyStatus}
+          appliedDescription={state.accessPolicyMessage}
+        />
+      </section>
+
       <section className="section" aria-labelledby="retrieval-results-title">
         <div className="section__header">
           <h2 className="section__title" id="retrieval-results-title">
@@ -138,6 +213,15 @@ function SearchResults({ state }: { state: SearchState }) {
 
   if (state.loading) {
     return <EmptyPanel title="Searching" description="Retrieving cited chunks from the local API." />;
+  }
+
+  if (state.accessPolicyStatus === "blocked") {
+    return (
+      <EmptyPanel
+        title="Search blocked by simulation"
+        description={state.accessPolicyMessage}
+      />
+    );
   }
 
   if (state.error) {

@@ -8,7 +8,9 @@ The project demonstrates how an AI Product Manager, Enterprise AI Solution Consu
 
 Phase 9A adds **Enterprise KnowledgeOps Studio**, a React/Vite product-facing frontend for the local KnowledgeOps platform. FastAPI remains the backend API, and Streamlit remains the technical evaluation and governance dashboard layer. The Studio preserves the local-first architecture and is a portfolio/product demo layer, not production infrastructure.
 
-Phase 9A does not add authentication, RBAC, SSO, Neo4j, Redis, Kafka, Celery, Supabase/Postgres, or production deployment infrastructure. It also does not replace the Streamlit dashboards.
+Phase 9B adds an **Enterprise Readiness Layer** with simulated personas, deterministic access-policy explanations, a `/readiness` page, and opt-in Search/Query policy simulation. When enabled, generated metadata filters are applied before retrieval; when disabled, default Search and Query behavior is unchanged.
+
+Phase 9A/9B do not add real authentication, RBAC, SSO, Neo4j, Redis, Kafka, Celery, Supabase/Postgres, or production deployment infrastructure. The readiness layer is simulation-only and does not replace the Streamlit dashboards.
 
 ![Enterprise KnowledgeOps Studio landing page](docs/assets/studio/studio-landing.png)
 
@@ -18,6 +20,7 @@ Studio pages:
 - Workspace
 - Search & Citations
 - Query Planner
+- Readiness
 - Evaluation Center
 - Governance Center
 - Graph Explorer
@@ -26,9 +29,13 @@ Studio pages:
 |---|---|---|
 | ![Studio workspace page](docs/assets/studio/studio-workspace.png) | ![Studio search and citations page](docs/assets/studio/studio-search.png) | ![Studio query planner page](docs/assets/studio/studio-query.png) |
 
-| Evaluation Center | Governance Center | Graph Explorer |
+| Readiness | Evaluation Center | Governance Center |
 |---|---|---|
-| ![Studio evaluation center page](docs/assets/studio/studio-evaluation.png) | ![Studio governance center page](docs/assets/studio/studio-governance.png) | ![Studio graph explorer page](docs/assets/studio/studio-graph.png) |
+| ![Studio readiness center page](docs/assets/studio/studio-readiness.png) | ![Studio evaluation center page](docs/assets/studio/studio-evaluation.png) | ![Studio governance center page](docs/assets/studio/studio-governance.png) |
+
+| Graph Explorer |
+|---|
+| ![Studio graph explorer page](docs/assets/studio/studio-graph.png) |
 
 ## What This Is
 
@@ -65,6 +72,7 @@ Studio pages:
 - Run deterministic retrieval and Phase 6 quality evaluations.
 - Inspect evaluation metrics and case-level failures in Streamlit.
 - Capture local feedback, triage review status, and link feedback to evaluation case IDs manually.
+- Simulate enterprise readiness personas and access-policy metadata filters without adding real auth/RBAC/SSO.
 
 ## Architecture Overview
 
@@ -165,6 +173,9 @@ Local URLs:
 - `GET /api/v1/graph/edges`: inspect graph edges and evidence.
 - `GET /api/v1/graph/neighborhood`: inspect node neighborhoods.
 - `POST /api/v1/query`: return an evidence pack and optionally a citation-grounded answer.
+- `GET /api/v1/readiness/summary`: inspect local readiness status and boundaries.
+- `GET /api/v1/readiness/personas`: list deterministic simulated personas.
+- `POST /api/v1/readiness/access-policy`: generate simulation-only metadata filters and explanations.
 - `POST /api/v1/evaluation/run`: run deterministic Phase 6 evaluation.
 - `GET /api/v1/evaluation/latest`: load the latest local evaluation report.
 - `POST /api/v1/feedback`: submit local governance feedback.
@@ -209,6 +220,8 @@ Interpretation:
 | Phase 6 | `v0.5.0-evaluation-dashboard` | Evaluation harness, core/holdout dataset, metrics, Evaluation Dashboard |
 | Phase 7 | `v0.6.0-feedback-governance` | Local feedback capture, review queue, governance dashboard, feedback audit events |
 | Phase 8 | planned `v1.0.0-portfolio` | Final portfolio packaging, docs, release notes, clean demo narrative |
+| Phase 9A | `v1.1.0-phase9a-studio` | React/Vite Studio product layer, screenshots, Studio docs |
+| Phase 9B | planned `v1.2.0-phase9b-readiness` | Enterprise readiness simulation, personas, readiness page, opt-in Search/Query policy filters |
 
 ## Tech Stack
 
@@ -239,6 +252,7 @@ Interpretation:
 - [Portfolio Summary](docs/portfolio_summary.md)
 - [Final Checklist](docs/final_checklist.md)
 - [Release Notes Draft](docs/releases/v1.0.0-portfolio.md)
+- [Phase 9B Release Notes Draft](docs/releases/v1.2.0-phase9b-readiness.md)
 
 ## Example Prompts
 
@@ -274,7 +288,7 @@ Use `generate_answer=true` to request a citation-grounded answer. Without that f
 
 - Optional external LLM provider integration while preserving deterministic mock mode.
 - Stronger entity/relation extraction and graph normalization.
-- Access-control simulation and advanced enterprise guardrails.
+- Larger scenario library for access-policy simulation and advanced enterprise guardrails.
 - Optional Neo4j adapter.
 - Human review workflow integration.
 - Larger evaluation corpus and semantic/faithfulness evaluation.

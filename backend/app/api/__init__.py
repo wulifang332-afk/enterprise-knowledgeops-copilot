@@ -5,6 +5,7 @@ from .routes_feedback import router as feedback_router
 from .routes_graph import router as graph_router
 from .routes_ingest import router as ingest_router
 from .routes_query import router as query_router
+from .routes_readiness import router as readiness_router
 from .routes_search import router as search_router
 from .routes_workspace import router as studio_router
 
@@ -16,6 +17,7 @@ __all__ = [
     "graph_router",
     "ingest_router",
     "query_router",
+    "readiness_router",
     "search_router",
     "studio_router",
 ]

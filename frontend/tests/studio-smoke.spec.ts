@@ -6,6 +6,7 @@ const routes = [
   { path: "/search", heading: "Search & Citations" },
   { path: "/graph", heading: "Graph Explorer" },
   { path: "/query", heading: "Query Planner" },
+  { path: "/readiness", heading: "Readiness Center" },
   { path: "/evaluation", heading: "Evaluation Center" },
   { path: "/governance", heading: "Governance Center" }
 ] as const;

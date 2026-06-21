@@ -7,6 +7,7 @@ import { GraphExplorerPage } from "./pages/GraphExplorerPage";
 import { HomePage } from "./pages/HomePage";
 import { KnowledgeWorkspacePage } from "./pages/KnowledgeWorkspacePage";
 import { QueryPlannerPage } from "./pages/QueryPlannerPage";
+import { ReadinessCenterPage } from "./pages/ReadinessCenterPage";
 import { SearchCitationsPage } from "./pages/SearchCitationsPage";
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/search" element={<SearchCitationsPage />} />
         <Route path="/graph" element={<GraphExplorerPage />} />
         <Route path="/query" element={<QueryPlannerPage />} />
+        <Route path="/readiness" element={<ReadinessCenterPage />} />
         <Route path="/evaluation" element={<EvaluationCenterPage />} />
         <Route path="/governance" element={<GovernanceCenterPage />} />
       </Routes>

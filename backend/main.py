@@ -16,6 +16,7 @@ from backend.app.api import (
     graph_router,
     ingest_router,
     query_router,
+    readiness_router,
     search_router,
     studio_router,
 )
@@ -54,6 +55,7 @@ def create_app() -> FastAPI:
     app.include_router(search_router)
     app.include_router(graph_router)
     app.include_router(query_router)
+    app.include_router(readiness_router)
     app.include_router(evaluation_router)
     app.include_router(feedback_router)
     app.include_router(studio_router)

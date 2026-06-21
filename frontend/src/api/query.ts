@@ -73,12 +73,12 @@ export type EvidencePack = {
   grounding_summary: string | null;
 };
 
-export function planQuery(query: string, generateAnswer: boolean): Promise<EvidencePack> {
+export function planQuery(query: string, generateAnswer: boolean, filters: SearchFilters = {}): Promise<EvidencePack> {
   return postJson<EvidencePack, QueryRequest>("/api/v1/query", {
     query,
     top_k: 5,
     include_graph: true,
     generate_answer: generateAnswer,
-    filters: {}
+    filters
   });
 }

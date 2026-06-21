@@ -17,6 +17,7 @@ const routes = [
   { path: "/workspace", heading: "Knowledge Workspace", filename: "studio-workspace.png" },
   { path: "/search", heading: "Search & Citations", filename: "studio-search.png" },
   { path: "/query", heading: "Query Planner", filename: "studio-query.png" },
+  { path: "/readiness", heading: "Readiness Center", filename: "studio-readiness.png" },
   { path: "/evaluation", heading: "Evaluation Center", filename: "studio-evaluation.png" },
   { path: "/governance", heading: "Governance Center", filename: "studio-governance.png" },
   { path: "/graph", heading: "Graph Explorer", filename: "studio-graph.png" }

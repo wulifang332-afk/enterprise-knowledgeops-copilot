@@ -1,6 +1,13 @@
 import { FormEvent, useState } from "react";
 
 import { planQuery, type EvidencePack, type RetrievalEvidenceItem } from "../api";
+import {
+  AccessPolicySimulationPanel,
+  filtersFromAccessPolicy,
+  isAccessPolicyBlocked,
+  useAccessPolicySimulation,
+  type SimulationApplicationStatus
+} from "../components/AccessPolicySimulationPanel";
 
 type QueryState = {
   pack: EvidencePack | null;
@@ -8,20 +15,25 @@ type QueryState = {
   error: string | null;
   emptyQuery: boolean;
   hasSubmitted: boolean;
+  accessPolicyStatus: SimulationApplicationStatus;
+  accessPolicyMessage: string;
 };
 
 export function QueryPlannerPage() {
   const [query, setQuery] = useState("");
   const [generateAnswer, setGenerateAnswer] = useState(false);
+  const accessPolicy = useAccessPolicySimulation();
   const [state, setState] = useState<QueryState>({
     pack: null,
     loading: false,
     error: null,
     emptyQuery: false,
-    hasSubmitted: false
+    hasSubmitted: false,
+    accessPolicyStatus: "disabled",
+    accessPolicyMessage: "Access policy simulation is disabled. Query requests are unchanged."
   });
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmedQuery = query.trim();
 
@@ -31,7 +43,11 @@ export function QueryPlannerPage() {
         loading: false,
         error: null,
         emptyQuery: true,
-        hasSubmitted: true
+        hasSubmitted: true,
+        accessPolicyStatus: accessPolicy.enabled ? "ready" : "disabled",
+        accessPolicyMessage: accessPolicy.enabled
+          ? "Access policy simulation was not run because the query was empty."
+          : "Access policy simulation is disabled. Query requests are unchanged."
       });
       return;
     }
@@ -41,17 +57,60 @@ export function QueryPlannerPage() {
       loading: true,
       error: null,
       emptyQuery: false,
-      hasSubmitted: true
+      hasSubmitted: true,
+      accessPolicyStatus: accessPolicy.enabled ? "ready" : "disabled",
+      accessPolicyMessage: accessPolicy.enabled
+        ? "Preparing simulation-only filters before query planning."
+        : "Access policy simulation is disabled. Query requests are unchanged."
     });
 
-    planQuery(trimmedQuery, generateAnswer)
+    let filters = {};
+    let accessPolicyStatus: SimulationApplicationStatus = "disabled";
+    let accessPolicyMessage = "Access policy simulation is disabled. Query requests are unchanged.";
+
+    if (accessPolicy.enabled) {
+      const policy = await accessPolicy.runSimulation();
+      if (!policy) {
+        setState({
+          pack: null,
+          loading: false,
+          error: "Access policy simulation is unavailable. Disable simulation to run default query planning.",
+          emptyQuery: false,
+          hasSubmitted: true,
+          accessPolicyStatus: "unavailable",
+          accessPolicyMessage: "No query request was sent because simulation-only filters could not be generated."
+        });
+        return;
+      }
+      if (isAccessPolicyBlocked(policy)) {
+        setState({
+          pack: null,
+          loading: false,
+          error: null,
+          emptyQuery: false,
+          hasSubmitted: true,
+          accessPolicyStatus: "blocked",
+          accessPolicyMessage:
+            "No query request was sent because the simulated policy produced no allowed filters."
+        });
+        return;
+      }
+      filters = filtersFromAccessPolicy(policy);
+      accessPolicyStatus = "applied";
+      accessPolicyMessage =
+        "Simulation-only allowed_filters were applied to POST /api/v1/query before planning.";
+    }
+
+    planQuery(trimmedQuery, generateAnswer, filters)
       .then((pack) => {
         setState({
           pack,
           loading: false,
           error: null,
           emptyQuery: false,
-          hasSubmitted: true
+          hasSubmitted: true,
+          accessPolicyStatus,
+          accessPolicyMessage
         });
       })
       .catch((error: unknown) => {
@@ -60,7 +119,9 @@ export function QueryPlannerPage() {
           loading: false,
           error: messageFor(error),
           emptyQuery: false,
-          hasSubmitted: true
+          hasSubmitted: true,
+          accessPolicyStatus,
+          accessPolicyMessage
         });
       });
   }
@@ -113,6 +174,20 @@ export function QueryPlannerPage() {
         </form>
       </section>
 
+      <section className="section" aria-labelledby="query-access-policy-title">
+        <div className="section__header">
+          <h2 className="section__title" id="query-access-policy-title">
+            Access Policy Simulation
+          </h2>
+          <p className="section__note">Optional, simulation-only metadata filters</p>
+        </div>
+        <AccessPolicySimulationPanel
+          controller={accessPolicy}
+          applicationStatus={state.accessPolicyStatus}
+          appliedDescription={state.accessPolicyMessage}
+        />
+      </section>
+
       <QueryOutcome state={state} />
     </>
   );
@@ -139,6 +214,17 @@ function QueryOutcome({ state }: { state: QueryState }) {
     return (
       <section className="section">
         <EmptyPanel title="Planning query" description="Calling the local query-planning API." />
+      </section>
+    );
+  }
+
+  if (state.accessPolicyStatus === "blocked") {
+    return (
+      <section className="section">
+        <EmptyPanel
+          title="Query blocked by simulation"
+          description={state.accessPolicyMessage}
+        />
       </section>
     );
   }
