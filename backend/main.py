@@ -17,6 +17,7 @@ from backend.app.api import (
     ingest_router,
     query_router,
     search_router,
+    studio_router,
 )
 from backend.app.core.errors import KnowledgeOpsError
 from backend.app.schemas.enums import ErrorCode
@@ -55,6 +56,7 @@ def create_app() -> FastAPI:
     app.include_router(query_router)
     app.include_router(evaluation_router)
     app.include_router(feedback_router)
+    app.include_router(studio_router)
     return app
 
 

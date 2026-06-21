@@ -4,6 +4,32 @@ Enterprise KnowledgeOps Copilot is a local-first enterprise AI portfolio project
 
 The project demonstrates how an AI Product Manager, Enterprise AI Solution Consultant, RAG Application Engineer, or GraphRAG/Product Engineer could design and ship a governed knowledge operations platform: ingestion, metadata governance, deterministic chunking, hybrid retrieval, citations, knowledge graph inspection, query planning, grounded answer generation, evaluation, and feedback governance.
 
+## Enterprise KnowledgeOps Studio
+
+Phase 9A adds **Enterprise KnowledgeOps Studio**, a React/Vite product-facing frontend for the local KnowledgeOps platform. FastAPI remains the backend API, and Streamlit remains the technical evaluation and governance dashboard layer. The Studio preserves the local-first architecture and is a portfolio/product demo layer, not production infrastructure.
+
+Phase 9A does not add authentication, RBAC, SSO, Neo4j, Redis, Kafka, Celery, Supabase/Postgres, or production deployment infrastructure. It also does not replace the Streamlit dashboards.
+
+![Enterprise KnowledgeOps Studio landing page](docs/assets/studio/studio-landing.png)
+
+Studio pages:
+
+- Landing
+- Workspace
+- Search & Citations
+- Query Planner
+- Evaluation Center
+- Governance Center
+- Graph Explorer
+
+| Workspace | Search & Citations | Query Planner |
+|---|---|---|
+| ![Studio workspace page](docs/assets/studio/studio-workspace.png) | ![Studio search and citations page](docs/assets/studio/studio-search.png) | ![Studio query planner page](docs/assets/studio/studio-query.png) |
+
+| Evaluation Center | Governance Center | Graph Explorer |
+|---|---|---|
+| ![Studio evaluation center page](docs/assets/studio/studio-evaluation.png) | ![Studio governance center page](docs/assets/studio/studio-governance.png) | ![Studio graph explorer page](docs/assets/studio/studio-graph.png) |
+
 ## What This Is
 
 - A local KnowledgeOps platform for synthetic enterprise policies and SOPs.
@@ -111,10 +137,22 @@ uvicorn backend.main:app --reload
 streamlit run dashboard/streamlit_app.py
 ```
 
+Start and verify the React/Vite Studio:
+
+```bash
+cd frontend
+npm install
+npm run dev
+npm run build
+npm run test:e2e
+npm run screenshots:studio
+```
+
 Local URLs:
 
 - FastAPI: `http://127.0.0.1:8000`
 - Streamlit: `http://localhost:8501`
+- React/Vite Studio: `http://127.0.0.1:5173`
 
 ## API Highlights
 
@@ -177,6 +215,11 @@ Interpretation:
 - Python 3.11+
 - FastAPI
 - Streamlit
+- React
+- Vite
+- TypeScript
+- React Router
+- Playwright
 - Pydantic v2
 - SQLite
 - BM25 local implementation
@@ -190,6 +233,7 @@ Interpretation:
 - [Demo Guide](docs/demo.md)
 - [API Reference](docs/api.md)
 - [Architecture](docs/architecture.md)
+- [Enterprise KnowledgeOps Studio](docs/studio.md)
 - [Evaluation Reference](docs/evaluation.md)
 - [Implementation Notes](docs/implementation_notes.md)
 - [Portfolio Summary](docs/portfolio_summary.md)
