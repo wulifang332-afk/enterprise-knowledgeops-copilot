@@ -12,17 +12,6 @@ const outputDir = path.resolve(repoRoot, "docs/assets/studio");
 const port = process.env.STUDIO_SCREENSHOT_PORT ?? "4174";
 const baseURL = `http://127.0.0.1:${port}`;
 
-const routes = [
-  { path: "/", heading: "Enterprise KnowledgeOps Studio", filename: "studio-landing.png" },
-  { path: "/workspace", heading: "Knowledge Workspace", filename: "studio-workspace.png" },
-  { path: "/search", heading: "Search & Citations", filename: "studio-search.png" },
-  { path: "/query", heading: "Query Planner", filename: "studio-query.png" },
-  { path: "/readiness", heading: "Readiness Center", filename: "studio-readiness.png" },
-  { path: "/evaluation", heading: "Evaluation Center", filename: "studio-evaluation.png" },
-  { path: "/governance", heading: "Governance Center", filename: "studio-governance.png" },
-  { path: "/graph", heading: "Graph Explorer", filename: "studio-graph.png" }
-];
-
 await mkdir(outputDir, { recursive: true });
 
 const server = spawn("npm", ["run", "dev", "--", "--port", port, "--strictPort"], {
@@ -32,10 +21,10 @@ const server = spawn("npm", ["run", "dev", "--", "--port", port, "--strictPort"]
 });
 
 server.stdout.on("data", (chunk) => {
-  process.stdout.write(`[studio-screenshots] ${chunk}`);
+  process.stdout.write(`[agent-workbench-screenshot] ${chunk}`);
 });
 server.stderr.on("data", (chunk) => {
-  process.stderr.write(`[studio-screenshots] ${chunk}`);
+  process.stderr.write(`[agent-workbench-screenshot] ${chunk}`);
 });
 
 try {
@@ -47,16 +36,16 @@ try {
     deviceScaleFactor: 1
   });
 
-  for (const route of routes) {
-    await page.goto(`${baseURL}${route.path}`, { waitUntil: "domcontentloaded" });
-    await page.getByRole("heading", { level: 1, name: route.heading }).waitFor({ state: "visible" });
-    await page.waitForTimeout(500);
-    await page.screenshot({
-      path: path.join(outputDir, route.filename),
-      fullPage: true
-    });
-    console.log(`captured ${route.filename}`);
-  }
+  await page.goto(baseURL, { waitUntil: "domcontentloaded" });
+  await page
+    .getByRole("heading", { level: 1, name: "Enterprise KnowledgeOps Agent Workbench" })
+    .waitFor({ state: "visible" });
+  await page.waitForTimeout(500);
+  await page.screenshot({
+    path: path.join(outputDir, "agent-workbench.png"),
+    fullPage: true
+  });
+  console.log("captured agent-workbench.png");
 
   await browser.close();
 } finally {

@@ -1,5 +1,5 @@
 {
-  "name": "enterprise-knowledgeops-studio",
+  "name": "enterprise-knowledgeops-agent-workbench",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,8 +12,7 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",
